@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPassword;
 use App\Http\Controllers\Auth\ChangePassword;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -29,6 +30,11 @@ use App\Http\Controllers\ItemController;
 Route::get('/', function () {
 	return redirect('/landing');
 })->middleware('auth');
+
+
+Route::get('/auth/redirect', [AuthController::class, 'redirectToProvider'])->name('auth.microsoft');
+Route::get('/auth/callback', [AuthController::class, 'handleProviderCallback']);
+
 
 Route::get('/login', [LoginController::class, 'show'])->middleware('guest')->name('login');
 Route::post('/login', [LoginController::class, 'login'])->middleware('guest')->name('login.perform');

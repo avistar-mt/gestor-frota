@@ -3,7 +3,7 @@
     <div class="{{ $container ?? 'container-fluid'}} ps-2 pe-0">
         <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 {{ $text ?? ''}}"
             href="/default">
-            Argon Dashboard 2 PRO Laravel
+            Gestor Frota
         </a>
         <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
             data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
@@ -29,13 +29,13 @@
                     </a>
                 </li>
             </ul>
-            <ul class="navbar-nav d-lg-block d-none">
+            <!-- <ul class="navbar-nav d-lg-block d-none">
                 <li class="nav-item">
                     <a href="https://www.creative-tim.com/product/argon-dashboard-pro-laravel"
                         class="btn btn-sm  btn-primary  mb-0 me-1" target="_blank"
                         onclick="smoothToPricing('pricing-argon')">Buy Now</a>
                 </li>
-            </ul>
+            </ul> -->
         </div>
     </div>
 </nav>

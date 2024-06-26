@@ -11,7 +11,7 @@
             <a class="navbar-brand m-0"
                 href=" https://demos.creative-tim.com/argon-dashboard-pro/pages/dashboards/default.html " target="_blank">
                 <img src="../../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="me-1 font-weight-bold">Argon Dashboard 2 PRO Laravel</span>
+                <span class="me-1 font-weight-bold">Gestor Frota</span>
             </a>
         </div>
         <hr class="horizontal dark mt-0">

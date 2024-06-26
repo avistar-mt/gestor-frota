@@ -3,7 +3,7 @@
     <div class="{{ $container ?? 'container-fluid'}} ps-2 pe-0">
         <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 {{ $text ?? ''}}"
             href="/default">
-            Argon Dashboard 2 PRO Laravel
+            Gestor Frota
         </a>
         <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
             data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
@@ -37,30 +37,30 @@
                                             <i class="ni ni-spaceship me-3 text-primary"></i>
                                             Dashboards
                                         </div>
-                                        <a href="/landing"
+                                        <!-- <a href="/landing"
                                             class="dropdown-item border-radius-md">
                                             <span class="ps-3">Landing</span>
-                                        </a>
+                                        </a> -->
                                         <a href="/default"
                                             class="dropdown-item border-radius-md">
                                             <span class="ps-3">Default</span>
                                         </a>
-                                        <a href="/automotive"
+                                        <!-- <a href="/automotive"
                                             class="dropdown-item border-radius-md">
                                             <span class="ps-3">Automotive</span>
-                                        </a>
-                                        <a href="/smart-home"
+                                        </a> -->
+                                        <!-- <a href="/smart-home"
                                             class="dropdown-item border-radius-md">
                                             <span class="ps-3">Smart Home</span>
-                                        </a>
-                                        <a href="/vr-default"
+                                        </a> -->
+                                        <!-- <a href="/vr-default"
                                             class="dropdown-item border-radius-md">
                                             <span class="ps-3">Virtual Reality</span>
-                                        </a>
-                                        <a href="/crm"
+                                        </a> -->
+                                        <!-- <a href="/crm"
                                             class="dropdown-item border-radius-md">
                                             <span class="ps-3">CRM</span>
-                                        </a>
+                                        </a> -->
                                         <div
                                             class="dropdown-header text-dark font-weight-bolder d-flex align-items-center mt-3 px-0">
                                             <i class="ni ni-circle-08 me-3 text-primary"></i>
@@ -691,7 +691,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="nav-item dropdown dropdown-hover mx-2">
+                <!-- <li class="nav-item dropdown dropdown-hover mx-2">
                     <a role="button"
                         class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center "
                         id="dropdownMenuEcommerce" data-bs-toggle="dropdown" aria-expanded="false">
@@ -812,7 +812,7 @@
                             </a>
                         </div>
                     </div>
-                </li>
+                </li> -->
                 <li class="nav-item dropdown dropdown-hover mx-2">
                     <a role="button"
                         class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center "
@@ -1001,13 +1001,13 @@
                     </div>
                 </li>
             </ul>
-            <ul class="navbar-nav d-lg-block d-none">
+            <!-- <ul class="navbar-nav d-lg-block d-none">
                 <li class="nav-item">
                     <a href="https://www.creative-tim.com/product/argon-dashboard-pro-laravel"
                         class="btn btn-sm  btn-primary  mb-0 me-1"
                         onclick="smoothToPricing('pricing-argon')">Buy Now</a>
                 </li>
-            </ul>
+            </ul> -->
         </div>
     </div>
 </nav>

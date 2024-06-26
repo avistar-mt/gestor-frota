@@ -1,7 +1,7 @@
 <footer class="footer py-5">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 mb-4 mx-auto text-center">
+            <!-- <div class="col-lg-8 mb-4 mx-auto text-center">
                 <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
                     Company
                 </a>
@@ -20,25 +20,25 @@
                 <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
                     Pricing
                 </a>
-            </div>
-            <div class="col-lg-8 mx-auto text-center mb-4 mt-2">
-                <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
+            </div> -->
+            <!-- <div class="col-lg-8 mx-auto text-center mb-4 mt-2"> -->
+                <!-- <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
                     <span class="text-lg fab fa-dribbble"></span>
-                </a>
-                <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
+                </a> -->
+                <!-- <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
                     <span class="text-lg fab fa-twitter"></span>
-                </a>
-                <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
+                </a> -->
+                <!-- <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
                     <span class="text-lg fab fa-instagram"></span>
-                </a>
-                <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
+                </a> -->
+                <!-- <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
                     <span class="text-lg fab fa-pinterest"></span>
-                </a>
-                <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
+                </a> -->
+                <!-- <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
                     <span class="text-lg fab fa-github"></span>
-                </a>
-            </div>
-        </div>
+                </a> -->
+            <!-- </div> -->
+        <!-- </div> -->
         <div class="row">
             <div class="col-8 mx-auto text-center mt-1">
                 <p class="mb-0 text-secondary">
@@ -46,9 +46,9 @@
                     <script>
                         document.write(new Date().getFullYear())
                     </script>
-                    <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
+                    <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Avistar</a>
                     &
-                    <a href="https://www.updivision.com" class="font-weight-bold" target="_blank">UPDIVISION</a>
+                    <a href="https://www.updivision.com" class="font-weight-bold" target="_blank">Avistar</a>
                 </p>
             </div>
         </div>

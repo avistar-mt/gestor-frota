@@ -7,7 +7,7 @@
         <a class="navbar-brand m-0"
             href="{{ route('dashboards', ['page' => 'default']) }}">
             <img src="{{ $logo ?? '/assets/img/logo-ct-dark.png'}}" class="navbar-brand-img h-100" alt="main_logo">
-            <span class="ms-1 font-weight-bold">Argon Dashboard 2 PRO Laravel</span>
+            <span class="ms-1 font-weight-bold">Gestor Frota</span>
         </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -24,10 +24,10 @@
                 <div class="collapse {{ Route::currentRouteName() == 'dashboards' ? 'show' : '' }} " id="dashboardsExamples">
                     <ul class="nav ms-4">
                         <li class="nav-item ">
-                            <a class="nav-link {{ str_contains(request()->url(), 'landing') == true ? 'active' : '' }}" href="{{ route('dashboards', ['page' => 'landing']) }}">
+                            <!-- <a class="nav-link {{ str_contains(request()->url(), 'landing') == true ? 'active' : '' }}" href="{{ route('dashboards', ['page' => 'landing']) }}">
                                 <span class="sidenav-mini-icon"> L </span>
                                 <span class="sidenav-normal"> Landing </span>
-                            </a>
+                            </a> -->
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link {{ str_contains(request()->url(), 'default') == true ? 'active' : '' }}" href="{{ route('dashboards', ['page' => 'default']) }}">
@@ -35,19 +35,19 @@
                                 <span class="sidenav-normal"> Default </span>
                             </a>
                         </li>
-                        <li class="nav-item ">
+                        <!-- <li class="nav-item ">
                             <a class="nav-link {{ str_contains(request()->url(), 'automotive') == true ? 'active' : '' }}" href="{{ route('dashboards', ['page' => 'automotive']) }}">
                                 <span class="sidenav-mini-icon"> A </span>
                                 <span class="sidenav-normal"> Automotive </span>
                             </a>
-                        </li>
-                        <li class="nav-item ">
+                        </li> -->
+                        <!-- <li class="nav-item ">
                             <a class="nav-link {{ str_contains(request()->url(), 'smart-home') == true ? 'active' : '' }}" href="{{ route('dashboards', ['page' => 'smart-home']) }}">
                                 <span class="sidenav-mini-icon"> S </span>
                                 <span class="sidenav-normal"> Smart Home </span>
                             </a>
-                        </li>
-                        <li class="nav-item ">
+                        </li> -->
+                        <!-- <li class="nav-item ">
                             <a class="nav-link " data-bs-toggle="collapse" aria-expanded="false"
                                 href="#vrExamples">
                                 <span class="sidenav-mini-icon"> V </span>
@@ -69,13 +69,13 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
-                        <li class="nav-item ">
+                        </li> -->
+                        <!-- <li class="nav-item ">
                             <a class="nav-link {{ str_contains(request()->url(), 'crm') == true ? 'active' : '' }}" href="{{ route('dashboards', ['page' => 'crm']) }}">
                                 <span class="sidenav-mini-icon"> C </span>
                                 <span class="sidenav-normal"> CRM </span>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </li>
@@ -86,7 +86,7 @@
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-end justify-content-center">
                         <i class="fab fa-laravel" style="color: #f4645f; font-size: large; font-weight: 500 "></i>
                     </div>
-                    <span class="nav-link-text ms-1">Laravel Examples </span>
+                    <span class="nav-link-text ms-1">Avistar Examples </span>
                 </a>
                 <div class="collapse show" id="laravelExamples">
                     <ul class="nav ms-4">
@@ -346,7 +346,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#ecommerceExamples" class="nav-link {{ str_contains(request()->url(), 'ecommerce') == true ? 'active' : '' }}"
                     aria-controls="ecommerceExamples" role="button" aria-expanded="false">
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
@@ -428,8 +428,8 @@
                         </li>
                     </ul>
                 </div>
-            </li>
-            <li class="nav-item">
+            </li> -->
+            <!-- <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#authExamples" class="nav-link {{ str_contains(request()->url(), 'authentication') == true ? 'active' : '' }}" aria-controls="authExamples"
                     role="button" aria-expanded="false">
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
@@ -610,10 +610,10 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li> -->
         </ul>
     </div>
-    <div class="sidenav-footer mx-3 my-3">
+    <!-- <div class="sidenav-footer mx-3 my-3">
         <div class="card card-plain shadow-none" id="sidenavCard">
             <img class="w-60 mx-auto" src="/assets/img/illustrations/icon-documentation-warning.svg"
                 alt="sidebar_illustration">
@@ -627,6 +627,6 @@
         <a href="/docs/bootstrap/overview/argon-dashboard/index.html" target="_blank"
             class="btn btn-dark btn-sm w-100 mb-3">Documentation</a>
         <a class="btn btn-primary btn-sm mb-0 w-100"
-            href="https://www.creative-tim.com/product/argon-dashboard-pro-laravel" type="button" target="_blank">Upgrade to PRO</a>
+            href="https://www.creative-tim.com/product/argon-dashboard-pro-laravel" type="button" target="_blank">Upgrade to PRO</a> -->
     </div>
 </aside>

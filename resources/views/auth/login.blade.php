@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('content')
@@ -11,7 +12,7 @@
         <div class="page-header align-items-start min-vh-50 pt-7 pb-9 m-3 border-radius-lg"
             style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-cover.jpg');">
             <span class="mask bg-gradient-dark opacity-6"></span>
-            <div class="container">
+            <!-- <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-5 text-center mx-auto">
                         <h1 class="text-white mb-2 mt-5">Welcome!</h1>
@@ -25,7 +26,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="container">
             <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
