@@ -8,6 +8,7 @@ use Carbon\Carbon;
 
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Branch;
 
 class UserController extends Controller
 {
@@ -20,7 +21,8 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return view('laravel.users.create', compact('roles'));
+        $branches = Branch::all();
+        return view('laravel.users.create', compact('roles', 'branches'));
     }
 
     public function store(Request $request)
@@ -28,11 +30,13 @@ class UserController extends Controller
         $attributes = request()->validate([
             'firstname' => ['required'],
             'email' => ['required', 'unique:users', 'email'],
+            'cpf' => ['required', 'unique:users'],
             'confirmation' => ['same:email'],
             'password' => ['required', 'min:5'],
             'confirm-password' => ['same:password'],
             'role' => ['required'],
-            'image' => ['image'],
+            'branch' => ['required'],
+//            'image' => ['image'],
             'phone' => ['max:10']
         ]);
 
@@ -50,19 +54,21 @@ class UserController extends Controller
             'password' => $request->get('password'),
             'role_id' => $request->get('role'),
             'email' => $request->get('email'),
-            'gender' => $request->get('gender'),
+            'cpf' => $request->get('cpf'),
+            'branch_id' => $request->get('branch'),
+//            'gender' => $request->get('gender'),
             'location' => $request->get('location'),
             'phone' => $request->get('phone'),
-            'language' => $request->get('language'),
+//            'language' => $request->get('language'),
             'birthday' => $birthday,
-            'skills' => $request->get('skills')
+//            'skills' => $request->get('skills')
         ]);
 
-        if($request->file('avatar')) {
-            $user->update([
-                'avatar' => $request->file('avatar')->store('/', 'avatars')
-            ]);
-        }
+//        if($request->file('avatar')) {
+//            $user->update([
+//                'avatar' => $request->file('avatar')->store('/', 'avatars')
+//            ]);
+//        }
 
         return redirect()->route('user-management')->with('succes', 'User succesfully saved');
     }
@@ -108,7 +114,7 @@ class UserController extends Controller
             'password' => [],
             'confirm-password' => ['same:password'],
             'role' => ['required'],
-            'image' => ['image'],
+//            'image' => ['image'],
             'phone' => ['max:10']
         ]);
 
@@ -126,12 +132,12 @@ class UserController extends Controller
             'password' => $request->get('password'),
             'role_id' => $request->get('role'),
             'email' => $request->get('email'),
-            'gender' => $request->get('gender'),
+//            'gender' => $request->get('gender'),
             'location' => $request->get('location'),
             'phone' => $request->get('phone'),
-            'language' => $request->get('language'),
+//            'language' => $request->get('language'),
             'birthday' => $birthday,
-            'skills' => $request->get('skills')
+//            'skills' => $request->get('skills')
         ]);
 
         if($request->file('avatar')) {

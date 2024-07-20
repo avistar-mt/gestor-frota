@@ -208,16 +208,16 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-4 col-6">
-                                    <label class="form-label mt-4">I'm</label>
-                                    <select class="form-control" name="gender" id="choices-gender">
-                                        <option value="">Choose</option>
-                                        <option value="Male" {{ auth()->user()->gender == 'Male' ? 'selected' : '' }}>Male
-                                        </option>
-                                        <option value="Female" {{ auth()->user()->gender == 'Female' ? 'selected' : '' }}>
-                                            Female</option>
-                                    </select>
+                                    <label class="form-label mt-4">CPF</label>
+                                                <div class="input-group">
+                                        <input id="cpf" name="cpf" class="form-control" type="text"
+                                            value="{{ auth()->user()->cpf }}" placeholder="000.000.000-00">
+                                    </div>
+                                    @error('cpf')
+                                        <p class='text-danger text-xs pt-1'> {{ $message }} </p>
+                                    @enderror
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-6">
                                     <div class="row">
                                         <div class="col-sm-5 col-5">
                                             <label class="form-label mt-4">Birth Date</label>
@@ -288,7 +288,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-md-6 align-self-center">
                                     <label class="form-label mt-4">Language</label>
                                     <select class="form-control" name="language" id="choices-language">
@@ -308,45 +308,47 @@
                                     <input class="form-control" id="skills" name="skills" type="text"
                                         value="{{ auth()->user()->skills }}" placeholder="Enter your skills" />
                                 </div>
-                            </div>
+                            </div> -->
                             <button type="submit" class="btn bg-gradient-dark btn-sm float-end mt-6 mb-0">Update</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        @include('layouts.footers.auth.footer')
+        <!-- @include('layouts.footers.auth.footer') -->
+
     </div>
 @endsection
 
 @push('js')
     <script src="/assets/js/plugins/choices.min.js"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     <script>
         var birthdayArray = <?php echo !empty($birthdayArray) ? json_encode($birthdayArray) : '"0"'; ?>;
         var selectedYear = birthdayArray["year"];
         var selectedMonth = Math.floor(birthdayArray["month"]);
         var selectedDay = birthdayArray["day"];
 
-        if (document.getElementById('choices-gender')) {
-            var gender = document.getElementById('choices-gender');
-            const example = new Choices(gender);
-        }
+        // if (document.getElementById('choices-gender')) {
+        //     var gender = document.getElementById('choices-gender');
+        //     const example = new Choices(gender);
+        // }
+        //
+        // if (document.getElementById('choices-language')) {
+        //     var language = document.getElementById('choices-language');
+        //     const example = new Choices(language);
+        // }
 
-        if (document.getElementById('choices-language')) {
-            var language = document.getElementById('choices-language');
-            const example = new Choices(language);
-        }
-
-        if (document.getElementById('choices-skills')) {
-            var skills = document.getElementById('choices-skills');
-            const example = new Choices(skills, {
-                delimiter: ',',
-                editItems: true,
-                maxItemCount: 5,
-                removeItemButton: true,
-                addItems: true
-            });
-        }
+        // if (document.getElementById('choices-skills')) {
+        //     var skills = document.getElementById('choices-skills');
+        //     const example = new Choices(skills, {
+        //         delimiter: ',',
+        //         editItems: true,
+        //         maxItemCount: 5,
+        //         removeItemButton: true,
+        //         addItems: true
+        //     });
+        // }
 
         if (document.getElementById('choices-year')) {
             var year = document.getElementById('choices-year');
@@ -399,18 +401,18 @@
 
             var d = new Date();
             var monthArray = new Array();
-            monthArray[0] = "January";
-            monthArray[1] = "February";
-            monthArray[2] = "March";
-            monthArray[3] = "April";
-            monthArray[4] = "May";
-            monthArray[5] = "June";
-            monthArray[6] = "July";
-            monthArray[7] = "August";
-            monthArray[8] = "September";
-            monthArray[9] = "October";
-            monthArray[10] = "November";
-            monthArray[11] = "December";
+            monthArray[0] = "Janeiro";
+            monthArray[1] = "Fevereiro";
+            monthArray[2] = "Março";
+            monthArray[3] = "Abril";
+            monthArray[4] = "Maio";
+            monthArray[5] = "Junho";
+            monthArray[6] = "Julho";
+            monthArray[7] = "Agosto";
+            monthArray[8] = "Setembro";
+            monthArray[9] = "Outubro";
+            monthArray[10] = "Novembro";
+            monthArray[11] = "Dezembro";
             for (m = 0; m <= 11; m++) {
                 var optn = document.createElement("OPTION");
                 optn.text = monthArray[m];
@@ -437,18 +439,18 @@
             }
         }
 
-        var openFile = function(event) {
-            var input = event.target;
-
-            // Instantiate FileReader
-            var reader = new FileReader();
-            reader.onload = function() {
-                imageFile = reader.result;
-
-                document.getElementById("imageChange").innerHTML = '<img width="200" src="' + imageFile +
-                    '" class="rounded-circle w-100 shadow" />';
-            };
-            reader.readAsDataURL(input.files[0]);
-        };
+        // var openFile = function(event) {
+        //     var input = event.target;
+        //
+        //     // Instantiate FileReader
+        //     var reader = new FileReader();
+        //     reader.onload = function() {
+        //         imageFile = reader.result;
+        //
+        //         document.getElementById("imageChange").innerHTML = '<img width="200" src="' + imageFile +
+        //             '" class="rounded-circle w-100 shadow" />';
+        //     };
+        //     reader.readAsDataURL(input.files[0]);
+        // };
     </script>
 @endpush

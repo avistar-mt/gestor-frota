@@ -86,4 +86,10 @@ class UserPolicy
     {
         return $user->isAdmin() || $user->isCreator();
     }
+
+
+    public function manageDrivers(User $user)
+    {
+        return $user->isAdmin();
+    }
 }

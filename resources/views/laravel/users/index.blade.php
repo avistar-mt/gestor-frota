@@ -143,9 +143,9 @@
                         <table class="table table-flush" id="datatable-basic">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    <!-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Avatar
-                                    </th>
+                                    </th> -->
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Name
                                     </th>
@@ -166,12 +166,12 @@
                             <tbody>
                                 @foreach ($users as $user)
                                     <tr>
-                                        <td class="text-sm font-weight-normal">
+                                        <!-- <td class="text-sm font-weight-normal">
                                             <span class="my-2 text-xs">
                                                 <img src="{{ $user->avatarUrl() }}" alt="bruce"
                                                     class="border-radius-lg shadow-sm height-100 w-auto">
                                             </span>
-                                        </td>
+                                        </td> -->
                                         <td class="text-sm font-weight-normal">{{ $user->firstname }}
                                             {{ $user->lastname }}</td>
                                         <td class="text-sm font-weight-normal">{{ $user->email }}</td>
@@ -206,7 +206,8 @@
                 </div>
             </div>
         </div>
-        @include('layouts.footers.auth.footer')
+        <!-- @include('layouts.footers.auth.footer') -->
+
     </div>
 @endsection
 

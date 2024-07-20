@@ -62,19 +62,20 @@ class ProfileController extends Controller
             'firstname' => $request->get('firstname'),
             'lastname' => $request->get('lastname'),
             'email' => config('app.is_demo') ? auth()->user()->email : $request->get('email') ,
-            'gender' => $request->get('gender'),
+            // 'gender' => $request->get('gender'),
             'location' => $request->get('location'),
             'phone' => $request->get('phone'),
-            'language' => $request->get('language'),
+            'cpf' => $request->get('cpf'),
+            // 'language' => $request->get('language'),
             'birthday' => $birthday,
-            'skills' => $request->get('skills')
+            // 'skills' => $request->get('skills')
         ]);
 
-        if($request->file('avatar')) {
-            auth()->user()->update([
-                'avatar' => $request->file('avatar')->store('/', 'avatars')
-            ]);
-        }
+        // if($request->file('avatar')) {
+        //     auth()->user()->update([
+        //         'avatar' => $request->file('avatar')->store('/', 'avatars')
+        //     ]);
+        // }
 
         return back()->with('succes', 'Profile succesfully updated');
     }

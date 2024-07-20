@@ -148,13 +148,15 @@
                             <p class='text-danger text-xs pt-1'> {{ $message }} </p>
                         @enderror
                         <div class="d-flex justify-content-end mt-4">
+                            <a href="{{ route('category-management') }}" class="btn bg-gradient-secondary m-0">Back</a>
                             <button type="submit" class="btn bg-gradient-primary m-0 ms-2">Save</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        @include('layouts.footers.auth.footer')
+        <!-- @include('layouts.footers.auth.footer') -->
+
     </div>
 @endsection
 

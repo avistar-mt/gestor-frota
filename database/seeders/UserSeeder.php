@@ -23,9 +23,11 @@ class UserSeeder extends Seeder
             'email' => 'admin@argon.com',
             'password' =>  Hash::make('secret'),
             'role_id' => 1,
+            'branch_id' => 1,
+            'cpf' => '12345678909',
             'created_at' => now(),
             'updated_at' => now(),
-            'avatar' => '/team-1.jpg'
+//            'avatar' => '/team-1.jpg'
         ]);
 
         DB::table('users')->insert([
@@ -35,9 +37,11 @@ class UserSeeder extends Seeder
             'email' => 'creator@argon.com',
             'password' =>  Hash::make('secret'),
             'role_id' => 2,
+            'branch_id' => 1,
+            'cpf' => '12345678910',
             'created_at' => now(),
             'updated_at' => now(),
-            'avatar' => '/team-2.jpg'
+//            'avatar' => '/team-2.jpg'
         ]);
 
         DB::table('users')->insert([
@@ -47,9 +51,11 @@ class UserSeeder extends Seeder
             'email' => 'member@argon.com',
             'password' => Hash::make('secret'),
             'role_id' => 3,
+            'cpf' => '12345678911',
+            'branch_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
-            'avatar' => '/team-3.jpg'
+//            'avatar' => '/team-3.jpg'
         ]);
     }
 }

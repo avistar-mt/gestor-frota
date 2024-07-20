@@ -185,7 +185,7 @@
                             <div class="col-6">
                                 <label class="form-label">End Date</label>
                                 <input class="form-control datetimepicker" type="text"
-                                    placeholder="Please select end date" data-input>
+                                    placeholder="Please select end date">
                             </div>
                         </div>
                         <label class="mt-4 form-label">Starting Files</label>
@@ -202,7 +202,8 @@
                     </div>
                 </div>
             </div>
-            @include('layouts.footers.auth.footer')
+            <!-- @include('layouts.footers.auth.footer') -->
+
         </div>
 @endsection
 

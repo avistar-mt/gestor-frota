@@ -209,7 +209,8 @@
                 </div>
             </div>
         </div>
-        @include('layouts.footers.auth.footer')
+        <!-- @include('layouts.footers.auth.footer') -->
+
     </div>
 @endsection
 
@@ -221,7 +222,7 @@
             fixedHeight: true,
             columns: [{
                 select: [1, 5],
-                sortable: false
+                sortable: true
             }]
         });
     </script>

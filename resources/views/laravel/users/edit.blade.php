@@ -137,7 +137,7 @@
                     <div class="card-body pt-0">
                         <form method="POST" action="{{ route('user-edit.update', $user->id) }}" enctype="multipart/form-data">
                             @csrf
-                            <div class="row">
+                            <div class="row mt-4">
                                 <div class="col-6">
                                     <label class="form-label">First Name</label>
                                     <div class="input-group">
@@ -152,6 +152,13 @@
                                     <div class="input-group">
                                         <input id="lastname" name="lastname" value="{{ old('lastname') ?? $user->lastname }}" class="form-control" type="text" placeholder="Lastname">
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-6">
+                                    <label class="form-label">CPF</label>
+                                    <div class="input-group">
+                                        <input id="cpf" name="cpf" value="{{ old('cpf') ?? $user->cpf }}" class="form-control" type="text" placeholder="000.000.000-00">
                                 </div>
                             </div>
                             <div class="row mt-4">
@@ -185,14 +192,14 @@
                                 @error('role') <p class='text-danger text-xs pt-1'> {{ $message }} </p> @enderror
                             </div>
                             <div class="row">
-                                <div class="col-sm-4 col-6">
-                                    <label class="form-label mt-4">Gender</label>
-                                    <select class="form-control" name="gender" id="choices-gender">
-                                        <option value="">Choose</option>
-                                        <option value="Male" {{ old('gender', $user->gender) == 'Male' ? 'selected' : '' }}>Male</option>
-                                        <option value="Female" {{old('gender', $user->gender) == 'Female' ? 'selected' : '' }}>Female</option>
-                                    </select>
-                                </div>
+{{--                                <div class="col-sm-4 col-6">--}}
+{{--                                    <label class="form-label mt-4">Gender</label>--}}
+{{--                                    <select class="form-control" name="gender" id="choices-gender">--}}
+{{--                                        <option value="">Choose</option>--}}
+{{--                                        <option value="Male" {{ old('gender', $user->gender) == 'Male' ? 'selected' : '' }}>Male</option>--}}
+{{--                                        <option value="Female" {{old('gender', $user->gender) == 'Female' ? 'selected' : '' }}>Female</option>--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
                                 <div class="col-sm-8">
                                     <div class="row">
                                         <div class="col-sm-5 col-5">
@@ -255,7 +262,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 align-self-center">
+                                <!-- <div class="col-md-6 align-self-center">
                                     <label class="form-label mt-4">Language</label>
                                     <select class="form-control" name="language" id="choices-language">
                                         <option value="">Choose</option>
@@ -263,19 +270,19 @@
                                         <option value="French" {{ old('language', $user->language) == 'French' ? 'selected' : '' }}>French</option>
                                         <option value="Spanish" {{ old('language', $user->language) == 'Spanish' ? 'selected' : '' }}>Spanish</option>
                                     </select>
-                                </div>
-                                <div class="col-md-6">
-                                        <label class="form-label mt-4">Skills</label>
-                                        <input class="form-control" id="skills" name="skills" value="{{ old('skills', $user->skills) }}" type="text" placeholder="Enter your skills" />
-                                </div>
+                                </div> -->
+{{--                                <div class="col-md-6">--}}
+{{--                                        <label class="form-label mt-4">Skills</label>--}}
+{{--                                        <input class="form-control" id="skills" name="skills" value="{{ old('skills', $user->skills) }}" type="text" placeholder="Enter your skills" />--}}
+{{--                                </div>--}}
 
-                                <div class="d-flex flex-column">
+                                <!-- <div class="d-flex flex-column">
                                     <label class="mt-4 form-label" for="avatar">Add Image</label>
                                     <input type="file" name="avatar" accept="image/*" id="avatar" class="form-control">
                                     @error('avatar')
                                         <p class='text-danger text-xs pt-1'> {{ $message }} </p>
                                     @enderror
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="d-flex justify-content-end mt-4">
@@ -287,7 +294,8 @@
                 </div>
             </div>
         </div>
-        @include('layouts.footers.auth.footer')
+        <!-- @include('layouts.footers.auth.footer') -->
+
     </div>
 @endsection
 
@@ -308,27 +316,27 @@
         var selectedMonth = Math.floor(birthdayArray["month"]);
         var selectedDay = birthdayArray["day"];
 
-        if (document.getElementById('choices-gender')) {
-            var gender = document.getElementById('choices-gender');
-            const example = new Choices(gender);
-        }
+        // if (document.getElementById('choices-gender')) {
+        //     var gender = document.getElementById('choices-gender');
+        //     const example = new Choices(gender);
+        // }
 
         if (document.getElementById('choices-role')) {
             var role = document.getElementById('choices-role');
             const example = new Choices(role);
         }
 
-        if (document.getElementById('choices-language')) {
-            var language = document.getElementById('choices-language');
-            const example = new Choices(language);
-        }
+        // if (document.getElementById('choices-language')) {
+        //     var language = document.getElementById('choices-language');
+        //     const example = new Choices(language);
+        // }
 
-        if (document.getElementById('choices-skills')) {
-            var skills = document.getElementById('choices-skills');
-            const example = new Choices(skills, {
-                removeItemButton: true,
-            });
-        }
+        // if (document.getElementById('choices-skills')) {
+        //     var skills = document.getElementById('choices-skills');
+        //     const example = new Choices(skills, {
+        //         removeItemButton: true,
+        //     });
+        // }
 
         if (document.getElementById('choices-year')) {
             var year = document.getElementById('choices-year');
@@ -381,18 +389,18 @@
 
             var d = new Date();
             var monthArray = new Array();
-            monthArray[0] = "January";
-            monthArray[1] = "February";
-            monthArray[2] = "March";
-            monthArray[3] = "April";
-            monthArray[4] = "May";
-            monthArray[5] = "June";
-            monthArray[6] = "July";
-            monthArray[7] = "August";
-            monthArray[8] = "September";
-            monthArray[9] = "October";
-            monthArray[10] = "November";
-            monthArray[11] = "December";
+            monthArray[0] = "Janeiro";
+            monthArray[1] = "Fevereiro";
+            monthArray[2] = "Março";
+            monthArray[3] = "Abril";
+            monthArray[4] = "Maio";
+            monthArray[5] = "Junho";
+            monthArray[6] = "Julho";
+            monthArray[7] = "Agosto";
+            monthArray[8] = "Setembro";
+            monthArray[9] = "Outubro";
+            monthArray[10] = "Novembro";
+            monthArray[11] = "Dezembro";
             for (m = 0; m <= 11; m++) {
                 var optn = document.createElement("OPTION");
                 optn.text = monthArray[m];
@@ -419,18 +427,18 @@
             }
         }
 
-        var openFile = function(event) {
-            var input = event.target;
-
-            // Instantiate FileReader
-            var reader = new FileReader();
-            reader.onload = function() {
-                imageFile = reader.result;
-
-                document.getElementById("imageChange").innerHTML = '<img width="200" src="' + imageFile +
-                    '" class="rounded-circle w-100 shadow" />';
-            };
-            reader.readAsDataURL(input.files[0]);
-        };
+        // var openFile = function(event) {
+        //     var input = event.target;
+        //
+        //     // Instantiate FileReader
+        //     var reader = new FileReader();
+        //     reader.onload = function() {
+        //         imageFile = reader.result;
+        //
+        //         document.getElementById("imageChange").innerHTML = '<img width="200" src="' + imageFile +
+        //             '" class="rounded-circle w-100 shadow" />';
+        //     };
+        //     reader.readAsDataURL(input.files[0]);
+        // };
     </script>
 @endpush

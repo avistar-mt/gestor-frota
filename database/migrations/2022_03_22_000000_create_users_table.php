@@ -17,20 +17,19 @@ return new class extends Migration
             $table->id();
             $table->string('firstname');
             $table->string('lastname')->nullable();
-            $table->string('gender')->nullable();
+//            $table->string('gender')->nullable();
+            $table->string('cpf')->nullable();
             $table->date('birthday')->nullable();
             $table->string('email')->unique();
             $table->string('location')->nullable();
             $table->string('phone')->nullable();
-            $table->string('language')->nullable();
-            $table->string('skills')->nullable();
+//            $table->string('language')->nullable();
+//            $table->string('skills')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('avatar')->nullable();
+//            $table->string('avatar')->nullable();
             $table->rememberToken();
             $table->timestamps();
-
-            $table->foreignId('role_id')->constrained('roles');
         });
     }
 

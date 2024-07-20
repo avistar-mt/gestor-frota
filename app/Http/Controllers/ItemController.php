@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Models\User;
 
 class ItemController extends Controller
 {

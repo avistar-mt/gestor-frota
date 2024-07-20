@@ -30,7 +30,9 @@ class User extends Authenticatable
         'skills',
         'role_id',
         'birthday',
-        'avatar'
+        'avatar',
+        'role_id',
+        'branch_id'
     ];
 
     /**
@@ -69,6 +71,10 @@ class User extends Authenticatable
 
     public function role() {
         return $this->belongsTo(Role::class);
+    }
+
+    public function branch() {
+        return $this->belongsTo(Branch::class);
     }
 
     /**

@@ -18,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
         Item::class => ItemPolicy::class,
         Role::class => RolePolicy::class,
         Category::class => CategoryPolicy::class,
+        Branch::class => BranchPolicy::class,
     ];
 
     /**
@@ -34,6 +35,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('manage-users', 'App\Policies\UserPolicy@manageUsers');
 
         Gate::define('manage-users', 'App\Policies\UserPolicy@updatecategory');
+
+        Gate::define('manage-drivers', 'App\Policies\UserPolicy@manageDrivers');
 
     }
 }
