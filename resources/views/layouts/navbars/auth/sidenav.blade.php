@@ -13,18 +13,12 @@
             <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#dashboardsExamples" class="nav-link {{ Route::currentRouteName() == 'dashboards' ? 'active' : '' }}" aria-controls="dashboardsExamples" role="button" aria-expanded="false">
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
-                        <i class="ni ni-shop text-primary text-sm opacity-10"></i>
+                        <i class="ni ni-shop text-primary text-sm opacity-10" style="font-size:large;"></i>
                     </div>
                     <span class="nav-link-text ms-1">Dashboards</span>
                 </a>
                 <div class="collapse {{ Route::currentRouteName() == 'dashboards' ? 'show' : '' }} " id="dashboardsExamples">
                     <ul class="nav ms-4">
-                        <li class="nav-item ">
-                            <!-- <a class="nav-link {{ str_contains(request()->url(), 'landing') == true ? 'active' : '' }}" href="{{ route('dashboards', ['page' => 'landing']) }}">
-                                <span class="sidenav-mini-icon"> L </span>
-                                <span class="sidenav-normal"> Landing </span>
-                            </a> -->
-                        </li>
                         <li class="nav-item active">
                             <a class="nav-link {{ str_contains(request()->url(), 'default') == true ? 'active' : '' }}" href="{{ route('dashboards', ['page' => 'default']) }}">
                                 <span class="sidenav-mini-icon"> D </span>
@@ -76,41 +70,27 @@
                 </div>
             </li>
 
+
+
+            <!-- OPERATION -->
+
             <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#laravelExamples" class="nav-link active" aria-controls="laravelExamples" role="button" aria-expanded="false">
+                <a data-bs-toggle="collapse" href="#operation" class="nav-link {{ Route::currentRouteName() == 'operation' ? 'active' : ''}}" aria-controls="operation" role="button" aria-expanded="false">
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-end justify-content-center">
                         <i class="fa fa-folder-open" style="color: #f4645f; font-size: large; font-weight: 500 "></i>
                     </div>
                     <span class="nav-link-text ms-1">Operation </span>
                 </a>
-                <div class="collapse show" id="laravelExamples">
+                <div class="collapse show" id="operation">
                     <ul class="nav ms-4">
-                        <!-- <li class="nav-item ">
-                            <a class="nav-link {{ Route::currentRouteName() == 'user-profile' ? 'active' : '' }}" href="{{ route('user-profile') }}">
-                                <span class="sidenav-mini-icon"> U </span>
-                                <span class="sidenav-normal"> User Profile </span>
-                            </a>
-                        </li> -->
                         @can('manage-users', auth()->user())
-                        <li class="nav-item ">
-                            <a class="nav-link {{ Route::currentRouteName() == 'user-management' ? 'active' : '' }}" href="{{ route('user-management') }}">
-                                <span class="sidenav-mini-icon"> U </span>
-                                <span class="sidenav-normal"> User Management </span>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link {{ Route::currentRouteName() == 'role-management' ? 'active' : '' }}" href="{{ route('role-management') }}">
-                                <span class="sidenav-mini-icon"> R </span>
-                                <span class="sidenav-normal"> Role Management </span>
-                            </a>
-                        </li>
                         <li class="nav-item ">
                             <a class="nav-link {{ Route::currentRouteName() == 'branch-management' ? 'active' : '' }}" href="{{ route('branch-management') }}">
                                 <span class="sidenav-mini-icon"> B </span>
                                 <span class="sidenav-normal"> Branch </span>
                             </a>
                         </li>
-                        <li class="nav-item ">
+                        <li class="nav-item show">
                             <a class="nav-link {{ Route::currentRouteName() == 'reservation-management' ? 'active' : '' }}" href="{{ route('reservation-management') }}">
                                 <span class="sidenav-mini-icon"> R </span>
                                 <span class="sidenav-normal"> Reservation </span>
@@ -121,35 +101,58 @@
                 </div>
             </li>
 
+
+
+            <!-- CADASTRO -->
             <li class="nav-item mt-3">
-                <a data-bs-toggle="collapse" href="#configurationExamples" class="nav-link active" aria-controls="configurationExamples" role="button" aria-expanded="false">
+                <a data-bs-toggle="collapse" href="#cadastro" class="nav-link" aria-controls="cadastro" role="button" aria-expanded="false">
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-end justify-content-center">
                         <i class="fa fa-check-square-o" style="color: #f4645f; font-size: large; font-weight: 500 "></i>
                     </div>
                     <span class="nav-link-text ms-1">Cadastro </span>
                 </a>
 
-                <div class="collapse show" id="configurationExamples">
+                <div class="collapse show" id="cadastro">
                     <ul class="nav ms-4">
-                        <li class="nav-item ">
+                    <li class="nav-item">
+                            <a class="nav-link {{ Route::currentRouteName() == 'user-management' ? 'active' : '' }}" href="{{ route('user-management') }}">
+                                <span class="sidenav-mini-icon"> U </span>
+                                <span class="sidenav-normal"> User Management </span>
+                            </a>
+                        </li>
+                        <li class="nav-item show">
+                            <a class="nav-link {{ Route::currentRouteName() == 'role-management' ? 'active' : '' }}" href="{{ route('role-management') }}">
+                                <span class="sidenav-mini-icon"> R </span>
+                                <span class="sidenav-normal"> Role Management </span>
+                            </a>
+                        </li>
+                        <li class="nav-item show">
                             <a class="nav-link {{ Route::currentRouteName() == 'city-management' ? 'active' : '' }}" href="{{ route('city-management') }}">
                                 <span class="sidenav-mini-icon"> C </span>
                                 <span class="sidenav-normal"> City </span>
                             </a>
                         </li>
 
-                        <li class="nav-item ">
+                        <li class="nav-item show">
                             <a class="nav-link {{ Route::currentRouteName() == 'vehicle-management' ? 'active' : '' }}" href="{{ route('vehicle-management') }}">
                                 <span class="sidenav-mini-icon"> V </span>
                                 <span class="sidenav-normal"> Vehicles </span>
                             </a>
                         </li>
 
-                        <li class="nav-item ">
+                        <li class="nav-item show">
                             <a class="nav-link {{ Route::currentRouteName() == 'driver-management' ? 'active' : '' }}" href="{{ route('driver-management') }}">
                                 <span class="sidenav-mini-icon"> S </span>
                                 <span class="sidenav-normal"> Drivers </span>
                             </a>
+                        </li>
+
+                        <li class="nav-item show">
+                            <a class="nav-link {{ Route::currentRouteName() == 'branch-vehicle-management' ? 'active' : '' }}" href="{{ route('branch-vehicle-management') }}">
+                                <span class="sidenav-mini-icon"> BV </span>
+                                <span class="sidenav-normal"> Branch Vehicles </span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
 
@@ -360,287 +363,6 @@
                     </ul>
                 </div>
             </li>
-            <!-- <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#ecommerceExamples" class="nav-link {{ str_contains(request()->url(), 'ecommerce') == true ? 'active' : '' }}"
-                    aria-controls="ecommerceExamples" role="button" aria-expanded="false">
-                    <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
-                        <i class="ni ni-archive-2 text-success text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Ecommerce</span>
-                </a>
-                <div class="collapse {{ str_contains(request()->url(), 'ecommerce') == true ? 'show' : '' }}" id="ecommerceExamples">
-                    <ul class="nav ms-4">
-                        <li class="nav-item ">
-                            <a class="nav-link {{ str_contains(request()->url(), 'overview-ecommerce') == true ? 'active' : '' }}" href="{{ route('ecommerce', ['page' => 'overview-ecommerce']) }}">
-                                <span class="sidenav-mini-icon"> O </span>
-                                <span class="sidenav-normal"> Overview </span>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link {{ Route::currentRouteName() == 'products' ? 'actve' : '' }}" data-bs-toggle="collapse" aria-expanded="false"
-                                href="#productsExample">
-                                <span class="sidenav-mini-icon"> P </span>
-                                <span class="sidenav-normal"> Products <b class="caret"></b></span>
-                            </a>
-                            <div class="collapse {{ Route::currentRouteName() == 'products' ? 'show' : '' }} " id="productsExample">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'new-product') == true ? 'active' : '' }}" href="{{ route('products', ['page' => 'new-product']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> N </span>
-                                            <span class="sidenav-normal"> New Product </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'edit-product') == true ? 'active' : '' }}" href="{{ route('products', ['page' => 'edit-product']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> E </span>
-                                            <span class="sidenav-normal"> Edit Product </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'product-page') == true ? 'active' : '' }}" href="{{ route('products', ['page' => 'product-page']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> P </span>
-                                            <span class="sidenav-normal"> Product Page </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'product-list') == true ? 'active' : '' }}" href="{{ route('products', ['page' => 'product-list']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> P </span>
-                                            <span class="sidenav-normal"> Products List </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link {{ Route::currentRouteName() == 'orders' ? 'actve' : '' }}" data-bs-toggle="collapse" aria-expanded="false"
-                                href="#ordersExample">
-                                <span class="sidenav-mini-icon"> O </span>
-                                <span class="sidenav-normal"> Orders <b class="caret"></b></span>
-                            </a>
-                            <div class="collapse {{ Route::currentRouteName() == 'orders' ? 'show' : '' }}" id="ordersExample">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'order-list') == true ? 'active' : '' }}" href="{{ route('orders', ['page' => 'order-list']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> O </span>
-                                            <span class="sidenav-normal"> Order List </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'details') == true ? 'active' : '' }}" href="{{ route('orders', ['page' => 'details']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> O </span>
-                                            <span class="sidenav-normal"> Order Details </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link {{ str_contains(request()->url(), 'referral') == true ? 'active' : '' }}" href="{{ route('ecommerce', ['page' => 'referral']) }}">
-                                <span class="sidenav-mini-icon"> R </span>
-                                <span class="sidenav-normal"> Referral </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li> -->
-            <!-- <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#authExamples" class="nav-link {{ str_contains(request()->url(), 'authentication') == true ? 'active' : '' }}" aria-controls="authExamples"
-                    role="button" aria-expanded="false">
-                    <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
-                        <i class="ni ni-single-copy-04 text-danger text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Authentication</span>
-                </a>
-                <div class="collapse {{ str_contains(request()->url(), 'authentication') == true ? 'show' : '' }}" id="authExamples">
-                    <ul class="nav ms-4">
-                        <li class="nav-item ">
-                            <a class="nav-link {{ Route::currentRouteName() == 'signins' ? 'active' : '' }}" data-bs-toggle="collapse" aria-expanded="false"
-                                href="#signinExample">
-                                <span class="sidenav-mini-icon"> S </span>
-                                <span class="sidenav-normal"> Sign In <b class="caret"></b></span>
-                            </a>
-                            <div class="collapse {{ Route::currentRouteName() == 'signins' ? 'show' : '' }}" id="signinExample">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'signin-basic') == true ? 'active' : '' }}" href="{{ route('signins', ['page' => 'signin-basic']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> B </span>
-                                            <span class="sidenav-normal"> Basic </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'signin-cover') == true ? 'active' : '' }}" href="{{ route('signins', ['page' => 'signin-cover']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> C </span>
-                                            <span class="sidenav-normal"> Cover </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'signin-illustration') == true ? 'active' : '' }}" href="{{ route('signins', ['page' => 'signin-illustration']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> I </span>
-                                            <span class="sidenav-normal"> Illustration </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link {{ Route::currentRouteName() == 'signups' ? 'active' : '' }}" data-bs-toggle="collapse" aria-expanded="false"
-                                href="#signupExample">
-                                <span class="sidenav-mini-icon"> S </span>
-                                <span class="sidenav-normal"> Sign Up <b class="caret"></b></span>
-                            </a>
-                            <div class="collapse {{ Route::currentRouteName() == 'signups' ? 'show' : '' }}" id="signupExample">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'signup-basic') == true ? 'active' : '' }}" href="{{ route('signups', ['page' => 'signup-basic']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> B </span>
-                                            <span class="sidenav-normal"> Basic </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'signup-cover') == true ? 'active' : '' }}" href="{{ route('signups', ['page' => 'signup-cover']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> C </span>
-                                            <span class="sidenav-normal"> Cover </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'signup-illustration') == true ? 'active' : '' }}" href="{{ route('signups', ['page' => 'signup-illustration']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> I </span>
-                                            <span class="sidenav-normal"> Illustration </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link {{ Route::currentRouteName() == 'resets' ? 'active' : '' }}" data-bs-toggle="collapse" aria-expanded="false"
-                                href="#resetExample">
-                                <span class="sidenav-mini-icon"> R </span>
-                                <span class="sidenav-normal"> Reset Password <b class="caret"></b></span>
-                            </a>
-                            <div class="collapse {{ Route::currentRouteName() == 'resets' ? 'show' : '' }}" id="resetExample">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'reset-basic') == true ? 'active' : '' }}" href="{{ route('resets', ['page' => 'reset-basic']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> B </span>
-                                            <span class="sidenav-normal"> Basic </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'reset-cover') == true ? 'active' : '' }}" href="{{ route('resets', ['page' => 'reset-cover']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> C </span>
-                                            <span class="sidenav-normal"> Cover </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'reset-illustration') == true ? 'active' : '' }}" href="{{ route('resets', ['page' => 'reset-illustration']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> I </span>
-                                            <span class="sidenav-normal"> Illustration </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link {{ Route::currentRouteName() == 'locks' ? 'active' : '' }}" data-bs-toggle="collapse" aria-expanded="false"
-                                href="#lockExample">
-                                <span class="sidenav-mini-icon"> L </span>
-                                <span class="sidenav-normal"> Lock <b class="caret"></b></span>
-                            </a>
-                            <div class="collapse {{ Route::currentRouteName() == 'locks' ? 'show' : '' }}" id="lockExample">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'lock-basic') == true ? 'active' : '' }}" href="{{ route('locks', ['page' => 'lock-basic']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> B </span>
-                                            <span class="sidenav-normal"> Basic </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'lock-cover') == true ? 'active' : '' }}" href="{{ route('locks', ['page' => 'lock-cover']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> C </span>
-                                            <span class="sidenav-normal"> Cover </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'lock-illustration') == true ? 'active' : '' }}" href="{{ route('locks', ['page' => 'lock-illustration']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> I </span>
-                                            <span class="sidenav-normal"> Illustration </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link {{ Route::currentRouteName() == 'verifications' ? 'active' : '' }}" data-bs-toggle="collapse" aria-expanded="false"
-                                href="#StepExample">
-                                <span class="sidenav-mini-icon"> 2 </span>
-                                <span class="sidenav-normal"> 2-Step Verification <b
-                                        class="caret"></b></span>
-                            </a>
-                            <div class="collapse {{ Route::currentRouteName() == 'verifications' ? 'show' : '' }}" id="StepExample">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link  {{ str_contains(request()->url(), 'verification-basic') == true ? 'active' : '' }}" href="{{ route('verifications', ['page' => 'verification-basic']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> B </span>
-                                            <span class="sidenav-normal"> Basic </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link  {{ str_contains(request()->url(), 'verification-cover') == true ? 'active' : '' }}" href="{{ route('verifications', ['page' => 'verification-cover']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> C </span>
-                                            <span class="sidenav-normal"> Cover </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), 'verification-illustration') == true ? 'active' : '' }}" href="{{ route('verifications', ['page' => 'verification-illustration']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> I </span>
-                                            <span class="sidenav-normal"> Illustration </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link {{ Route::currentRouteName() == 'errors' ? 'active' : '' }}" data-bs-toggle="collapse" aria-expanded="false"
-                                href="#errorExample">
-                                <span class="sidenav-mini-icon"> E </span>
-                                <span class="sidenav-normal"> Error <b class="caret"></b></span>
-                            </a>
-                            <div class="collapse {{ Route::currentRouteName() == 'errors' ? 'show' : '' }}" id="errorExample">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), '404') == true ? 'active' : '' }}" href="{{ route('errors', ['page' => '404']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> E </span>
-                                            <span class="sidenav-normal"> Error 404 </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ str_contains(request()->url(), '500') == true ? 'active' : '' }}" href="{{ route('errors', ['page' => '500']) }}">
-                                            <span class="sidenav-mini-icon text-xs"> E </span>
-                                            <span class="sidenav-normal"> Error 500 </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </li> -->
         </ul>
-    </div>
-    <!-- <div class="sidenav-footer mx-3 my-3">
-        <div class="card card-plain shadow-none" id="sidenavCard">
-            <img class="w-60 mx-auto" src="/assets/img/illustrations/icon-documentation-warning.svg"
-                alt="sidebar_illustration">
-            <div class="card-body text-center p-3 w-100 pt-0">
-                <div class="docs-info">
-                    <h6 class="mb-0">Need help?</h6>
-                    <p class="text-xs font-weight-bold mb-0">Please check our docs</p>
-                </div>
-            </div>
-        </div>
-        <a href="/docs/bootstrap/overview/argon-dashboard/index.html" target="_blank"
-            class="btn btn-dark btn-sm w-100 mb-3">Documentation</a>
-        <a class="btn btn-primary btn-sm mb-0 w-100"
-            href="https://www.creative-tim.com/product/argon-dashboard-pro-laravel" type="button" target="_blank">Upgrade to PRO</a> -->
     </div>
 </aside>

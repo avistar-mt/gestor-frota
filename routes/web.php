@@ -135,6 +135,12 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::controller(BranchVehicleController::class)->group(function() {
+        Route::get('/branch-vehicle-management', 'index')->name('branch-vehicle-management');
+        Route::get('/branch-vehicle-management/new', 'create')->name('branch-vehicle-new');
+        Route::post('/branch-vehicle-management/new', 'store')->name('branch-vehicle-new.store');
+        Route::get('/branch-vehicle-management/edit/{id}', 'edit')->name('branch-vehicle-edit');
+        Route::post('/branch-vehicle-management/edit/{id}', 'update')->name('branch-vehicle-edit.update');
+        Route::post('/branch-vehicle-delete/{id}', 'destroy')->name('branch-vehicle-destroy');
         Route::get('/api/vehicles-for-branch/{id}', 'getVehicleByBranchId');
 
     });

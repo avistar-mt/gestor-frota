@@ -6,6 +6,12 @@ window.PerfectScrollbar = PerfectScrollbar;
 document.addEventListener('DOMContentLoaded', function () {
     var cpf = document.getElementById('cpf');
     if (cpf) {
+        cpf.addEventListener('blur', function () {
+            if (!validateCPF(cpf.value)) {
+                alert('CPF inválido');
+            }
+        });
+
         cpf.addEventListener('input', function () {
             cpf.value = formatCPF(cpf.value);
         });     
@@ -26,7 +32,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
         
     }
+
+    // Apply CPF mask logic on page load
+    if (cpf) {
+        cpf.value = formatCPF(cpf.value);
+    }
 });
+
+// Apply CPF mask logic on page load
+var cpf = document.getElementById('cpf');
+if (cpf) {
+    cpf.value = formatCPF(cpf.value);
+}
 
 require('./bootstrap');
 require('./custom')

@@ -21,6 +21,6 @@ class Branch extends Model
 
     public function vehicles()
     {
-        return $this->hasMany(Vehicle::class, 'branch_vehicle');
+        return $this->belongsToMany(Vehicle::class, 'branch_vehicle');
     }
 }
