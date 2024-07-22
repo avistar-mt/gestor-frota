@@ -48,7 +48,7 @@ class UserController extends Controller
         ]);
 
         $birthday = Carbon::parse($request->get('birthday'))->format('Y-m-d');
-        $cpf = preg_replace('/[^0-9]/', '', $request->get('cpf'));
+        $cpf = preg_replace('/[^0-9]/', '', $request->get('cpf')); 
 
         $user = User::create([
             'firstname' => $request->get('firstname'),
@@ -62,6 +62,9 @@ class UserController extends Controller
             'phone' => $request->get('phone'),
             'birthday' => $birthday,
         ]);
+
+        $user->cpf = $cpf;
+        $user->save();
 
         return redirect()->route('user-management')->with('succes', 'User succesfully saved');
     }
