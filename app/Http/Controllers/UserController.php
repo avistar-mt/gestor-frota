@@ -82,15 +82,9 @@ class UserController extends Controller
 
         $attributes = request()->validate([
             'firstname' => ['required'],
-            'cpf' => ['required', 'unique:users', function ($attribute, $value, $fail) {
-                $cpf = preg_replace('/[^0-9]/', '', $value);
-                $cpfExists = User::where('cpf', $cpf)->exists();
-                if ($cpfExists) {
-                    $fail('The CPF has already been taken.');
-                }
-            }],
-            'email' => ['required', 'email',  Rule::unique('users')->ignore($user->id)],
-            'confirmation' => [],
+            'cpf' => ['required', Rule::unique('users', 'cpf')->ignore($user->id)],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($user->id)],
+            'confirmation' => ['same:email'],
             'password' => [],
             'confirm-password' => ['same:password'],
             'role' => ['required'],
