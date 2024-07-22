@@ -27,7 +27,7 @@ class BranchController extends Controller
         $branches = Branch::join('cities', 'cities.id', 'branches.city_id')
             ->select('branches.*', 'cities.name as city')
             ->get();
-        return view('laravel.branch.index', compact('branches'));
+        return view('operation.branch.index', compact('branches'));
     }
 
     /**
@@ -36,7 +36,7 @@ class BranchController extends Controller
     public function create()
     {
         $cities = City::all();
-        return view('laravel.branch.create', compact('cities'));
+        return view('operation.branch.create', compact('cities'));
     }
 
     /**
@@ -76,7 +76,7 @@ class BranchController extends Controller
         $branch = Branch::find($id);
         $cities = City::all();
         $states = State::all();
-        return view('laravel.branch.edit', compact('branch', 'cities', 'states'));
+        return view('operation.branch.edit', compact('branch', 'cities', 'states'));
     }
 
     /**

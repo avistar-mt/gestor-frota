@@ -84,17 +84,25 @@ class User extends Authenticatable
         return $this->role_id === 1;
     }
 
+    public function isGestor() {
+        return $this->role_id === 2;
+    }
+
+    public function isOperator() {
+        return $this->role_id === 3;
+    }
+
     /**
      * Check if the user is creator
      */
-    public function isCreator() {
-        return $this->role_id === 2;
-    }
+    // public function isCreator() {
+    //     return $this->role_id === 2;
+    // }
 
     /**
      * Check if the user is member
      */
-    public function isMember() {
-        return $this->role_id === 3;
-    }
+    // public function isMember() {
+    //     return $this->role_id === 3;
+    // }
 }

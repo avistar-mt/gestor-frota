@@ -6,6 +6,8 @@ use App\Enums\StatusType;
 use Illuminate\Validation\Rule;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class VehicleController extends Controller
 {
@@ -14,7 +16,20 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        $vehicles = Vehicle::all();
+        $user = Auth::user();
+
+        if ($user->role_id == 1) {
+            $vehicles = Vehicle::all();
+        } else if ($user->role_id == 2) {
+            $vehicles = DB::table('branch_vehicles')
+                ->join('vehicles', 'branch_vehicles.vehicle_id', '=', 'vehicles.id')
+                ->where('branch_vehicles.branch_id', $user->branch_id)
+                ->select('vehicles.*')
+                ->get();
+        } else {
+            return redirect('/')->with('error', 'Você não tem permissão para acessar essa página.');
+        }
+
         return view('laravel.vehicle.index', compact('vehicles'));
     }
 

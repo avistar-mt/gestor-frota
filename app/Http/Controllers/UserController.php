@@ -27,26 +27,28 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        
         $attributes = request()->validate([
             'firstname' => ['required'],
             'email' => ['required', 'unique:users', 'email'],
-            'cpf' => ['required', 'unique:users'],
+            'cpf' => ['required', 'unique:users', function ($attribute, $value, $fail) {
+                $cpf = preg_replace('/[^0-9]/', '', $value);
+                $cpfExists = User::where('cpf', $cpf)->exists();
+                if ($cpfExists) {
+                    $fail('The CPF has already been taken.');
+                }
+            }],
             'confirmation' => ['same:email'],
             'password' => ['required', 'min:5'],
             'confirm-password' => ['same:password'],
             'role' => ['required'],
             'branch' => ['required'],
-//            'image' => ['image'],
-            'phone' => ['max:10']
+            'phone' => ['max:20'], 
+            'birthday' => ['required','date', 'before:today']
         ]);
 
-        if($request->get('choices-year') || $request->get('choices-month') || $request->get('choices-day'))
-        {
-            $birthday = $request->get('choices-year').'-'.$request->get('choices-month').'-'.$request->get('choices-day');
-        }
-        else{
-            $birthday = null;
-        }
+        $birthday = Carbon::parse($request->get('birthday'))->format('Y-m-d');
+        $cpf = preg_replace('/[^0-9]/', '', $request->get('cpf'));
 
         $user = User::create([
             'firstname' => $request->get('firstname'),
@@ -54,21 +56,12 @@ class UserController extends Controller
             'password' => $request->get('password'),
             'role_id' => $request->get('role'),
             'email' => $request->get('email'),
-            'cpf' => $request->get('cpf'),
+            'cpf' => $cpf,
             'branch_id' => $request->get('branch'),
-//            'gender' => $request->get('gender'),
             'location' => $request->get('location'),
             'phone' => $request->get('phone'),
-//            'language' => $request->get('language'),
             'birthday' => $birthday,
-//            'skills' => $request->get('skills')
         ]);
-
-//        if($request->file('avatar')) {
-//            $user->update([
-//                'avatar' => $request->file('avatar')->store('/', 'avatars')
-//            ]);
-//        }
 
         return redirect()->route('user-management')->with('succes', 'User succesfully saved');
     }
@@ -78,29 +71,9 @@ class UserController extends Controller
         $this->authorize('manage-users', User::class);
         $user = User::find($id);
         $roles = Role::all();
+        $branches = Branch::all();
 
-        $birthday = $user->birthday;
-        if(!empty($birthday))
-        {
-            $year = Carbon::createFromFormat('Y-m-d', $birthday)->format('Y');
-            $day = Carbon::createFromFormat('Y-m-d', $birthday)->format('d');
-            $month = Carbon::createFromFormat('Y-m-d', $birthday)->format('m');
-            $birthdayArray = array(
-                "year" => $year,
-                "day" => $day,
-                "month" =>$month
-              );
-        }
-        else{
-            $birthdayArray = array(
-                'year' => 0,
-                'day' => 0,
-                'month' => 0
-              );
-
-        }
-
-        return view ('laravel.users.edit', compact('user', 'roles', 'birthdayArray'));
+        return view ('laravel.users.edit', compact('user', 'roles', 'branches'));
     }
 
     public function update(Request $request, $id)
@@ -109,42 +82,37 @@ class UserController extends Controller
 
         $attributes = request()->validate([
             'firstname' => ['required'],
+            'cpf' => ['required', 'unique:users', function ($attribute, $value, $fail) {
+                $cpf = preg_replace('/[^0-9]/', '', $value);
+                $cpfExists = User::where('cpf', $cpf)->exists();
+                if ($cpfExists) {
+                    $fail('The CPF has already been taken.');
+                }
+            }],
             'email' => ['required', 'email',  Rule::unique('users')->ignore($user->id)],
             'confirmation' => [],
             'password' => [],
             'confirm-password' => ['same:password'],
             'role' => ['required'],
-//            'image' => ['image'],
-            'phone' => ['max:10']
+            'phone' => ['max:20'], 
+            'birthday' => ['required','date', 'before:today']
         ]);
 
-        if($request->get('choices-year') || $request->get('choices-month') || $request->get('choices-day'))
-        {
-            $birthday = $request->get('choices-year').'-'.$request->get('choices-month').'-'.$request->get('choices-day');
-        }
-        else{
-            $birthday = null;
-        }
+
+        $birthday = Carbon::parse($request->get('birthday'))->format('Y-m-d');
+        $cpf  = preg_replace('/[^0-9]/', '', $request->get('cpf'));
 
         $user ->update([
             'firstname' => $request->get('firstname'),
             'lastname' => $request->get('lastname'),
+            'cpf' => $cpf,
             'password' => $request->get('password'),
             'role_id' => $request->get('role'),
             'email' => $request->get('email'),
-//            'gender' => $request->get('gender'),
             'location' => $request->get('location'),
             'phone' => $request->get('phone'),
-//            'language' => $request->get('language'),
             'birthday' => $birthday,
-//            'skills' => $request->get('skills')
         ]);
-
-        if($request->file('avatar')) {
-            $user->update([
-                'avatar' => $request->file('avatar')->store('/', 'avatars')
-            ]);
-        }
 
         return redirect()->route('user-management')->with('succes', 'User succesfully updated');
     }

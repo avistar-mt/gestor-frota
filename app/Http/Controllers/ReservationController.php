@@ -8,9 +8,7 @@ use App\Models\Driver;
 use App\Models\Branch;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use App\Enums\ReservationStatus;
-
-
+use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
@@ -19,9 +17,9 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $reservations = Reservation::all();
+        $reservations = Reservation::orderBy('created_at', 'desc')->get();
 
-        return view('laravel.reservation.index', compact('reservations'));
+        return view('operation.reservation.index', compact('reservations'));
     }
 
     /**
@@ -32,7 +30,7 @@ class ReservationController extends Controller
         $branches = Branch::all();
         $drivers = Driver::all();
 
-        return view('laravel.reservation.create', compact('branches', 'drivers'));
+        return view('operation.reservation.create', compact('branches', 'drivers'));
     }
 
     /**
@@ -87,7 +85,7 @@ class ReservationController extends Controller
             ->get();
 
 
-        return view('laravel.reservation.edit', compact('reservation', 'branches', 'drivers', 'user', 'vehicles'));
+        return view('operation.reservation.edit', compact('reservation', 'branches', 'drivers', 'user', 'vehicles'));
     }
 
     /**
@@ -96,18 +94,21 @@ class ReservationController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'status' => 'required|in:pending,approved,cancelled',
+            'status' => 'required|in:pending,approved,canceled',
         ]);
 
         $reservation = Reservation::find($id);
 
-        if ($request->status == 'rejected') {
+        if ($request->status == 'canceled') {
             $request->validate(['motive' => 'required|string']);
             $reservation->motive = $request->motive;
+            $reservation->status = $request->status;
         }
 
         if ($request->status == 'approved') {
-            $reservation->approved_by = auth()->user()->id;
+            $reservation->status = $request->status;
+            $reservation->motive = null;
+            $reservation->approved_by = Auth::user()->id;
         }
 
         $reservation->save();

@@ -23,8 +23,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('vehicles', function (Blueprint $table) {
+            $table->dropForeign(['branch_id']);
             $table->unsignedBigInteger('branch_id');
-            $table->foreign('branch_id')->constrained('branches')->onDelete('cascade');
+            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
         });
     }
 };

@@ -4,7 +4,7 @@
     <nav class="navbar navbar-main navbar-expand-lg  px-0 mx-4 shadow-none border-radius-xl z-index-sticky " id="navbarBlur"
         data-scroll="false">
         <div class="container-fluid py-1 px-3">
-            @include('layouts.navbars.auth.topnav', ['title' => 'Category Management'])
+            @include('layouts.navbars.auth.topnav', ['title' => 'Branch Management'])
             <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none ">
                 <a href="javascript:;" class="nav-link p-0">
                     <div class="sidenav-toggler-inner">
@@ -40,13 +40,13 @@
                         </a>
                     </li>
                     <li class="nav-item position-relative pe-2 d-flex align-items-center">
-                        <a href="#" class="nav-link text-white p-0" id="dropdownMenuButton"
+                        <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-bell cursor-pointer"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
                             <li class="mb-2">
-                                <a class="dropdown-item border-radius-md" href="#">
+                                <a class="dropdown-item border-radius-md" href="javascript:;">
                                     <div class="d-flex py-1">
                                         <div class="my-auto">
                                             <img src="/assets/img/team-2.jpg" class="avatar avatar-sm  me-3 "
@@ -65,7 +65,7 @@
                                 </a>
                             </li>
                             <li class="mb-2">
-                                <a class="dropdown-item border-radius-md" href="#">
+                                <a class="dropdown-item border-radius-md" href="javascript:;">
                                     <div class="d-flex py-1">
                                         <div class="my-auto">
                                             <img src="/assets/img/small-logos/logo-spotify.svg"
@@ -84,7 +84,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item border-radius-md" href="#">
+                                <a class="dropdown-item border-radius-md" href="javascript:;">
                                     <div class="d-flex py-1">
                                         <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
                                             <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1"
@@ -133,8 +133,10 @@
                 <div class="card">
                     <!-- Card header -->
                     <div class="card-header d-flex justify-content-between">
-                        <h5 class="mb-0">Users Management</h5>
-                        <a href="{{ route('user-new') }}" class="btn bg-gradient-dark btn-sm float-end mb-0">Add User</a>
+                        <h5 class="mb-0">Branch Management</h5>
+                        @can('manage-users', auth()->user())
+                            <a href="{{ route('branch-new') }}" class="btn bg-gradient-dark btn-sm float-end mb-0">Add Branch</a>
+                        @endcan
                     </div>
                     <div class="px-4" id="alert">
                         @include('components.alert')
@@ -143,20 +145,14 @@
                         <table class="table table-flush" id="datatable-basic">
                             <thead class="thead-light">
                                 <tr>
-                                    <!-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Avatar
-                                    </th> -->
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Name
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        CPF
+                                        City
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Email
-                                    </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Role
+                                        Creation Date
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Action
@@ -164,33 +160,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
+                                @foreach ($branches as $branch)
                                     <tr>
-                                        <!-- <td class="text-sm font-weight-normal">
-                                            <span class="my-2 text-xs">
-                                                <img src="{{ $user->avatarUrl() }}" alt="bruce"
-                                                    class="border-radius-lg shadow-sm height-100 w-auto">
-                                            </span>
-                                        </td> -->
-                                        <td class="text-sm font-weight-normal">{{ $user->firstname }}
-                                            {{ $user->lastname }}</td>
-                                        <td class="text-sm font-weight-normal">{{ $user->cpf }}</td>
-                                        <td class="text-sm font-weight-normal">{{ $user->email }}</td>
-                                        <td class="text-sm font-weight-normal">{{ $user->role->name }}</td>
+                                        <td class="text-sm font-weight-normal">{{ $branch->name }}</td>
+                                        <td class="text-sm font-weight-normal">{{ $branch->city}}</td>
+                                        <td class="text-sm font-weight-normal">{{ $branch->created_at }}</td>
                                         <td class="text-sm">
                                             <span class="d-flex">
-                                                @can('update', $user)
-                                                    <a href="{{ route('user-edit', $user->id) }}" class="me-3"
-                                                        data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+                                                @can('manage-users', auth()->user())
+                                                    <a href="{{ route('branch-edit', $branch->id) }}" class="me-3" data-bs-toggle="tooltip"
+                                                        data-bs-original-title="Edit branch">
                                                         <i class="fas fa-user-edit text-secondary"></i>
                                                     </a>
-                                                @endcan
-                                                @can('delete', $user)
-                                                    <form action="{{ route('user-destroy', $user->id) }}" method="post">
+                                                    <form action="{{ route('branch-destroy', $branch->id) }}" method="post">
                                                         @csrf
-                                                        <button
-                                                            onclick="confirm('Are you sure you want to remove the tag?') || event.stopImmediatePropagation()"
-                                                            data-bs-toggle="tooltip" data-bs-original-title="Delete user"
+                                                        <button onclick="confirm('Are you sure you want to remove the branch?') || event.stopImmediatePropagation()"
+                                                            data-bs-toggle="tooltip" data-bs-original-title="Delete branch"
                                                             class="border-0 bg-white">
                                                             <i class="fas fa-trash text-secondary"></i>
                                                         </button>
@@ -212,14 +197,13 @@
 @endsection
 
 @push('js')
-    <script src=" {{ asset('js/app.js') }}"></script>
     <script src="/assets/js/plugins/datatables.js"></script>
     <script>
         const dataTableBasic = new simpleDatatables.DataTable("#datatable-basic", {
             searchable: true,
             fixedHeight: true,
             columns: [{
-                select: [0, 5],
+                select: [3],
                 sortable: false
             }]
         });

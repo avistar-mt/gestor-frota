@@ -4,7 +4,7 @@
     <nav class="navbar navbar-main navbar-expand-lg  px-0 mx-4 shadow-none border-radius-xl z-index-sticky " id="navbarBlur"
         data-scroll="false">
         <div class="container-fluid py-1 px-3">
-            @include('layouts.navbars.auth.topnav', ['title' => 'Category Management'])
+            @include('layouts.navbars.auth.topnav', ['title' => 'New Reservation'])
             <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none ">
                 <a href="javascript:;" class="nav-link p-0">
                     <div class="sidenav-toggler-inner">
@@ -40,16 +40,16 @@
                         </a>
                     </li>
                     <li class="nav-item position-relative pe-2 d-flex align-items-center">
-                        <a href="#" class="nav-link text-white p-0" id="dropdownMenuButton"
+                        <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-bell cursor-pointer"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
                             <li class="mb-2">
-                                <a class="dropdown-item border-radius-md" href="#">
+                                <a class="dropdown-item border-radius-md" href="javascript:;">
                                     <div class="d-flex py-1">
                                         <div class="my-auto">
-                                            <img src="/assets/img/team-2.jpg" class="avatar avatar-sm  me-3 "
+                                            <img src="../../../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 "
                                                 alt="user image">
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
@@ -65,10 +65,10 @@
                                 </a>
                             </li>
                             <li class="mb-2">
-                                <a class="dropdown-item border-radius-md" href="#">
+                                <a class="dropdown-item border-radius-md" href="javascript:;">
                                     <div class="d-flex py-1">
                                         <div class="my-auto">
-                                            <img src="/assets/img/small-logos/logo-spotify.svg"
+                                            <img src="../../../assets/img/small-logos/logo-spotify.svg"
                                                 class="avatar avatar-sm bg-gradient-dark  me-3 " alt="logo spotify">
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
@@ -84,7 +84,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item border-radius-md" href="#">
+                                <a class="dropdown-item border-radius-md" href="javascript:;">
                                     <div class="d-flex py-1">
                                         <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
                                             <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1"
@@ -128,81 +128,83 @@
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid py-4">
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="card">
-                    <!-- Card header -->
-                    <div class="card-header d-flex justify-content-between">
-                        <h5 class="mb-0">Users Management</h5>
-                        <a href="{{ route('user-new') }}" class="btn bg-gradient-dark btn-sm float-end mb-0">Add User</a>
-                    </div>
-                    <div class="px-4" id="alert">
-                        @include('components.alert')
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-flush" id="datatable-basic">
-                            <thead class="thead-light">
-                                <tr>
-                                    <!-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Avatar
-                                    </th> -->
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Name
-                                    </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        CPF
-                                    </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Email
-                                    </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Role
-                                    </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Action
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($users as $user)
-                                    <tr>
-                                        <!-- <td class="text-sm font-weight-normal">
-                                            <span class="my-2 text-xs">
-                                                <img src="{{ $user->avatarUrl() }}" alt="bruce"
-                                                    class="border-radius-lg shadow-sm height-100 w-auto">
-                                            </span>
-                                        </td> -->
-                                        <td class="text-sm font-weight-normal">{{ $user->firstname }}
-                                            {{ $user->lastname }}</td>
-                                        <td class="text-sm font-weight-normal">{{ $user->cpf }}</td>
-                                        <td class="text-sm font-weight-normal">{{ $user->email }}</td>
-                                        <td class="text-sm font-weight-normal">{{ $user->role->name }}</td>
-                                        <td class="text-sm">
-                                            <span class="d-flex">
-                                                @can('update', $user)
-                                                    <a href="{{ route('user-edit', $user->id) }}" class="me-3"
-                                                        data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                                        <i class="fas fa-user-edit text-secondary"></i>
-                                                    </a>
-                                                @endcan
-                                                @can('delete', $user)
-                                                    <form action="{{ route('user-destroy', $user->id) }}" method="post">
-                                                        @csrf
-                                                        <button
-                                                            onclick="confirm('Are you sure you want to remove the tag?') || event.stopImmediatePropagation()"
-                                                            data-bs-toggle="tooltip" data-bs-original-title="Delete user"
-                                                            class="border-0 bg-white">
-                                                            <i class="fas fa-trash text-secondary"></i>
-                                                        </button>
-                                                    </form>
-                                                @endcan
-                                            </span>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+        <div class="row mb-5">
+            <div class="col-lg-9 col-12 mx-auto">
+                <div class="card card-body mt-4">
+                    <h6 class="mb-0">New Reservation</h6>
+                    <hr class="horizontal dark my-3">
+                    <form method="POST" action="{{ route('reservation-new.store') }}">
+                        @csrf
+                        <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="driver_id">Driver</label>
+                                <select class="form-control" id="driver_id" name="driver_id">
+                                    <option value="">Select a driver</option>
+                                    @foreach($drivers as $driver)
+                                        <option value="{{ $driver->id }}">{{ $driver->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @error('driver_id')
+                                <div class="text-danger text-xs pt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="branch_id">Branch</label>
+                                <select class="form-control" id="branch_id" name="branch_id" onchange="loadVehicles()">
+                                    <option value="">Select a branch</option>
+                                    @foreach($branches as $branch)
+                                        <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @error('branch_id')
+                                <div class="text-danger text-xs pt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+
+                        <div class="row mt-2">
+                        
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="vehicle">Vehicle</label>
+                                <select class="form-control" id="vehicle_id" name="vehicle_id">
+                                        <option value=""> Select a vehicle</option>
+                                </select>
+                            </div>
+                            @error('vehicle_id')
+                                <div class="text-danger text-xs pt-1">{{ $message }}</div>   
+                            @enderror
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="reservation_star">Reservation Start</label>
+                                <input type="text" class="form-control datetimepicker" id="reservation_star" autocomplete="off"  placeholder="DD/MM/AAAA" name="reservation_star" date-input>
+                            </div>
+                            @error('reservation_star')
+                                <div class="text-danger text-xs pt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="reservation_end">Reservation End</label>
+                                <input type="text" class="form-control datetimepicker" autocomplete="off" placeholder="DD/MM/AAAA" id="reservation_end" name="reservation_end" date-input>
+                            </div>
+                            @error('reservation_end')
+                                <div class="text-danger text-xs pt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-4">
+                            <a href="{{ route('reservation-management') }}" class="btn btn-light m-0">Back</a>
+                            <button type="submit" class="btn bg-gradient-primary m-0 ms-2">Save</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -212,16 +214,41 @@
 @endsection
 
 @push('js')
-    <script src=" {{ asset('js/app.js') }}"></script>
-    <script src="/assets/js/plugins/datatables.js"></script>
+    <script src="/assets/js/plugins/quill.min.js"></script>
+    <script src="../../../assets/js/plugins/flatpickr.min.js"></script>
+
     <script>
-        const dataTableBasic = new simpleDatatables.DataTable("#datatable-basic", {
-            searchable: true,
-            fixedHeight: true,
-            columns: [{
-                select: [0, 5],
-                sortable: false
-            }]
-        });
+        if (document.getElementById('editor')) {
+            var quill = new Quill('#editor', {
+                theme: 'snow' // Specify theme in configuration
+            });
+        }
+        
+        if (document.querySelector('.datetimepicker')) {
+                flatpickr('.datetimepicker', {
+                    allowInput: true,
+                    enableTime: true, 
+                    dateFormat: "d-m-Y H:i",
+                    defaultDate: new Date(),
+                }); // flatpickr
+            }
+
+
+    function loadVehicles() {
+    const branchId = document.getElementById('branch_id').value;
+    const vehicleSelect = document.getElementById('vehicle_id');
+    vehicleSelect.innerHTML = '<option value="">Carregando...</option>';
+
+    fetch(`${window.location.origin}/api/vehicles-for-branch/${branchId}`)
+        .then(response => response.json())
+        .then(vehicles => {
+            vehicleSelect.innerHTML = '<option value="">Selecione um Veículo</option>';
+            vehicles.forEach(vehicle => {
+                vehicleSelect.innerHTML += `<option value="${vehicle.id}">${vehicle.plate}</option>`;
+            });
+        }).catch(() => {
+            vehicleSelect.innerHTML = '<option value="">Erro ao carregar veículos</option>';
+        })
+}
     </script>
 @endpush

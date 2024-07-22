@@ -46,7 +46,7 @@ class Reservation extends Model
         return $this->belongsTo(Vehicle::class);
     }
 
-    public function approvedBy()
+    public function approver()
     {
         return $this->belongsTo(User::class);
     }
