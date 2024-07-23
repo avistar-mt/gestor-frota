@@ -37,10 +37,10 @@ class RolePolicy
      * @param  \App\User  $user
      * @return boolean
      */
-    // public function create(User $user)
-    // {
-    //     return $user->isAdmin();
-    // }
+    public function create(User $user)
+    {
+        return $user->isAdmin();
+    }
 
     /**
      * Determine whether the user can update the role.
@@ -55,9 +55,9 @@ class RolePolicy
     }
 
     public function delete(User $user, Role $role) {
-        if (config('app.is_demo')) {
-            return false;
-        }
+        // if (config('app.is_demo')) {
+        //     return false;
+        // }
         return $user->isAdmin();
     }
 }

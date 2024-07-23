@@ -166,12 +166,6 @@
                             <tbody>
                                 @foreach ($users as $user)
                                     <tr>
-                                        <!-- <td class="text-sm font-weight-normal">
-                                            <span class="my-2 text-xs">
-                                                <img src="{{ $user->avatarUrl() }}" alt="bruce"
-                                                    class="border-radius-lg shadow-sm height-100 w-auto">
-                                            </span>
-                                        </td> -->
                                         <td class="text-sm font-weight-normal">{{ $user->firstname }}
                                             {{ $user->lastname }}</td>
                                         <td class="text-sm font-weight-normal">{{ $user->cpf }}</td>
