@@ -134,7 +134,7 @@
                     <!-- Card header -->
                     <div class="card-header d-flex justify-content-between">
                         <h5 class="mb-0">Reservation Management</h5>
-                        @can('manage-users', auth()->user())
+                        @can('manage-reservation', auth()->user())
                             <a href="{{ route('reservation-new') }}" class="btn bg-gradient-dark btn-sm float-end mb-0">Add Reservation</a>
                         @endcan
                     </div>

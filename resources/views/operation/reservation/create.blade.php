@@ -138,44 +138,45 @@
                         <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="driver_id">Driver</label>
-                                <select class="form-control" id="driver_id" name="driver_id">
+                                <label for="driver">Driver</label>
+                                <select class="form-control" id="choices-driver" name="driver">
                                     <option value="">Select a driver</option>
                                     @foreach($drivers as $driver)
                                         <option value="{{ $driver->id }}">{{ $driver->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            @error('driver_id')
+                            @error('driver')
                                 <div class="text-danger text-xs pt-1">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="branch_id">Branch</label>
-                                <select class="form-control" id="branch_id" name="branch_id" onchange="loadVehicles()">
+                                <label for="branch">Branch</label>
+                                <select class="form-control" id="choices-branch" name="branch" onchange="loadVehicles()">
                                     <option value="">Select a branch</option>
                                     @foreach($branches as $branch)
                                         <option value="{{ $branch->id }}">{{ $branch->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            @error('branch_id')
+                            @error('branch')
                                 <div class="text-danger text-xs pt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-
                         <div class="row mt-2">
-                        
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="vehicle">Vehicle</label>
-                                <select class="form-control" id="vehicle_id" name="vehicle_id">
-                                        <option value=""> Select a vehicle</option>
+                                <select class="form-control" id="choices-vehicles" name="vehicle">
+                                    <option value="">Select a vehicle</option>
+                                    @foreach($vehicles as $vehicle)
+                                        <option value="{{ $vehicle->id }}">{{ $vehicle->plate }}</option>
+                                    @endforeach
                                 </select>
                             </div>
-                            @error('vehicle_id')
+                            @error('vehicle')
                                 <div class="text-danger text-xs pt-1">{{ $message }}</div>   
                             @enderror
                         </div>
@@ -216,7 +217,7 @@
 @push('js')
     <script src="/assets/js/plugins/quill.min.js"></script>
     <script src="../../../assets/js/plugins/flatpickr.min.js"></script>
-
+    <script src="/assets/js/plugins/choices.min.js"></script>
     <script>
         if (document.getElementById('editor')) {
             var quill = new Quill('#editor', {
@@ -232,23 +233,27 @@
                     defaultDate: new Date(),
                 }); // flatpickr
             }
+            
+            if (document.getElementById('choices-branch')) {
+                var branch = document.getElementById('choices-branch');
+                const example = new Choices(branch);
+            }
+
+            if (document.getElementById('choices-driver')) {
+                var driver = document.getElementById('choices-driver');
+                const example = new Choices(driver);
+            }
+
+            if (document.getElementById('choices-vehicles')) {
+                var vehicle = document.getElementById('choices-vehicles');
+                const example = new Choices(vehicle);
+            }
 
 
-    function loadVehicles() {
-    const branchId = document.getElementById('branch_id').value;
-    const vehicleSelect = document.getElementById('vehicle_id');
-    vehicleSelect.innerHTML = '<option value="">Carregando...</option>';
 
-    fetch(`${window.location.origin}/api/vehicles-for-branch/${branchId}`)
-        .then(response => response.json())
-        .then(vehicles => {
-            vehicleSelect.innerHTML = '<option value="">Selecione um Veículo</option>';
-            vehicles.forEach(vehicle => {
-                vehicleSelect.innerHTML += `<option value="${vehicle.id}">${vehicle.plate}</option>`;
-            });
-        }).catch(() => {
-            vehicleSelect.innerHTML = '<option value="">Erro ao carregar veículos</option>';
-        })
-}
+        function loadVehicles() {
+            const branchId = document.getElementById('choices-branch').value;
+            return branchId;
+        }
     </script>
 @endpush

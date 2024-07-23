@@ -9,6 +9,7 @@ use App\Models\Branch;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Vehicle;
 
 class ReservationController extends Controller
 {
@@ -17,6 +18,8 @@ class ReservationController extends Controller
      */
     public function index()
     {
+
+        $this->authorize('manage-reservation', Reservation::class);
         $reservations = Reservation::orderBy('created_at', 'desc')->get();
 
         return view('operation.reservation.index', compact('reservations'));
@@ -27,10 +30,30 @@ class ReservationController extends Controller
      */
     public function create()
     {
-        $branches = Branch::all();
+        
+        $user = auth()->user();
         $drivers = Driver::all();
 
-        return view('operation.reservation.create', compact('branches', 'drivers'));
+
+        $branches = [];
+        if ($user->role->isAdminFrota() || $user->role->isGestor()){
+            $branches = Branch::with('vehicles')->get();
+        } else {
+            $branches = Branch::with('vehicles')->where('id', $user->branch_id)->get();
+        }
+        
+
+        $vehicles = [];
+        if ($user->role->isAdminFrota() || $user->role->isGestor()) {
+            $vehicles = Vehicle::all()->where('status', 'available');
+        } else {
+            $vehicles = Vehicle::where('status', 'available')->whereHas('branches', function ($query) use ($user) {
+                $query->where('branches.id', $user->branch_id);
+            })->get();
+        }
+        
+
+        return view('operation.reservation.create', compact('branches', 'drivers', 'vehicles'));
     }
 
     /**
