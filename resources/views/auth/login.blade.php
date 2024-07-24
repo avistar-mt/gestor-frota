@@ -19,7 +19,7 @@
                                 @csrf
                                 <label>Email</label>
                                 <div class="mb-3">
-                                    <input type="email" name="email"  class="form-control" placeholder="Email" aria-label="Email">
+                                    <input type="email" name="email"  value={{ old('email') }}class="form-control" placeholder="Email" aria-label="Email">
                                     @error('email') <p class='text-danger text-xs pt-1'> {{ $message }} </p> @enderror
                                 </div>
                                 <label>Password</label>
@@ -28,7 +28,7 @@
                                     @error('password') <p class='text-danger text-xs pt-1'> {{ $message }} </p> @enderror
                                 </div>
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
+                                    <input class="form-check-input" type="checkbox" id="rememberMe">
                                     <label class="form-check-label" for="rememberMe">Lembrar-me</label>
                                 </div>
                                 <div class="text-center">
