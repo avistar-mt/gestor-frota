@@ -24,7 +24,7 @@
                                 </div>
                                 <label>Password</label>
                                 <div class="mb-3">
-                                    <input type="password" name="password" value="" class="form-control" placeholder="Password" aria-label="Password">
+                                    <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password">
                                     @error('password') <p class='text-danger text-xs pt-1'> {{ $message }} </p> @enderror
                                 </div>
                                 <div class="form-check form-switch">
