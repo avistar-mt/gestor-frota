@@ -18,44 +18,44 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             'id' => 1,
-            'firstname' => 'Admin',
-            'lastname' => 'Admin',
-            'email' => 'admin@argon.com',
+            'firstname' => 'Aguia',
+            'lastname' => 'Rastreadores',
+            'email' => 'admin@aguia.com',
             'password' =>  Hash::make('secret'),
             'role_id' => 1,
             'branch_id' => 1,
             'cpf' => '12345678909',
+            'phone' => '65999234546',
             'created_at' => now(),
             'updated_at' => now(),
-//            'avatar' => '/team-1.jpg'
         ]);
 
         DB::table('users')->insert([
             'id' => 2,
-            'firstname' => 'Creator',
-            'lastname' => 'Creator',
-            'email' => 'creator@argon.com',
+            'firstname' => 'Mario',
+            'lastname' => 'Nintendo',
+            'email' => 'gestor@aguia.com',
             'password' =>  Hash::make('secret'),
             'role_id' => 2,
             'branch_id' => 1,
             'cpf' => '12345678910',
+            'phone' => '65999234547',
             'created_at' => now(),
             'updated_at' => now(),
-//            'avatar' => '/team-2.jpg'
         ]);
 
         DB::table('users')->insert([
             'id' => 3,
-            'firstname' => 'Member',
-            'lastname' => 'Member',
-            'email' => 'member@argon.com',
+            'firstname' => 'Zelda',
+            'lastname' => 'Link',
+            'email' => 'gestor@admin.com',
             'password' => Hash::make('secret'),
             'role_id' => 3,
             'cpf' => '12345678911',
+            'phone' => '65999234548',
             'branch_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
-//            'avatar' => '/team-3.jpg'
         ]);
     }
 }
