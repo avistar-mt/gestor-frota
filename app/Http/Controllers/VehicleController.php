@@ -144,6 +144,12 @@ class VehicleController extends Controller
     public function destroy(string $id)
     {
         $vehicle = Vehicle::findOrFail($id);
+
+
+        if ($vehicle->reservations->count() > 0) {
+            return redirect()->route('vehicle-management')
+                ->with('error', 'Veículo não pode ser excluído. Favor entrar em contato com Administrador');
+        }
         $vehicle->delete();
 
         return redirect()->route('vehicle-management')

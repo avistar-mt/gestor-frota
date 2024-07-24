@@ -25,7 +25,8 @@ class BranchController extends Controller
         $this->authorize('manage-users', User::class);
 
         $branches = Branch::join('cities', 'cities.id', 'branches.city_id')
-            ->select('branches.*', 'cities.name as city')
+            ->join('states', 'states.id', 'cities.state_id')
+            ->select('branches.*', 'cities.name as city', 'states.uf as state')
             ->get();
         return view('operation.branch.index', compact('branches'));
     }
@@ -106,6 +107,16 @@ class BranchController extends Controller
     {
         $this->authorize('manage-users', User::class);
         $branch = Branch::findOrFail($id);
+
+        // Check if there are vehicles linked to the branch
+        if ($branch->branch_vehicles()->exists()) {
+            return redirect()->route('branch-management')->with('error', 'Não é possível deletar filial com veículos vinculados.');
+        }
+
+        if($branch->branch_users()->exists()) {
+            return redirect()->route('branch-management')->with('error', 'Não é possível deletar filial com usuários vinculados.');
+        }
+
         $branch->delete();
         return redirect()->route('branch-management')->with('success', 'Branch deleted successfully.');
     }

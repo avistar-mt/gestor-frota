@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Driver;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Carbon\Carbon;
 
 class DriverController extends Controller
 {
@@ -16,7 +17,7 @@ class DriverController extends Controller
 
         $user = auth()->user();
         $this->authorize('manage-drivers', User::class);
-        $drivers = Driver::all();
+        $drivers = Driver::where('status', 'active')->get();
         return view('laravel.driver.index', compact('drivers', 'user'));
     }
 
@@ -33,14 +34,15 @@ class DriverController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+
+        $request->validate([
             'name'=> 'required|string|max:255',
             'cpf'=> 'required|string|max:14|unique:drivers',
             'phone'=> 'required|string|max:15',
             'status'=> 'required|in:active,inactive',
-            'birth_date'=> 'required|date',
+            'birth_date'=> 'required|date_format:d/m/Y',
             'cnh_number'=> 'required|string|max:20|unique:drivers',
-            'cnh_due_date'=> 'required|date',
+            'cnh_due_date'=> 'required|date_format:d/m/Y',
             'cnh_category'=> 'required|string',
             'street'=> 'required|string|max:255',
             'number'=> 'required|string|max:10',
@@ -48,7 +50,9 @@ class DriverController extends Controller
             'state'=> 'required|string|max:20',
         ]);
 
-        Driver::create($validatedData);
+        $data = $request->all();
+
+        Driver::create($data);
 
         return redirect()->route('driver-management')->with('success', 'Driver created successfully.');
     }
@@ -85,15 +89,18 @@ class DriverController extends Controller
             'cpf'=> 'required|string|max:14|unique:drivers',
             'phone'=> 'required|string|max:15',
             'status'=> 'required|in:active,inactive',
-            'birth_date'=> 'required|date',
+            'birth_date'=> 'required|date_format:d/m/Y',
             'cnh_number'=> 'required|string|max:20|unique:drivers',
-            'cnh_due_date'=> 'required|date',
+            'cnh_due_date'=> 'required|date_format:d/m/Y',
             'cnh_category'=> 'required|string|max:2',
             'street'=> 'required|string|max:255',
             'number'=> 'required|string|max:10',
             'city'=> 'required|string|max:255',
             'state'=> 'required|string|max:20',
         ]);
+
+        $validatedData['birth_date'] = Carbon::createFromFormat('d/m/Y', $request->birth_date)->format('Y-m-d');
+        $validatedData['cnh_due_date'] = Carbon::createFromFormat('d/m/Y', $request->cnh_due_date)->format('Y-m-d');
 
         $driver->update($validatedData);
 
@@ -107,7 +114,9 @@ class DriverController extends Controller
     {
 
         $driver = Driver::findOrFail($id);
-        $driver->delete();
+
+        $driver->status = 'inactive';
+        $driver->save();
 
         return redirect()->route('driver-management')->with('success', 'Driver deleted successfully.');
     }

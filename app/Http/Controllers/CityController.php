@@ -87,7 +87,13 @@ class CityController extends Controller
     public function destroy(string $id)
     {
         $city = City::findOrFail($id);
+
+        if(!$city->branches->isEmpty()) {
+            return redirect()->route('city-management')->with('error', 'Essa cidade possui filiais e não pode ser excluída. Favor entre em contato com o administrador.');
+        }
+
         $city->delete();
+        
         return redirect()->route('city-management')->with('success', 'City deleted successfully.');
     }
 }

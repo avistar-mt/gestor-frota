@@ -65,8 +65,9 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
-    public function avatarUrl() {
-        return $this->avatar ? Storage::disk('avatars')->url($this->avatar) : '/assets/img/team-3.jpg';
+
+    public function reservations() {
+        return $this->hasMany(Reservation::class);
     }
 
     public function role() {
@@ -84,25 +85,15 @@ class User extends Authenticatable
         return $this->role_id === 1;
     }
 
-    public function isGestor() {
+    public function isAdminFrota() {
         return $this->role_id === 2;
     }
 
-    public function isOperator() {
+    public function isGestor() {
         return $this->role_id === 3;
     }
 
-    /**
-     * Check if the user is creator
-     */
-    // public function isCreator() {
-    //     return $this->role_id === 2;
-    // }
-
-    /**
-     * Check if the user is member
-     */
-    // public function isMember() {
-    //     return $this->role_id === 3;
-    // }
+    public function isOperation() {
+        return $this->role_id === 4;
+    }
 }

@@ -28,12 +28,25 @@ class Reservation extends Model
 
     public function setReservationStarAttribute($value)
     {
-        $this->attributes['reservation_star'] = Carbon::createFromFormat('d-m-Y H:i', $value)->format('Y-m-d H:i:s');
+        $data = Carbon::createFromFormat('d/m/Y H:i',$value);
+        $this->attributes['reservation_star'] = $data->setTimezone('America/Sao_Paulo')->format('Y-m-d H:i:s');
+    }
+
+    public function getReservationStarAttribute($value)
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('d-m-Y H:i:s');
     }
 
     public function setReservationEndAttribute($value)
     {
-        $this->attributes['reservation_end'] = Carbon::createFromFormat('d-m-Y H:i', $value)->format('Y-m-d H:i:s');
+        $date = Carbon::createFromFormat('d/m/Y H:i', $value);
+        $this->attributes['reservation_end'] = $date->setTimezone('America/Sao_Paulo')->format('Y-m-d H:i:s');
+    }
+
+
+    public function getReservationEndAttribute($value)
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('d-m-Y H:i:s');
     }
 
     public function user()

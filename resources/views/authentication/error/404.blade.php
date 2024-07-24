@@ -15,10 +15,10 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-6 col-md-7 mx-auto text-center">
-                        <h1 class="display-1 text-bolder text-primary">Error 404</h1>
-                        <h2>Erm. Page not found</h2>
-                        <p class="lead">We suggest you to go to the homepage while we solve this issue.</p>
-                        <a href="/default" class="btn bg-gradient-dark mt-4">Go to Homepage</a>
+                        <h1 class="display-1 text-bolder text-primary">Erro 404</h1>
+                        <h2>Página não encontrada</h2>
+                        <p class="lead">Sugerimos que você vá para a página inicial enquanto resolvemos esse problema.</p>
+                        <a href="/default" class="btn bg-gradient-dark mt-4">Ir para a página inicial</a>
                     </div>
                 </div>
             </div>

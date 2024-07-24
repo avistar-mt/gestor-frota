@@ -61,26 +61,28 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'driver_id' => 'required|exists:drivers,id',
-            'reservation_star' => 'required|date|after:now',
-            'reservation_end' => 'required|date|after:reservation_star',
+            'reservation_star' => 'required|after:now|date_format:d/m/Y H:i',
+            'reservation_end' => 'required|after:reservation_star|date_format:d/m/Y H:i',
             'branch_id' => 'required|exists:branches,id',
             'vehicle_id' => 'required|exists:vehicles,id',
         ]);
 
+        Reservation::create(
+            [
+                'driver_id' => $request->driver_id,
+                'reservation_star' => $request->reservation_star,
+                'reservation_end' => $request->reservation_end,
+                'branch_id' => $request->branch_id,
+                'vehicle_id' => $request->vehicle_id,
+                'user_id' => auth()->user()->id, 
+                'status' => 'pending',
+            ]
+        );
 
-        $reservation = new Reservation();
-        $reservation->driver_id = $request->driver_id;
-        $reservation->reservation_star = Carbon::createFromFormat('d-m-Y H:i', $request->reservation_star, 'America/Sao_Paulo')->format('Y-m-d H:i:s');
-        $reservation->reservation_end = Carbon::createFromFormat('d-m-Y H:i', $request->reservation_end, 'America/Sao_Paulo')->format('Y-m-d H:i:s');
-        $reservation->branch_id = $request->branch_id;
-        $reservation->vehicle_id = $request->vehicle_id;
-        $reservation->user_id = auth()->user()->id;
-
-        $reservation->save();
-
-        return redirect()->route('reservation-management')->with('success', 'Reservation created successfully.');
+        return redirect()->route('reservation-management')->with('success', 'Reserva criada com sucesso.');
     }
 
     /**
@@ -136,7 +138,7 @@ class ReservationController extends Controller
 
         $reservation->save();
 
-        return redirect()->route('reservation-management')->with('success', 'Reservation updated successfully.');
+        return redirect()->route('reservation-management')->with('success', 'Reserva atualizada com sucesso.');
     }
 
     /**
@@ -147,6 +149,6 @@ class ReservationController extends Controller
         $reservation = Reservation::find($id);
         $reservation->delete();
 
-        return redirect()->route('reservation-management')->with('success', 'Reservation deleted successfully.');
+        return redirect()->route('reservation-management')->with('success', 'Reserva deletada com sucesso.');
     }
 }

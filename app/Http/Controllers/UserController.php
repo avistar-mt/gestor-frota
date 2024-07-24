@@ -14,15 +14,19 @@ class UserController extends Controller
 {
     public function index(User $model)
     {
+        $title = 'Gerenciamento de Usuário';
+
         $this->authorize('manage-users', User::class);
-        return view('laravel.users.index', ['users' => $model->all()]);
+
+        return view('laravel.users.index', ['users' => $model->all(), 'title' => $title]);
     }
 
     public function create()
     {
+        $title = 'Criar Usuário';
         $roles = Role::all();
         $branches = Branch::all();
-        return view('laravel.users.create', compact('roles', 'branches'));
+        return view('laravel.users.create', compact('roles', 'branches', 'title'));
     }
 
     public function store(Request $request)
@@ -117,6 +121,10 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
+
+        if(!$user->reservations->isEmpty()) {
+            return redirect()->route('user-management')->with('error', 'Usuário não pode ser excluído. Favor entrar em contato com Administrador');
+        }
         $user->delete();
         return redirect()->route('user-management')->with('succes', 'The user was succesfully deleted');
     }

@@ -8,6 +8,8 @@ use App\Models\BranchVehicle;
 use App\Models\Vehicle;
 use Illuminate\Support\Facades\DB;
 
+use function Laravel\Prompts\select;
+
 class BranchVehicleController extends Controller
 {
 
@@ -105,12 +107,14 @@ class BranchVehicleController extends Controller
 
     public function getVehicleByBranchId($id)
     {
-        $data = DB::table('branch_vehicle')
-            ->join('vehicles', 'branch_vehicle.vehicle_id', '=', 'vehicles.id')
-            ->join('branches', 'branch_vehicle.branch_id', '=', 'branches.id')
-            ->where('branch_vehicle.branch_id', $id)
-            ->select('vehicles.id', 'vehicles.plate')
-            ->get();
+    //     $data = DB::table('branch_vehicle')
+    //         ->join('vehicles', 'branch_vehicle.vehicle_id', '=', 'vehicles.id')
+    //         ->join('branches', 'branch_vehicle.branch_id', '=', 'branches.id')
+    //         ->where('branch_vehicle.branch_id', $id)
+    //         ->select('vehicles.id', 'vehicles.plate')
+    //         ->get();
+
+        $data = Vehicle::with('branch')->where('branch_id', $id)->select('vehicles.id', 'vehicles.plate')->get();
 
         return response()->json($data);
     }

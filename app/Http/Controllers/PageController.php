@@ -24,6 +24,19 @@ class PageController extends Controller
         return abort(404);
     }
 
+
+
+    public function operation(string $page)
+    {
+        if (view()->exists("operation.{$page}")) {
+            return view("operation.{$page}");
+        }
+
+        return abort(404);
+    }
+
+
+
     public function users(string $page)
     {
         if (view()->exists("pages.users.{$page}")) {
@@ -50,7 +63,6 @@ class PageController extends Controller
 
         return abort(404);
     }
-
 
     public function pages(string $page)
     {
