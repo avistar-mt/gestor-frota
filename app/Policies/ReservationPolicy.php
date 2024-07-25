@@ -6,18 +6,10 @@ use App\Models\User;
 
 class ReservationPolicy
 {
-    /**
-     * Create a new policy instance.
-     */
-    public function __construct()
-    {
-        //
-    }
-
 
     public function viewAny(User $user)
     {
-        return $user->isAdmin() || $user->isAdminFrota() || $user->isGestor() || $user->isOperation();
+        return true;
     }
 
     public function create(User $user)
@@ -26,7 +18,7 @@ class ReservationPolicy
     }
 
 
-    public function update(User $user)
+    public function manage(User $user)
     {
         return  $user->isAdmin() || $user->isAdminFrota() || $user->isGestor();
     }

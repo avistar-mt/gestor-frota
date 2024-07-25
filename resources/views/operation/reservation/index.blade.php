@@ -92,7 +92,7 @@
                                         </td>
                                         <td class="text-sm">
                                             <span class="d-flex">
-                                                @can('manage-users', auth()->user())
+                                                @can('manage-reservation', auth()->user())
                                                     <a href="{{ route('reservation-edit', $reservation->id) }}" class="me-3" data-bs-toggle="tooltip"
                                                         data-bs-original-title="View reservation">
                                                         <i class="far fa-eye text-secondary"></i>

@@ -54,11 +54,11 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('manage-role', 'App\Policies\UserPolicy@create');
 
-        Gate::define('manage-reservation', 'App\Policies\ReservationPolicy@viewAny');
+        Gate::define('view-reservation', 'App\Policies\ReservationPolicy@viewAny');
         
         Gate::define('manage-reservation', 'App\Policies\ReservationPolicy@create');
 
-        Gate::define('update-reservation', 'App\Policies\ReservationPolicy@update');
+        Gate::define('manage-reservation', 'App\Policies\ReservationPolicy@manage');
 
         Gate::define('delete-reservation', 'App\Policies\ReservationPolicy@delete');
 

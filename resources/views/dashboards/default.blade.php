@@ -276,33 +276,33 @@
                                         <td class="w-30">
                                             <div class="d-flex px-2 py-1 align-items-center">
                                                 <div class="ms-4">
-                                                    <h6 class="text-sm mb-0"> {{ $reservation->created_at->format('d/m/Y H:i') }}</h6>
+                                                    <h6 class="text-sm mb-0"> {{ $reservation->created_at ?? $reservation->created_at->format('d/m/Y H:i') }}</h6>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="text-center">
-                                                <h6 class="text-sm mb-0"> {{ $reservation->branch->name }}</h6>
+                                                <h6 class="text-sm mb-0"> {{ $reservation->branch->name ?? $reservation->branch->name }}</h6>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="text-center">
-                                                <h6 class="text-sm mb-0"> {{ $reservation->vehicle->plate }}</h6>
+                                                <h6 class="text-sm mb-0"> {{ $reservation->vehicle->plate ?? $reservation->vehicle->plate }}</h6>
                                             </div>
                                         </td>
                                         <td class="align-middle text-sm">
                                             <div class="col text-center">
-                                                <h6 class="text-sm mb-0"> {{ $reservation->driver->name }}</h6>
+                                                <h6 class="text-sm mb-0"> {{ $reservation->driver->name ?? $reservation->driver->name }}</h6>
                                             </div>
                                         </td>
                                         <td class="align-middle text-sm">
                                             <div class="col text-center">
                                                 <h6 class="text-sm mb-0"> 
-                                                @if ($reservation->status == 'pending')
+                                                @if ($reservation->status ?? $reservation->status == 'pending')
                                                 <span class="badge bg-gradient-warning">Pending</span>
-                                            @elseif ($reservation->status == 'canceled')
+                                            @elseif ($reservation->status ?? $reservation->status == 'canceled')
                                                 <span class="badge bg-gradient-danger">Denied</span>
-                                            @elseif ($reservation->status == 'approved')
+                                            @elseif ($reservation->status ?? $reservation->status == 'approved')
                                                 <span class="badge bg-gradient-success">Approved</span>
                                             @endif
                                             </h6>
@@ -310,7 +310,7 @@
                                         </td>
                                         <td class="align-middle text-sm">
                                             <div class="col text-center">
-                                                <h6 class="text-sm mb-0"> {{ $reservation->user->firstname . ' ' . $reservation->user->lastname}}</h6>
+                                                <h6 class="text-sm mb-0"> {{  $reservation->user->firstname . ' ' . $reservation->user->lastname }}</h6>
                                             </div>
                                         </td>
                                     </tr>

@@ -19,7 +19,7 @@ class ReservationController extends Controller
     public function index()
     {
 
-        $this->authorize('manage-reservation', Reservation::class);
+        $this->authorize('view-reservation', Reservation::class);
         $reservations = Reservation::orderBy('created_at', 'desc')->get();
 
         return view('operation.reservation.index', compact('reservations'));
@@ -32,7 +32,7 @@ class ReservationController extends Controller
     {
         
         $user = auth()->user();
-        $drivers = Driver::all();
+        $drivers = Driver::where('status', 'active')->get();
 
 
         $branches = [];
@@ -98,6 +98,8 @@ class ReservationController extends Controller
      */
     public function edit(string $id)
     {
+
+        $this->authorize('manage-reservation', Reservation::class);
         $reservation = Reservation::find($id);
         $drivers = Driver::all();
         $branches = Branch::all();
@@ -118,6 +120,9 @@ class ReservationController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
+        $this->authorize('manage-reservation', Reservation::class);
+
         $request->validate([
             'status' => 'required|in:pending,approved,canceled',
         ]);

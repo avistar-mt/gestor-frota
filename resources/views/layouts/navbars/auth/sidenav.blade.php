@@ -41,7 +41,7 @@
                 <div class="collapse show" id="operation">
                     <ul class="nav ms-4">
                     
-                        @can('manage-reservation', auth()->user())
+                        @can('view-reservation', auth()->user())
                         <li class="nav-item show">
                             <a class="nav-link {{ Route::currentRouteName() == 'reservation-management' ? 'active' : '' }}" href="{{ route('reservation-management') }}">
                                 <span class="sidenav-mini-icon"> R </span>
