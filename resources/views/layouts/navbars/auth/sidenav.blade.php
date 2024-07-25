@@ -129,6 +129,27 @@
                     </ul>
                 </div>
             </li>
+
+            <!-- RELATÓRIO -->
+            <li class="nav-item mt-3">
+                <a data-bs-toggle="collapse" href="#relatorio" class="nav-link" aria-controls="relatorio" role="button" aria-expanded="false">
+                    <div class="icon icon-shape icon-sm text-center d-flex align-items-end justify-content-center">
+                        <i class="fa fa-file" style="color: #f4645f; font-size: large; font-weight: 500 "></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Relatório </span>
+                </a>
+
+                <div class="collapse show" id="relatorio">
+                    <ul class="nav ms-4">
+                    <li class="nav-item">
+                            <a class="nav-link {{ Route::currentRouteName() == 'reservation-reportForm' ? 'active' : '' }}" href="{{ route('reservation-reportForm') }}">
+                                <span class="sidenav-mini-icon"> U </span>
+                                <span class="sidenav-normal"> Viagens </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
         </ul>
     </div>
 </aside>

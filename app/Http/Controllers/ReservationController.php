@@ -10,6 +10,12 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Vehicle;
+use App\Models\User;
+
+// use Barryvdh\DomPDF\Facade as PDF;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ReservationsExport;
+
 
 class ReservationController extends Controller
 {
@@ -155,5 +161,77 @@ class ReservationController extends Controller
         $reservation->delete();
 
         return redirect()->route('reservation-management')->with('success', 'Reserva deletada com sucesso.');
+    }
+
+    public function reportForm()
+    {
+        $users = User::all();
+        return view('operation.reservation.report', compact('users'));
+    }
+
+
+    public function generateReport(Request $request)
+{
+
+    $request->validate(
+        [
+            'start_date' => 'required|date_format:d/m/Y',
+            'end_date' => 'required|after_or_equal:start_date|date_format:d/m/Y',
+            'solicitante' => 'nullable|string',
+            'output_type' => 'nullable|string|in:pdf,excel',
+        ],
+        [
+            'start_date.required' => 'A data de início é obrigatória.',
+            'start_date.date_format' => 'A data de início deve estar no formato dd/mm/aaaa.',
+            'end_date.required' => 'A data de término é obrigatória.',
+            'end_date.date_format' => 'A data de término deve estar no formato dd/mm/aaaa.',
+            'end_date.after' => 'A data fim não pode ser maior que a data de início.',
+            'output_type.in' => 'O tipo de saída deve ser pdf ou excel.',
+        ]
+    );
+
+    $users = User::all();
+    $query = Reservation::query();
+
+    $query->where('reservation_star', '>=', Carbon::createFromFormat('d/m/Y', $request->start_date)->startOfDay());
+    $query->where('reservation_end', '<=', Carbon::createFromFormat('d/m/Y', $request->end_date)->endOfDay());
+
+    if (!empty($request->solicitante)) {
+        $query->where('user_id', $request->solicitante);
+    } else {
+        $query->where('user_id', auth()->user()->id);
+    }
+
+    $reservations = $query->get();    
+
+    return view('operation.reservation.report', compact('reservations', 'users'))->with('success', 'Relatório gerado com sucesso.');
+}
+
+
+    public function exportReport(Request $request) 
+    {
+
+        $request->validate([
+            'start_date' => 'required|date_format:d/m/Y',
+            'end_date' => 'required|date_format:d/m/Y|after_or_equal:start_date', 
+            'solicitante' => 'nullable|string'
+        ]);
+
+        $query = Reservation::query();
+
+        $query->where('reservation_start', '>=', Carbon::createFromFormat('d/m/Y', $request->start_date)->startOfDay());
+        $query->where('reservation_end', '<=', Carbon::createFromFormat('d/m/Y', $request->end_date)->endOfDay());
+
+        if (!empty($request->solicitante)) {
+            $query->whereHas('user', function($q) use ($request) {
+                $q->where('id',  $request->solicitante);
+            });
+        } else {
+            $query->where('user_id', auth()->user()->id);
+        }
+
+        $reservations = $query->get();
+
+        return Excel::download(new ReservationsExport($reservations), 'report.xlsx');
     }
 }

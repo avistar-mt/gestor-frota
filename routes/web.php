@@ -125,6 +125,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/reservation-management/edit/{id}', 'update')->name('reservation-edit.update');
         Route::post('/reservation-delete/{id}', 'destroy')->name('reservation-destroy');
         Route::post('/reservation-status/{id}', 'updateStatus')->name('reservation-status');
+        Route::get('reservations/report', 'reportForm')->name('reservation-reportForm');
+        Route::post('/reservations/generateReport', 'generateReport')->name('reservation-generateReport');
+        Route::post('/reservations/exportReport', 'exportReport')->name('reservation-exportReport');
     });
 
     Route::controller(BranchVehicleController::class)->group(function() {
@@ -139,18 +142,6 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::get('/{page}', [PageController::class, 'dashboards'])->name('dashboards');
-
-    // Route::get('/authentication/sign-in/{page}', [PageController::class, 'signins'])->name('signins');
-
-    // Route::get('/authentication/sign-up/{page}', [PageController::class, 'signups'])->name('signups');
-
-    // Route::get('/authentication/reset-password/{page}', [PageController::class, 'resets'])->name('resets');
-
-    // Route::get('/authentication/lock/{page}', [PageController::class, 'locks'])->name('locks');
-
-    // Route::get('/authentication/verification/{page}', [PageController::class, 'verifications'])->name('verifications');
-
-    // Route::get('/authentication/errors/{page}', [PageController::class, 'errors'])->name('errors');
 
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });

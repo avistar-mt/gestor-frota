@@ -23,6 +23,7 @@ class UserController extends Controller
 
     public function create()
     {
+        $this->authorize('manage-users', User::class);
         $title = 'Criar Usuário';
         $roles = Role::all();
         $branches = Branch::all();
