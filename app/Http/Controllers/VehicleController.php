@@ -24,6 +24,7 @@ class VehicleController extends Controller
             $vehicles = DB::table('branch_vehicles')
                 ->join('vehicles', 'branch_vehicles.vehicle_id', '=', 'vehicles.id')
                 ->where('branch_vehicles.branch_id', $user->branch_id)
+                ->where('vehicles.status', StatusType::DISPONIVEL)
                 ->select('vehicles.*')
                 ->get();
         } else {
@@ -67,7 +68,7 @@ class VehicleController extends Controller
         'year' => 'required|string|max:255',
         'color' => 'required|string|max:255',
         'renavam' => 'required|string|max:255',
-        'description' => 'required|string|max:255',
+        'description' => 'string|max:255',
         'tracker_number' => 'required|string|max:255'
     ]);
 
@@ -127,7 +128,7 @@ class VehicleController extends Controller
             'year' => 'required|string|max:255',
             'color' => 'required|string|max:255',
             'renavam' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            'description' => 'string|max:255',
             'tracker_number' => 'required|string|max:255', 
             'status' => ['required', 'string', 'max:50', Rule::in([StatusType::DISPONIVEL, StatusType::ALUGADO, StatusType::MANUTENCAO])]
         ]);

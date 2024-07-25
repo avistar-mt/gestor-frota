@@ -36,8 +36,9 @@ class BranchController extends Controller
      */
     public function create()
     {
-        $cities = City::all();
-        return view('operation.branch.create', compact('cities'));
+        $cities = City::orderBy('name')->get();
+        $states = State::all();
+        return view('operation.branch.create', compact('cities', 'states'));
     }
 
     /**

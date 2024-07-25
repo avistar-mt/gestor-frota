@@ -78,7 +78,7 @@
                                                     </a>
                                                     <form action="{{ route('branch-destroy', $branch->id) }}" method="post">
                                                         @csrf
-                                                        <button onclick="if(!confirm('Are you sure you want to remove the branch?')) {event.preventDefault();}"
+                                                        <button onclick="if(!confirm('Deseja deletar a filial?')) {event.preventDefault();}"
                                                             data-bs-toggle="tooltip" data-bs-original-title="Delete branch"
                                                             class="border-0 bg-white">
                                                             <i class="fas fa-trash text-secondary"></i>

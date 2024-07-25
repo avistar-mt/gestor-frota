@@ -6,6 +6,7 @@ use App\Models\Driver;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Validation\Rule;
 
 class DriverController extends Controller
 {
@@ -81,16 +82,15 @@ class DriverController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $driver = Driver::findOrFail($id);
 
         $validatedData = $request->validate([
             'name'=> 'required|string|max:255',
-            'cpf'=> 'required|string|max:14|unique:drivers',
+            'cpf'=> ['required', Rule::unique('drivers', 'cpf')->ignore($driver->id)],
             'phone'=> 'required|string|max:15',
             'status'=> 'required|in:active,inactive',
             'birth_date'=> 'required|date_format:d/m/Y',
-            'cnh_number'=> 'required|string|max:20|unique:drivers',
+            'cnh_number'=> ['required', Rule::unique('drivers', 'cnh_number')->ignore($driver->id)],
             'cnh_due_date'=> 'required|date_format:d/m/Y',
             'cnh_category'=> 'required|string|max:2',
             'street'=> 'required|string|max:255',
@@ -99,8 +99,8 @@ class DriverController extends Controller
             'state'=> 'required|string|max:20',
         ]);
 
-        $validatedData['birth_date'] = Carbon::createFromFormat('d/m/Y', $request->birth_date)->format('Y-m-d');
-        $validatedData['cnh_due_date'] = Carbon::createFromFormat('d/m/Y', $request->cnh_due_date)->format('Y-m-d');
+        // $validatedData['birth_date'] = Carbon::createFromFormat('d/m/Y', $request->birth_date)->format('Y-m-d');
+        // $validatedData['cnh_due_date'] = Carbon::createFromFormat('d/m/Y', $request->cnh_due_date)->format('Y-m-d');
 
         $driver->update($validatedData);
 

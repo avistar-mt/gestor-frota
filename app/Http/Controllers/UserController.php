@@ -43,7 +43,7 @@ class UserController extends Controller
                 }
             }],
             'confirmation' => ['same:email'],
-            'password' => ['required', 'min:5'],
+            'password' => ['required', 'min:8'],
             'confirm-password' => ['same:password'],
             'role' => ['required'],
             'branch' => ['required'],
