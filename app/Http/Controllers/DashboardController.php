@@ -25,7 +25,9 @@ class DashboardController extends Controller
             ->groupBy('branch_id')
             ->get();
 
+        $last24Hours = Reservation::where('created_at', '>=', now()->subDay())
+            ->count();
 
-        return view('dashboards.default', compact('totalVehicle', 'totalBranch', 'totalDriver','latestReservation', 'branchReservation'));
+        return view('dashboards.default', compact('totalVehicle', 'totalBranch', 'totalDriver','latestReservation', 'branchReservation', 'last24Hours'));
     }
 }
