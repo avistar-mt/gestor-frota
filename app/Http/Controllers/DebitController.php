@@ -88,6 +88,14 @@ class DebitController extends Controller
 
         $debit = Debit::find($id);
 
+        // Deletar imagem anterior
+        if ($request->input('delete_image')) {
+            if (isset($debit->image_path)) {
+            unlink(public_path("/{$debit->image_path}"));
+            $debit->image_path = null;
+            }
+      
+      
         if($request->hasFile('image_path')) {
             if (isset($debit->image_path)) {
                 return back()->with('error', 'Você não pode adicionar nova imagem, por favor delete a anterior.')->withInput();
@@ -95,12 +103,6 @@ class DebitController extends Controller
         }
 
 
-        // Deletar imagem anterior
-        if ($request->input('delete_image')) {
-            if (isset($debit->image_path)) {
-            unlink(public_path("/{$debit->image_path}"));
-            $debit->image_path = null;
-            }
         }
 
 
