@@ -45,10 +45,9 @@ COPY . /var/www
 
 # Adjust permissions for storage and bootstrap/cache public/images directories
 RUN mkdir -p /var/www/public/images \
-    && chown -R www-data:www-data /var/www/public/images \
+    && chown -R $user:$user /var/www/public/images \
     && chmod -R 775 /var/www/public/images \
     && chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
     && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
-
 
 USER $user
