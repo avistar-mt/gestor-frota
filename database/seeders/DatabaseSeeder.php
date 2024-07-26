@@ -17,6 +17,5 @@ class DatabaseSeeder extends Seeder
         $this->call([StateSeeder::class, CitySeeder::class]);
         $this->call([BranchSeeder::class]);
         $this->call([RoleSeeder::class, UserSeeder::class]);
-        $this->call([TagSeeder::class, CategorySeeder::class, ItemSeeder::class]);
     }
 }
