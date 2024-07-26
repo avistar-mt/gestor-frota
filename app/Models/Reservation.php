@@ -73,4 +73,9 @@ class Reservation extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+
+    public function debits()
+    {
+        return $this->hasMany(Debit::class);
+    }
 }

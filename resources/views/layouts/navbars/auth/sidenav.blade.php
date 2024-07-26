@@ -50,6 +50,13 @@
                         </li>
                         @endcan
 
+                        <li class="nav-item show">
+                            <a class="nav-link {{ Route::currentRouteName() == 'debit-management' ? 'active' : '' }}" href="{{ route('debit-management') }}">
+                                <span class="sidenav-mini-icon"> M </span>
+                                <span class="sidenav-normal"> Debito </span>
+                            </a>
+                        </li>
+
                         @can('manage-reservation', auth()->user())
                         <li class="nav-item show">
                             <a class="nav-link {{ Route::currentRouteName() == 'reservation-managemen' ? 'active' : '' }}" href="{{ route('reservation-management') }}">
@@ -58,6 +65,7 @@
                             </a>
                         </li>
                         @endcan
+
                     </ul>
                 </div>
             </li>

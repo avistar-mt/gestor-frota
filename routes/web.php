@@ -20,6 +20,7 @@ use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DebitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -140,6 +141,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/api/vehicles-for-branch/{id}', 'getVehicleByBranchId');
 
     });
+
+    Route::controller(DebitController::class)->group(function() {
+        Route::get('/debit-management', 'index')->name('debit-management');
+        Route::get('/debit-management/new', 'create')->name('debit-new');
+        Route::post('/debit-management/new', 'store')->name('debit-new.store');
+        Route::get('/debit-management/edit/{id}', 'edit')->name('debit-edit');
+        Route::post('/debit-management/edit/{id}', 'update')->name('debit-edit.update');
+        Route::post('/debit-delete/{id}', 'destroy')->name('debit-destroy');
+    }); 
 
     Route::get('/{page}', [PageController::class, 'dashboards'])->name('dashboards');
 
