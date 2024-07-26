@@ -92,7 +92,7 @@ class DebitController extends Controller
         if ($request->input('delete_image')) {
             if (isset($debit->image_path)) {
             unlink(public_path("/{$debit->image_path}"));
-            $data = $debit->image_path = null;
+            $data['image_path'] = $debit->image_path = null;
             }
         }   
       
