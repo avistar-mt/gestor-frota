@@ -34,7 +34,7 @@
         <div class="row mb-5">
             <div class="col-lg-9 col-12 mx-auto">
                 <div class="card card-body mt-4">
-                    <h6 class="mb-0">New Branch</h6>
+                    <h6 class="mb-0">Nova Filial</h6>
                     <hr class="horizontal dark my-3">
                     <form method="POST" action="{{ route('branch-new.store') }}">
                         @csrf
@@ -58,8 +58,8 @@
                             <p class='text-danger text-xs pt-1'> {{ $message }} </p>
                         @enderror
                         <div class="d-flex justify-content-end mt-4">
-                            <a href="{{ route('branch-management') }}" class="btn btn-light m-0">Back</a>
-                            <button type="submit" class="btn bg-gradient-primary m-0 ms-2">Create</button>
+                            <a href="{{ route('branch-management') }}" class="btn btn-light m-0">Volta</a>
+                            <button type="submit" class="btn bg-gradient-primary m-0 ms-2">Salvar</button>
                         </div>
                     </form>
                 </div>
