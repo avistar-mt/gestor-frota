@@ -1,13 +1,14 @@
 FROM php:8.3-fpm
 
 # set your user name, ex: user=carlos
-ARG user=yourusername
+ARG user=airton
 ARG uid=1000
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
     curl \
+    libzip-dev \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
@@ -18,7 +19,7 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd sockets
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd sockets zip
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -42,7 +43,7 @@ COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 # Copy application files
 COPY . /var/www
 
-# Configurar permissões corretas para o diretório storage e bootstrap/cache
+# Adjust permissions for storage and bootstrap/cache directories
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 RUN chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
