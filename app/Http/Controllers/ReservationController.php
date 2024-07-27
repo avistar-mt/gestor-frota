@@ -38,6 +38,8 @@ class ReservationController extends Controller
     {
         
         $user = auth()->user();
+
+        //Apenas motorista com status ativo 
         $drivers = Driver::where('status', 'active')->get();
 
 
@@ -51,11 +53,20 @@ class ReservationController extends Controller
 
         $vehicles = [];
         if ($user->role->isAdminFrota() || $user->role->isGestor()) {
-            $vehicles = Vehicle::all()->where('status', 'available');
+            $vehicles = Vehicle::all()
+                                ->where('status', 'available')
+                                ->whereDoesntHave('reservations', function ($query) {
+                                        $query->whereIn('status', ['approved', 'pending', 'ongoing']);
+                                 });
         } else {
-            $vehicles = Vehicle::where('status', 'available')->whereHas('branches', function ($query) use ($user) {
-                $query->where('branches.id', $user->branch_id);
-            })->get();
+            $vehicles = Vehicle::where('status', 'available')
+                ->whereDoesntHave('reservations', function ($query) {
+                    $query->whereIn('status', ['approved', 'pending', 'ongoing']);
+                })
+                ->whereHas('branches', function ($query) use ($user) {
+                    $query->where('branches.id', $user->branch_id);
+                })
+                ->get();
         }
         
 
