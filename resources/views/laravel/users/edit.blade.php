@@ -105,26 +105,26 @@
                             <div class="row mt-3">
                                 <div class="col-sm">
                                     <label class="form-label">Perfil</label>
-                                    <select name="role_id" id="choices-role" class="form-control">
+                                    <select name="role" id="choices-role" class="form-control">
                                         <option value="">Perfil</option>
                                         @foreach ($roles as $role)
                                             <option value="{{ $role->id }}" {{ $role->id == old('role', $user->role_id) ? 'selected' : '' }}>{{ $role->name }}</option>
                                         @endforeach
                                     </select>
-                                    @error('role_id')
+                                    @error('role')
                                     <p class='text-danger text-xs pt-1'> {{ $message }} </p>
                                     @enderror
                                 </div>
                                 <div class="col-sm">
                                     <label class="form-label">Filial</label>
-                                    <select name="branch_id" id="choices-branch" class="form-control">
+                                    <select name="branch" id="choices-branch" class="form-control">
                                         <option value="">Filial</option>
                                         @foreach ($branches as $branch)
                                         <option value="{{ $branch->id }}" {{ $branch->id == old('branch', $user->branch_id) ? 'selected' : '' }}>{{ $branch->name }}
                                         </option>
                                         @endforeach
                                     </select>
-                                    @error('branch_id')
+                                    @error('branch')
                                     <p class='text-danger text-xs pt-1'> {{ $message }} </p>
                                     @enderror
                                 </div>
@@ -155,7 +155,7 @@
                                 <div class="col-6">
                                     <label class="form-label mt-4">Cidade - Estado</label>
                                     <div class="input-group">
-                                        <input id="location" name="location" value="{{ old('location', $user->location) }}" class="form-control" type="text" placeholder="Cuiabá - MT">
+                                        <input id="location" name="location" value="{{ old('location') ?? $user->location }}" class="form-control" type="text" placeholder="Cuiabá - MT">
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -168,53 +168,6 @@
                                     @enderror
                                 </div>
                             </div>
-
-                            <div class="row" id="driverFields" style="display: none;">
-                            <div class="col-6">
-                                <label class="form-label">Número da CNH</label>
-                                <div class="form-group">
-                                    <input type="text" name="cnh_number" id="cnh_number" class="form-control" value="{{ old('cnh_number', $user->cnh_number) }}">
-                                </div>
-                                @error('cnh_number')
-                                <p class='text-danger text-xs pt-1'> {{ $message }} </p>
-                                @enderror
-                            </div>
-                            <div class="col-6">
-                                <label class="form-label">Data de Vencimento da CNH</label>
-                                <div class="form-group">
-                                    <input type="date" name="cnh_due_date" id="cnh_due_date" class="form-control datetimepicker" value=" {{ old('cnh_due_date', $user->cnh_due_date) }}">
-                                </div>
-                                @error('cnh_due_date')
-                                <p class='text-danger text-xs pt-1'> {{ $message }} </p>
-                                @enderror
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                <label class="form-label">Categoria CNH</label>
-                                    <select id="choices-category" name="cnh_category" class="form-control">
-                                        <option value="A" {{ old('cnh_category') == 'A' || $user->cnh_category == 'A' ? 'selected' : '' }}>A</option>
-                                        <option value="B" {{ old('cnh_category') == 'B' || $user->cnh_category == 'B' ? 'selected' : '' }}>B</option>
-                                        <option value="AB" {{ old('cnh_category') == 'AB' || $user->cnh_category == 'AB' ? 'selected' : '' }}>AB</option>
-                                        <option value="AC" {{ old('cnh_category') == 'AC' || $user->cnh_category == 'AC' ? 'selected' : '' }}>AC</option>
-                                        <option value="AD" {{ old('cnh_category') == 'AD' || $user->cnh_category == 'AD' ? 'selected' : '' }}>AD</option>
-                                        <option value="D" {{ old('cnh_category') == 'D' || $user->cnh_category == 'D' ? 'selected' : '' }}>D</option>
-                                        <option value="E" {{ old('cnh_category') == 'E' || $user->cnh_category == 'E' ? 'selected' : '' }}>E</option>
-                                        <option value="AE" {{ old('cnh_category') == 'AE' || $user->cnh_category == 'AE' ? 'selected' : '' }}>AE</option>
-                                        <option value="A1" {{ old('cnh_category') == 'A1' || $user->cnh_category == 'A1' ? 'selected' : '' }}>A1</option>
-                                        <option value="A2" {{ old('cnh_category') == 'A2' || $user->cnh_category == 'A2' ? 'selected' : '' }}>A2</option>
-                                        <option value="B1" {{ old('cnh_category') == 'B1' || $user->cnh_category == 'B1' ? 'selected' : '' }}>B1</option>
-                                        <option value="B2" {{ old('cnh_category') == 'B2' || $user->cnh_category == 'B2' ? 'selected' : '' }}>B2</option>
-                                        <option value="B3" {{ old('cnh_category') == 'B3' || $user->cnh_category == 'B3' ? 'selected' : '' }}>B3</option>
-                                        <option value="C1" {{ old('cnh_category') == 'C1' || $user->cnh_category == 'C1' ? 'selected' : '' }}>C1</option>
-                                        <option value="C2" {{ old('cnh_category') == 'C2' || $user->cnh_category == 'C2' ? 'selected' : '' }}>C2</option>
-                                        <option value="C3" {{ old('cnh_category') == 'C3' || $user->cnh_category == 'C3' ? 'selected' : '' }}>C3</option>
-                                    </select>  
-                                </div>
-                                @error('cnh_category')
-                                <p class='text-danger text-xs pt-1'> {{ $message }} </p>
-                                @enderror
-                            </div>
-                        </div>
 
                             <div class="d-flex justify-content-end mt-4">
                                 <a href="{{ route('user-management') }}" class="btn btn-light m-0">Volta</a>
@@ -245,19 +198,10 @@
     <script src="/assets/js/plugins/choices.min.js"></script>
     <script>
 
-        if (document.getElementById('birthday')) {
-                flatpickr('#birthday', {
+        if (document.querySelector('.datetimepicker')) {
+                flatpickr('.datetimepicker', {
                     allowInput: true,
                     dateFormat: "d/m/Y",
-                    defaultDate: "{{ old('birthday', $user->birthday) }}"
-                }); // flatpickr
-            }
-
-            if (document.getElementById('cnh_due_date')) {
-                flatpickr('#cnh_due_date', {
-                    allowInput: true,
-                    dateFormat: "d/m/Y",
-                    defaultDate: "{{ old('cnh_due_date', $user->cnh_due_date) }}"
                 }); // flatpickr
             }
 
@@ -271,23 +215,19 @@
             const example = new Choices(branch);
         }
 
-        if (document.getElementById('choices-category')) {
-            var cnh_category = document.getElementById('choices-category');
-            const example = new Choices(cnh_category);
-        }
 
-        function toggleDriverFields() {
-        var driverFields = document.getElementById('driverFields');
-        var roleId = document.getElementById('choices-role').value;
-        if (roleId == 5) {
-            driverFields.style.display = 'block';
-        } else {
-            driverFields.style.display = 'none';
-        }
-    }
 
-    document.getElementById('choices-role').addEventListener('change', toggleDriverFields);
-    toggleDriverFields();
+
+        function visible() {
+            var elem = document.getElementById('profileVisibility');
+            if (elem) {
+                if (elem.innerHTML == "Switch to visible") {
+                    elem.innerHTML = "Switch to invisible"
+                } else {
+                    elem.innerHTML = "Switch to visible"
+                }
+            }
+        }
 
     </script>
 @endpush

@@ -143,6 +143,11 @@
                                 <p class='text-danger text-xs pt-1'> {{ $message }} </p>
                             @enderror
                         </div>
+                        <label class="mt-4"> Description</label>
+                        <textarea name="description" rows="4" class="w-100 form-control">{{ old('description') }}</textarea>
+                        @error('description')
+                            <p class='text-danger text-xs pt-1'> {{ $message }} </p>
+                        @enderror
                         <div class="d-flex justify-content-end mt-4">
                             <a href="{{ route('role-management') }}" class="btn btn-light m-0">Back</a>
                             <button type="submit" class="btn bg-gradient-primary m-0 ms-2">Create</button>

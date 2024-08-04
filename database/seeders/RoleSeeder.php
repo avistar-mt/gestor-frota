@@ -17,7 +17,8 @@ class RoleSeeder extends Seeder
     {
         DB::table('roles')->insert([
             'id' => 1,
-            'name' => 'Super Admin',
+            'name' => 'Admin',
+            'description' => 'Usuários Avistar',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -25,6 +26,7 @@ class RoleSeeder extends Seeder
         DB::table('roles')->insert([
             'id' => 2,
             'name' => 'Admin Frota',
+            'description' => 'Administradores de Frota',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -33,6 +35,7 @@ class RoleSeeder extends Seeder
         DB::table('roles')->insert([
             'id' => 3,
             'name' => 'Gestor',
+            'description' => 'Gestores de Frota',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -41,13 +44,7 @@ class RoleSeeder extends Seeder
         DB::table('roles')->insert([
             'id' => 4,
             'name' => 'Operador',
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-
-        DB::table('roles')->insert([
-            'id' => 5,
-            'name' => 'Motorista',
+            'description' => 'Operadores de Frota',
             'created_at' => now(),
             'updated_at' => now()
         ]);

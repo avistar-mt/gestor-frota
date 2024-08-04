@@ -32,8 +32,8 @@ class UserSeeder extends Seeder
 
         DB::table('users')->insert([
             'id' => 2,
-            'firstname' => 'Olivan',
-            'lastname' => 'Teste',
+            'firstname' => 'Mario',
+            'lastname' => 'Nintendo',
             'email' => 'gestor@aguia.com',
             'password' =>  Hash::make('secret'),
             'role_id' => 2,
@@ -46,8 +46,8 @@ class UserSeeder extends Seeder
 
         DB::table('users')->insert([
             'id' => 3,
-            'firstname' => 'Airton',
-            'lastname' => 'Souza',
+            'firstname' => 'Zelda',
+            'lastname' => 'Link',
             'email' => 'gestor@admin.com',
             'password' => Hash::make('secret'),
             'role_id' => 3,

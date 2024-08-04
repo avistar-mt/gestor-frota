@@ -122,6 +122,13 @@
                         @endcan
 
                         <li class="nav-item show">
+                            <a class="nav-link {{ Route::currentRouteName() == 'driver-management' ? 'active' : '' }}" href="{{ route('driver-management') }}">
+                                <span class="sidenav-mini-icon"> M </span>
+                                <span class="sidenav-normal"> Motorista </span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item show">
                             <a class="nav-link {{ Route::currentRouteName() == 'branch-vehicle-management' ? 'active' : '' }}" href="{{ route('branch-vehicle-management') }}">
                                 <span class="sidenav-mini-icon"> F </span>
                                 <span class="sidenav-normal"> Frota </span>

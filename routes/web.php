@@ -99,14 +99,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/city-delete/{id}', 'destroy')->name('city-destroy');
     });
 
-    // Route::controller(DriverController::class)->group(function() {
-    //     Route::get('/driver-management', 'index')->name('driver-management');
-    //     Route::get('/driver-management/new', 'create')->name('driver-new');
-    //     Route::post('/driver-management/new', 'store')->name('driver-new.store');
-    //     Route::get('/driver-management/edit/{id}', 'edit')->name('driver-edit');
-    //     Route::post('/driver-management/edit/{id}', 'update')->name('driver-edit.update');
-    //     Route::post('/driver-delete/{id}', 'destroy')->name('driver-destroy');
-    // });
+    Route::controller(DriverController::class)->group(function() {
+        Route::get('/driver-management', 'index')->name('driver-management');
+        Route::get('/driver-management/new', 'create')->name('driver-new');
+        Route::post('/driver-management/new', 'store')->name('driver-new.store');
+        Route::get('/driver-management/edit/{id}', 'edit')->name('driver-edit');
+        Route::post('/driver-management/edit/{id}', 'update')->name('driver-edit.update');
+        Route::post('/driver-delete/{id}', 'destroy')->name('driver-destroy');
+    });
 
     Route::controller(VehicleController::class)->group(function() {
         Route::get('/vehicle-management', 'index')->name('vehicle-management');

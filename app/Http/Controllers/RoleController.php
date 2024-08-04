@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 use App\Models\Role;
 use App\Policies\RolePolicy;
-use App\Models\User;
 
 class RoleController extends Controller
 {
@@ -25,10 +24,12 @@ class RoleController extends Controller
     {
         $attributes = $request->validate([
             'name' => 'required|unique:roles',
+            'description' => 'required|max:255'
         ]);
 
         Role::create([
             'name' => $attributes['name'],
+            'description' => $attributes['description']
         ]);
 
         return redirect()->route('role-management')->with('succes', 'Role succesfully added');
@@ -48,6 +49,7 @@ class RoleController extends Controller
 
         $attributes = request()->validate([
             'name' => ['required',  Rule::unique('roles')->ignore($role->id)],
+            'description' => 'required'
         ]);
 
         $role->update($attributes);
