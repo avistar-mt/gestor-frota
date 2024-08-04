@@ -46,7 +46,7 @@
                                 <select class="form-control" id="choices-driver" name="driver_id">
                                     <option value="">Selecione motorista</option>
                                     @foreach($drivers as $driver)
-                                    <option value="{{ $driver->id }}">{{ $driver->name }}</option>
+                                    <option value="{{ $driver->id }}">{{ $driver->firstname . ' ' . $driver->lastname }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -156,7 +156,6 @@ if (document.getElementById('choices-vehicles')) {
     var vehicle = document.getElementById('choices-vehicles');
     const example = new Choices(vehicle);
 }
-
 
 
 function loadVehicles() {

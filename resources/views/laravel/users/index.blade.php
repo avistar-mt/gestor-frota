@@ -76,13 +76,11 @@
                                         <td class="text-sm font-weight-normal">{{ $user->role->name }}</td>
                                         <td class="text-sm">
                                             <span class="d-flex">
-                                                @can('update', $user)
                                                     <a href="{{ route('user-edit', $user->id) }}" class="me-3"
                                                         data-bs-toggle="tooltip" data-bs-original-title="Edit user">
                                                         <i class="fas fa-user-edit text-secondary"></i>
                                                     </a>
-                                                @endcan
-                                                @can('delete', $user)
+
                                                     <form action="{{ route('user-destroy', $user->id) }}" method="post">
                                                         @csrf
                                                         <button
@@ -92,7 +90,6 @@
                                                             <i class="fas fa-trash text-secondary"></i>
                                                         </button>
                                                     </form>
-                                                @endcan
                                             </span>
                                         </td>
                                     </tr>
@@ -109,14 +106,13 @@
 @endsection
 
 @push('js')
-    <script src=" {{ asset('js/app.js') }}"></script>
     <script src="/assets/js/plugins/datatables.js"></script>
     <script>
         const dataTableBasic = new simpleDatatables.DataTable("#datatable-basic", {
             searchable: true,
             fixedHeight: true,
             columns: [{
-                select: [0, 5],
+                select: [4],
                 sortable: false
             }]
         });

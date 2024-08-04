@@ -8,6 +8,7 @@ use App\Models\Reservation;
 use App\Models\Branch;
 use App\Models\Driver;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 
 
@@ -18,8 +19,8 @@ class DashboardController extends Controller
 
         $totalVehicle = Vehicle::count();
         $totalBranch = Branch::count();
-        $totalDriver = Driver::count();
-        $latestReservation = Reservation::orderBy('created_at', 'desc')->take(15)->get();
+        $totalDriver = User::where('role_id', 5)->count();
+        $latestReservation = Reservation::latest()->take(15)->get();
 
         $branchReservation = Reservation::select('branch_id', DB::raw('count(*) as total'))
             ->groupBy('branch_id')

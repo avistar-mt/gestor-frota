@@ -79,7 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/city-management/edit/{id}', 'update')->name('city-edit.update');
         Route::post('/city-delete/{id}', 'destroy')->name('city-destroy');
     });
-
+    
     Route::controller(VehicleController::class)->group(function() {
         Route::get('/vehicle-management', 'index')->name('vehicle-management');
         Route::get('/vehicle-management/new', 'create')->name('vehicle-new');
