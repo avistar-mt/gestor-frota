@@ -30,8 +30,6 @@
         </div>
     </nav>
     <!-- End Navbar -->
-
-
     <div class="container-fluid py-4">
         <div class="row mt-4">
             <div class="col-12">
@@ -76,7 +74,7 @@
                             <tbody>
                                 @foreach ($reservations as $reservation)
                                     <tr>
-                                        <td class="text-sm font-weight-normal">{{ $reservation->driver->name}}</td>
+                                        <td class="text-sm font-weight-normal">{{ $reservation->driver->firstname . ' ' . $reservation->driver->lastname }}</td>
                                         <td class="text-sm font-weight-normal">{{ $reservation->vehicle->plate}}</td>
                                         <td class="text-sm font-weight-normal">{{ date("d/m/Y H:i", strtotime($reservation->reservation_star)) }}</td>
                                         <td class="text-sm font-weight-normal">{{ date("d/m/Y H:i", strtotime($reservation->reservation_end)) }}</td>

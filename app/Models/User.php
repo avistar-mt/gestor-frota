@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -65,6 +66,16 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
+
+    public function setBirthdayAttribute($value)
+    {
+        $this->attributes['birthday'] = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
+    }
+
+    // public function getBirthdayAttribute($value)
+    // {
+    //     return Carbon::createFromFormat('Y-m-d', $value)->format('d/m/Y');
+    // }
 
     public function reservations() {
         return $this->hasMany(Reservation::class);

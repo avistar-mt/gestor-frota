@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('renavam')->nullable();
             $table->string('description')->nullable();
             $table->string('tracker_number');
-            $table->foreignId('branch_id')->constrained('branches')->onDelete('cascade');
             $table->timestamps();
         });
     }

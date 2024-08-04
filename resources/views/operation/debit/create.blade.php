@@ -44,7 +44,7 @@
                                 <option value="" selected>Selecione reserva</option>
                                 @foreach ($reservations as $reservation)
                                     <option value="{{ $reservation->id }}">
-                                        {{ $reservation->id . ' - ' . $reservation->branch->name . ' - ' . $reservation->driver->name }}</option>
+                                        {{ $reservation->id . ' - ' . $reservation->branch->name . ' - ' . $reservation->driver->firstname . ' ' . $reservation->driver->lastname }}</option>
                                     </option>
                                 @endforeach
                             </select>
