@@ -88,7 +88,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="reservation_star">Incio Reserva</label>
+                                    <label for="reservation_star">Inicio Reserva</label>
                                     <input type="text" class="form-control datetimepicker" id="reservation_star"
                                         autocomplete="off" placeholder="DD/MM/AAAA HH:MM" name="reservation_star" date-input>
                                 </div>
@@ -138,6 +138,7 @@ if (document.querySelector('.datetimepicker')) {
         enableTime: true,
         dateFormat: "d/m/Y H:i",
         defaultDate: new Date(),
+        disableMobile: true,
     }); // flatpickr
 }
 

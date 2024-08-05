@@ -1,26 +1,20 @@
 <?php
 
-use App\Enums\Reservation;
 use Illuminate\Support\Facades\Route;
 
-
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\ResetPassword;
-use App\Http\Controllers\Auth\ChangePassword;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\BranchVehicleController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\VehicleController;
-use App\Http\Controllers\DriverController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DebitController;
+use App\Http\Controllers\CheckinController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,20 +39,7 @@ Route::get('/auth/callback', [AuthController::class, 'handleProviderCallback']);
 Route::get('/login', [LoginController::class, 'show'])->middleware('guest')->name('login');
 Route::post('/login', [LoginController::class, 'login'])->middleware('guest')->name('login.perform');
 
-// Route::get('/register', [RegisterController::class, 'show'])->middleware('guest')->name('register');
-// Route::post('/register', [RegisterController::class, 'register'])->middleware('guest')->name('register.perform');
-
-// Route::get('/reset-password', [ResetPassword::class, 'show'])->middleware('guest')->name('reset-password');
-// Route::post('/reset-password', [ResetPassword::class, 'send'])->middleware('guest')->name('reset.perform');
-
-// Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
-// Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
-
 Route::group(['middleware' => 'auth'], function () {
-
-    // Route::get('/user-profile', [ProfileController::class, 'show'])->name('user-profile');
-    // Route::post('/user-profile', [ProfileController::class, 'update'])->name('user-profile.perform');
-
 
     Route::get('/default', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -99,15 +80,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/city-delete/{id}', 'destroy')->name('city-destroy');
     });
 
-    // Route::controller(DriverController::class)->group(function() {
-    //     Route::get('/driver-management', 'index')->name('driver-management');
-    //     Route::get('/driver-management/new', 'create')->name('driver-new');
-    //     Route::post('/driver-management/new', 'store')->name('driver-new.store');
-    //     Route::get('/driver-management/edit/{id}', 'edit')->name('driver-edit');
-    //     Route::post('/driver-management/edit/{id}', 'update')->name('driver-edit.update');
-    //     Route::post('/driver-delete/{id}', 'destroy')->name('driver-destroy');
-    // });
-
     Route::controller(VehicleController::class)->group(function() {
         Route::get('/vehicle-management', 'index')->name('vehicle-management');
         Route::get('/vehicle-management/new', 'create')->name('vehicle-new');
@@ -129,6 +101,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('reservations/report', 'reportForm')->name('reservation-reportForm');
         Route::post('/reservations/generateReport', 'generateReport')->name('reservation-generateReport');
         Route::post('/reservations/exportReport', 'exportReport')->name('reservation-exportReport');
+    });
+    
+    Route::controller(CheckinController::class)->group(function() {
+        Route::get('/reservations/{reservation}/checkin', 'index')->name('reservation-checkin');
+        Route::post('/reservations/{reservation}/checkin/{id}', 'update')->name('reservation-checkin.update');
     });
 
     Route::controller(BranchVehicleController::class)->group(function() {

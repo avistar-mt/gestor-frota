@@ -22,6 +22,8 @@ class Kernel extends ConsoleKernel
             $schedule->command('migrate:fresh --seed')->cron($scheduledInterval);
             $schedule->command('image:seed')->cron($scheduledInterval);
         }
+
+        $schedule->command('check:reservation')->everyMinute();
     }
 
     /**

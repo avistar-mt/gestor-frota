@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('vehicle_id')->constrained('vehicles')->onDelete('cascade');
             $table->dateTime('reservation_star');
             $table->dateTime('reservation_end');
-            $table->enum('status', ['pending', 'approved', 'completed', 'disapproved', 'ongoing'])->default('pending');
+            $table->enum('status', ['pending', 'approved', 'completed', 'disapproved', 'ongoing', 'canceled'])->default('pending');
             $table->text('motive')->nullable();
             $table->foreignId('branch_id')->constrained('branches')->onDelete('cascade');
             $table->foreignId('approved_by')->nullable()->constrained('users')->onDelete('set null');

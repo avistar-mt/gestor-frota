@@ -81,6 +81,10 @@ class User extends Authenticatable
         return $this->hasMany(Reservation::class);
     }
 
+    public function ownReservations() {
+        return $this->hasMany(Reservation::class, 'driver_id');
+    }
+
     public function role() {
         return $this->belongsTo(Role::class);
     }
@@ -106,5 +110,9 @@ class User extends Authenticatable
 
     public function isOperation() {
         return $this->role_id === 4;
+    }
+
+    public function getNameAttribute() {
+        return join(' ', array_filter([$this->firstname, $this->lastname]));
     }
 }

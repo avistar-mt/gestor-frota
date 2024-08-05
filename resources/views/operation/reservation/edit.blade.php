@@ -68,7 +68,7 @@
                         
                         <tr>
                             <th>Status: </td>
-                            <td>{{ strtoupper($reservation->status) }}</td>
+                            <td>{{ strtoupper($reservation->status->string()) }}</td>
                         </tr>
 
                         <tr>
@@ -133,6 +133,7 @@
             enableTime: true,
             dateFormat: "d/m/Y H:i",
             defaultDate: [`{{ date("d/m/Y H:i",strtotime($reservation->reservation_star)) }}`],
+            disableMobile: true,
         }); // flatpickr
     }
 

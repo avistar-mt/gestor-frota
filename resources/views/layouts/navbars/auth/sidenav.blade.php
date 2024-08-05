@@ -76,7 +76,7 @@
             <li class="nav-item mt-3">
                 <a data-bs-toggle="collapse" href="#cadastro" class="nav-link" aria-controls="cadastro" role="button" aria-expanded="false">
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-end justify-content-center">
-                        <i class="fa fa-check-square-o" style="color: #f4645f; font-size: large; font-weight: 500 "></i>
+                        <i class="fa fa-check-square" style="color: #f4645f; font-size: large; font-weight: 500 "></i>
                     </div>
                     <span class="nav-link-text ms-1">Cadastro </span>
                 </a>

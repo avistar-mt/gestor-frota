@@ -154,12 +154,14 @@ document.addEventListener("DOMContentLoaded", function(){
         allowInput: true,
         dateFormat: "d/m/Y",
         defaultDate: "{{ request('start_date') }}",
+        disableMobile: true,
     }); // flatpickr
 
     flatpickr('#end_date', {
         allowInput: true,
         dateFormat: "d/m/Y",
         defaultDate: "{{ request('end_date') }}",
+        disableMobile: true,
     }); // flatpickr
 
 

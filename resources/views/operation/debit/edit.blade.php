@@ -146,6 +146,7 @@
             allowInput: true,
             dateFormat: "d/m/Y",
             defaultDate: `{{ $debit->date }}`,
+            disableMobile: true,
         }); // flatpickr
     }
 

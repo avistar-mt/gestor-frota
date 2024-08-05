@@ -316,7 +316,8 @@
 
         if (document.querySelector('.datetimepicker')) {
             flatpickr('.datetimepicker', {
-                allowInput: true
+                allowInput: true,
+                disableMobile: true,
             }); // flatpickr
         }
     </script>

@@ -80,13 +80,7 @@
                                         <td class="text-sm font-weight-normal">{{ date("d/m/Y H:i", strtotime($reservation->reservation_end)) }}</td>
                                         <td class="text-sm font-weight-normal">{{ $reservation->user->firstname . ' ' . $reservation->user->lastname }}</td>
                                         <td class="text-sm font-weight-normal">
-                                            @if ($reservation->status == 'pending')
-                                                <span class="badge bg-gradient-warning">Pending</span>
-                                            @elseif ($reservation->status == 'canceled')
-                                                <span class="badge bg-gradient-danger">Denied</span>
-                                            @elseif ($reservation->status == 'approved')
-                                                <span class="badge bg-gradient-success">Approved</span>
-                                            @endif
+                                            <span class="badge bg-gradient-{{$reservation->status->color()}}">{{ $reservation->status->string() }}</span>
                                         </td>
                                         <td class="text-sm">
                                             <span class="d-flex">

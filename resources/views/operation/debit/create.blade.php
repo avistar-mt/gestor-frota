@@ -128,6 +128,7 @@
         flatpickr('.datetimepicker', {
             allowInput: true,
             dateFormat: "d/m/Y",
+            disableMobile: true,
         });
     }
 

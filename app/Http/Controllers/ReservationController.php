@@ -38,10 +38,9 @@ class ReservationController extends Controller
         
         $user = auth()->user();
 
-        //Apenas motorista com status ativo 
-        $drivers = Driver::where('status', 'active')->get();
-
-        $drivers = User::where('role_id', 5)->get();
+        $drivers = User::where('role_id', 5)->whereDoesntHave('ownReservations', function ($query) {
+            $query->whereIn('status', ['approved', 'pending', 'ongoing']);
+        })->get();
 
 
         $branches = [];
@@ -88,7 +87,7 @@ class ReservationController extends Controller
             'vehicle_id' => 'required|exists:vehicles,id',
         ]);
 
-        Reservation::create(
+       $reservation =  Reservation::create(
             [
                 'driver_id' => $request->driver_id,
                 'reservation_star' => $request->reservation_star,
@@ -96,11 +95,14 @@ class ReservationController extends Controller
                 'branch_id' => $request->branch_id,
                 'vehicle_id' => $request->vehicle_id,
                 'user_id' => auth()->user()->id, 
-                'status' => 'pending',
             ]
         );
 
-        return redirect()->route('reservation-management')->with('success', 'Reserva criada com sucesso.');
+        foreach (['wheels', 'bodywork', 'lights', 'document'] as $checklist) {
+            $reservation->checkins()->create(['step' => $checklist]);
+        }
+
+        return redirect()->route('reservation-checkin', $reservation);
     }
 
     /**
@@ -119,7 +121,7 @@ class ReservationController extends Controller
 
         $this->authorize('manage-reservation', Reservation::class);
         $reservation = Reservation::find($id);
-        $drivers = Driver::all();
+        $drivers = User::where('role_id', 5)->get();
         $branches = Branch::all();
         $user = auth()->user();
 
@@ -142,7 +144,7 @@ class ReservationController extends Controller
         $this->authorize('manage-reservation', Reservation::class);
 
         $request->validate([
-            'status' => 'required|in:pending,approved,canceled',
+            'status' => 'required|in:pending,approved,canceled, completed, disapproved, ongoing',
         ]);
 
         $reservation = Reservation::find($id);
@@ -170,6 +172,7 @@ class ReservationController extends Controller
     public function destroy(string $id)
     {
         $reservation = Reservation::find($id);
+        $reservation->checkins()->delete();
         $reservation->delete();
 
         return redirect()->route('reservation-management')->with('success', 'Reserva deletada com sucesso.');

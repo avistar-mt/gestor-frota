@@ -249,7 +249,8 @@
                 flatpickr('#birthday', {
                     allowInput: true,
                     dateFormat: "d/m/Y",
-                    defaultDate: "{{ old('birthday', $user->birthday) }}"
+                    defaultDate: "{{ old('birthday', $user->birthday) }}",
+                    disableMobile: true,
                 }); // flatpickr
             }
 
@@ -257,7 +258,8 @@
                 flatpickr('#cnh_due_date', {
                     allowInput: true,
                     dateFormat: "d/m/Y",
-                    defaultDate: "{{ old('cnh_due_date', $user->cnh_due_date) }}"
+                    defaultDate: "{{ old('cnh_due_date', $user->cnh_due_date) }}",
+                    disableMobile: true,
                 }); // flatpickr
             }
 

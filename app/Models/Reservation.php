@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Enums\StatusType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Models\Checkin;
 
 class Reservation extends Model
 {
     use HasFactory;
+
 
     protected $fillable = [
         'user_id',
@@ -24,6 +27,13 @@ class Reservation extends Model
     protected $dates = [
         'reservation_star',
         'reservation_end',
+    ];
+
+
+    protected $casts = [
+        'reservation_star' => 'datetime:d-m-Y H:i',
+        'reservation_end' => 'datetime:d-m-Y H:i',
+        'status' => StatusType::class,
     ];
 
     public function setReservationStarAttribute($value)
@@ -77,5 +87,10 @@ class Reservation extends Model
     public function debits()
     {
         return $this->hasMany(Debit::class);
+    }
+
+    public function checkins()
+    {
+        return $this->hasMany(Checkin::class);
     }
 }
