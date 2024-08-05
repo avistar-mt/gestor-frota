@@ -40,7 +40,7 @@ class CheckinController extends Controller
         if (count($approvedCheckins) == count($reservation->checkins)) {
             return redirect()->route('reservation-management')->with('success', 'Checkin completed');
         } else {
-            return redirect()->route('reservation-management')->with('success', 'Checkin updated');
+            return redirect()->back();
         }
     }
 
