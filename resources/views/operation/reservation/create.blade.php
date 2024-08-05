@@ -39,6 +39,9 @@
                 <hr class="horizontal dark my-3">
                 <form method="POST" action="{{ route('reservation-new.store') }}">
                     @csrf
+                    <div class="px-4" id="alert">
+                        @include('components.alert')
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">

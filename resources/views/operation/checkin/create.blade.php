@@ -30,7 +30,12 @@
                     </div>
                 </div>
                 @endforeach
-            </div>
+
+                <div class="d-flex justify-content-end mt-4">
+                            <a href="{{ route('reservation-management') }}" class="btn btn-light m-0">Volta</a>
+                        </div>
+             </div>
+
         </div>
     </div>
 </div>

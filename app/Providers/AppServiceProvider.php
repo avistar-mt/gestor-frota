@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Checkin;
 use Illuminate\Support\ServiceProvider;
+use App\Observers\CheckinObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Checkin::observe(CheckinObserver::class);
     }
 }

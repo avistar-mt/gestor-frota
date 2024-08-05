@@ -89,6 +89,10 @@
                                                         data-bs-original-title="View reservation">
                                                         <i class="far fa-eye text-secondary"></i>
                                                     </a>
+                                                    <a href="{{ route('reservation-checkin', $reservation) }}" class="me-3" data-bs-toggle="tooltip"
+                                                        data-bs-original-title="Checking reservation">
+                                                        <i class="fa fa-check text-secondary"></i>
+                                                    </a>
                                                     <form action="{{ route('reservation-destroy', $reservation->id) }}" method="post">
                                                         @csrf
                                                         <button onclick="if(!confirm('Deseja deletar a reserva?')) { event.preventDefault(); }"
