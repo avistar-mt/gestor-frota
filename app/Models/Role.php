@@ -15,8 +15,8 @@ class Role extends Model
         return $this->hasMany(User::class);
     }
 
-    public function isSuperAdmin() {
-        return $this->name === 'Super Admin';
+    public function isAdmin() {
+        return $this->name === 'Admin';
     }
 
     public function isAdminFrota() {
@@ -27,15 +27,7 @@ class Role extends Model
         return $this->name === 'Gestor';
     }
 
-    public function isSuperVisor() {
-        return $this->name === 'Supervisor';
-    }
-
     public function isOperador() {
         return $this->name === 'Operador';
-    }
-
-    public function isMotorista() {
-        return $this->name === 'Motorista';
     }
 }

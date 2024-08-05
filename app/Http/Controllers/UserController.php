@@ -32,44 +32,43 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-
-        // dd($request->all());
         
-        $data = request()->validate([
+        $attributes = request()->validate([
             'firstname' => ['required'],
-            'lastname' => ['nullable'],
             'email' => ['required', 'unique:users', 'email'],
             'cpf' => ['required', 'unique:users', function ($attribute, $value, $fail) {
                 $cpf = preg_replace('/[^0-9]/', '', $value);
                 $cpfExists = User::where('cpf', $cpf)->exists();
                 if ($cpfExists) {
-                    $fail('CPF já cadastrado.');
+                    $fail('The CPF has already been taken.');
                 }
             }],
             'confirmation' => ['same:email'],
             'password' => ['required', 'min:8'],
             'confirm-password' => ['same:password'],
-            'role_id' => ['required', 'exists:roles,id'],
-            'cnh_number' => ['required_if:role_id,5'], 
-            'cnh_due_date' => ['required_if:role_id,5', 'date_format:d/m/Y', 'after:today'],
-            'cnh_category' => ['required_if:role_id,5'],
-            'branch_id' => ['required'],
+            'role' => ['required'],
+            'branch' => ['required'],
             'phone' => ['max:20'], 
-            'birthday' => ['required','date_format:d/m/Y', 'before:today'], 
-            'location' => ['required']
+            'birthday' => ['required','date', 'before:today']
         ]);
 
-        $user = User::create($data);
+        $birthday = Carbon::parse($request->get('birthday'))->format('Y-m-d');
+        $cpf = preg_replace('/[^0-9]/', '', $request->get('cpf')); 
 
-        $user->cpf = preg_replace('/[^0-9]/', '', $request->get('cpf'));
+        $user = User::create([
+            'firstname' => $request->get('firstname'),
+            'lastname' => $request->get('lastname'),
+            'password' => $request->get('password'),
+            'role_id' => $request->get('role'),
+            'email' => $request->get('email'),
+            'cpf' => $cpf,
+            'branch_id' => $request->get('branch'),
+            'location' => $request->get('location'),
+            'phone' => $request->get('phone'),
+            'birthday' => $birthday,
+        ]);
 
-
-        if($request->get('role_id') == 5) {
-            $user->cnh_number = $request->get('cnh_number');
-            $user->cnh_due_date = Carbon::createFromFormat('d/m/Y', $request->get('cnh_due_date'))->format('Y-m-d');
-            $user->cnh_category = $request->get('cnh_category');
-        }
-
+        $user->cpf = $cpf;
         $user->save();
 
         return redirect()->route('user-management')->with('succes', 'User succesfully saved');
@@ -96,23 +95,26 @@ class UserController extends Controller
             'confirmation' => ['same:email'],
             'password' => [],
             'confirm-password' => ['same:password'],
-            'role_id' => ['required'],
+            'role' => ['required'],
             'phone' => ['max:20'], 
             'birthday' => ['required','date', 'before:today']
         ]);
 
 
+        $birthday = Carbon::parse($request->get('birthday'))->format('Y-m-d');
         $cpf  = preg_replace('/[^0-9]/', '', $request->get('cpf'));
 
-        $user ->update($attributes);
-
-        $user->cpf = $cpf;
-
-        if($request->get('role_id') == 5) {
-            $user->cnh_number = $request->get('cnh_number');
-            $user->cnh_due_date = Carbon::createFromFormat('d/m/Y', $request->get('cnh_due_date'))->format('Y-m-d');
-            $user->cnh_category = $request->get('cnh_category');
-        }
+        $user ->update([
+            'firstname' => $request->get('firstname'),
+            'lastname' => $request->get('lastname'),
+            'cpf' => $cpf,
+            'password' => $request->get('password'),
+            'role_id' => $request->get('role'),
+            'email' => $request->get('email'),
+            'location' => $request->get('location'),
+            'phone' => $request->get('phone'),
+            'birthday' => $birthday,
+        ]);
 
         return redirect()->route('user-management')->with('succes', 'User succesfully updated');
     }

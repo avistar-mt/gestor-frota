@@ -292,18 +292,17 @@
                                         </td>
                                         <td class="align-middle text-sm">
                                             <div class="col text-center">
-                                                <h6 class="text-sm mb-0"> {{ isset($reservation->driver) ? $reservation->driver->firstname . ' ' . $reservation->driver->lastname : ''}}</h6>
+                                                <h6 class="text-sm mb-0"> {{ isset($reservation->driver->name) ? $reservation->driver->name  : ''}}</h6>
                                             </div>
                                         </td>
                                         <td class="align-middle text-sm">
                                             <div class="col text-center">
                                                 <h6 class="text-sm mb-0"> 
-
-                                                @if (isset($reservation->status) && $reservation->status == 'pending')
+                                                @if ($reservation->status ?? $reservation->status == 'pending')
                                                 <span class="badge bg-gradient-warning">Pending</span>
-                                            @elseif (isset($reservation->status) && $reservation->status == 'canceled')
+                                            @elseif ($reservation->status ?? $reservation->status == 'canceled')
                                                 <span class="badge bg-gradient-danger">Denied</span>
-                                            @elseif (isset($reservation->status) && $reservation->status == 'approved')
+                                            @elseif ($reservation->status ?? $reservation->status == 'approved')
                                                 <span class="badge bg-gradient-success">Approved</span>
                                             @endif
                                             </h6>

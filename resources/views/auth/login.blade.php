@@ -15,7 +15,7 @@
                             <h3 class="font-weight-bolder">Seja Bem Vindo</h3>
                         </div>
                         <div class="card-body">
-                            <form role="form" method="POST" action="{{route('login.perform') }}" class="text-start" autocomplete="off">
+                            <form role="form" method="POST" action="{{route('login.perform') }}" class="text-start">
                                 @csrf
                                 <label>Email</label>
                                 <div class="mb-3">

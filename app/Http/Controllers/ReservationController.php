@@ -26,7 +26,8 @@ class ReservationController extends Controller
     {
 
         $this->authorize('view-reservation', Reservation::class);
-        $reservations = Reservation::orderBy('created_at', 'desc')->take(15)->get();
+        $reservations = Reservation::orderBy('created_at', 'desc')->get();
+
         return view('operation.reservation.index', compact('reservations'));
     }
 
@@ -37,7 +38,6 @@ class ReservationController extends Controller
     {
         
         $user = auth()->user();
-
         $drivers = User::where('role_id', 5)->whereDoesntHave('ownReservations', function ($query) {
             $query->whereIn('status', ['approved', 'pending', 'ongoing']);
         })->get();
@@ -80,7 +80,7 @@ class ReservationController extends Controller
     {
 
         $request->validate([
-            'driver_id' => 'required|exists:users,id',
+            'driver_id' => 'required|exists:drivers,id',
             'reservation_star' => 'required|after:now|date_format:d/m/Y H:i',
             'reservation_end' => 'required|after:reservation_star|date_format:d/m/Y H:i',
             'branch_id' => 'required|exists:branches,id',

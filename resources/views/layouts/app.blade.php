@@ -8,6 +8,30 @@
     <link rel="icon" type="image/png" href="/assets/img/favicon.png">
     <title>Gestor Frota</title>
     <base href="{{ url('/') }}">
+
+    @if (config('app.is_demo'))
+        <meta name="keywords"
+            content="creative tim, updivision, html dashboard, laravel, argon, html css dashboard laravel, laravel argon dashboard laravel, laravel argon dashboard laravel pro, laravel argon dashboard, laravel argon dashboard pro, argon admin, laravel dashboard, laravel dashboard pro, laravel admin, web dashboard, bootstrap 5 dashboard laravel, bootstrap 5, css3 dashboard, bootstrap 5 admin laravel, argon dashboard bootstrap 5 laravel, frontend, responsive bootstrap 5 dashboard, argon dashboard, argon laravel bootstrap 5 dashboard" />
+        <meta name="description" content="Premium Admin Dashboard for Laravel with Ready to Use CRUDs" />
+        <meta itemprop="name" content="Gestor Frota by Creative Tim & UPDIVISION" />
+        <meta itemprop="description" content="Premium Admin Dashboard for Laravel with Ready to Use CRUDs" />
+        <meta itemprop="image"
+            content="https://s3.amazonaws.com/creativetim_bucket/products/146/original/argon-dashboard-pro-laravel.jpg" />
+        <meta name="twitter:card" content="product" />
+        <meta name="twitter:site" content="@creativetim" />
+        <meta name="twitter:title" content="Gestor Frota by Creative Tim & UPDIVISION" />
+        <meta name="twitter:description" content="Premium Admin Dashboard for Laravel with Ready to Use CRUDs" />
+        <meta name="twitter:creator" content="@creativetim" />
+        <meta name="twitter:image"
+            content="https://s3.amazonaws.com/creativetim_bucket/products/146/original/argon-dashboard-pro-laravel.jpg" />
+        <meta property="fb:app_id" content="655968634437471" />
+        <meta property="og:title" content="Gestor Frota by Creative Tim & UPDIVISION" />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="https://www.creative-tim.com/live/argon-dashboard-pro-laravel" />
+        <meta property="og:image"
+            content="https://s3.amazonaws.com/creativetim_bucket/products/146/original/argon-dashboard-pro-laravel.jpg" />
+        <meta property="og:description" content="Premium Admin Dashboard for Laravel with Ready to Use CRUDs" />
+    @endif
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Nucleo Icons -->
