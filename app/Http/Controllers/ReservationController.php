@@ -171,7 +171,8 @@ class ReservationController extends Controller
      */
     public function destroy(string $id)
     {
-        $reservation = Reservation::find($id);
+        $reservation = Reservation::findOrFail($id);
+
         $reservation->checkins()->delete();
         $reservation->delete();
 
