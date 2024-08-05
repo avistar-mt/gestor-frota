@@ -34,7 +34,14 @@ class CheckinController extends Controller
         $checklist->fill($params);
         $checklist->save();
 
-        return redirect()->back();
+        $reservation->load('checkins');
+        $approvedCheckins = $reservation->checkins->where('status', 'approved');
+
+        if (count($approvedCheckins) == count($reservation->checkins)) {
+            return redirect()->route('reservation-management')->with('success', 'Checkin completed');
+        } else {
+            return redirect()->route('reservation-management')->with('success', 'Checkin updated');
+        }
     }
 
     /**
