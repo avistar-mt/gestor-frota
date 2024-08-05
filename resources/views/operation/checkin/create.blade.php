@@ -7,8 +7,6 @@
         <div class="col-lg-9 col-12 mx-auto">
             <div class="card card-body mt-4">
                 <h3>Check-in para Reserva #{{ $reservation->id }}</h3>
-                <h4>Barra de Progresso</h4>
-
                 @foreach ($reservation->checkins as $checklist)
                 <div class="card mb-4">
                     <div class="card-header">{{ $checklist->step->getDescription() }}</div>

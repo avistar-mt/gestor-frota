@@ -43,7 +43,7 @@
                     <table class="table-bg-primary-soft">
                         <tr>
                             <th>Motorista: </th>
-                            <td>{{ strtoupper($reservation->driver->name) }}</td>
+                            <td>{{ strtoupper($reservation->driver->firstname) }}</td>
                         </tr>
                         <tr>
                             <th>Placa: </td>

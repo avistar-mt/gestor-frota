@@ -80,7 +80,7 @@ class ReservationController extends Controller
     {
 
         $request->validate([
-            'driver_id' => 'required|exists:drivers,id',
+            'driver_id' => 'required|exists:users,id',
             'reservation_star' => 'required|after:now|date_format:d/m/Y H:i',
             'reservation_end' => 'required|after:reservation_star|date_format:d/m/Y H:i',
             'branch_id' => 'required|exists:branches,id',
