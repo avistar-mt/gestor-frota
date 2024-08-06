@@ -23,6 +23,7 @@
 
     <!-- CSS Files -->
     <link id="pagestyle" href="/assets/css/argon-dashboard.css" rel="stylesheet" />
+    <link href="{{ url('/manifest.json') }}" rel="manifest">
 
     @stack('css')
 
