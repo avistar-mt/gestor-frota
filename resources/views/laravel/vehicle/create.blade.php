@@ -128,7 +128,7 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src=" {{ asset('js/app.js') }}"></script>
     <script src="/assets/js/plugins/quill.min.js"></script>
     <script>
         if (document.getElementById('editor')) {

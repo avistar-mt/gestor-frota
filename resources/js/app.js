@@ -37,12 +37,24 @@ document.addEventListener('DOMContentLoaded', function () {
     if (cpf) {
         cpf.value = formatCPF(cpf.value);
     }
+
+    // Apply Plate mask logic on page load
+    if (placa) {
+        placa.value = formatPlaca(placa.value);
+    }
+    
 });
 
 // Apply CPF mask logic on page load
 var cpf = document.getElementById('cpf');
 if (cpf) {
     cpf.value = formatCPF(cpf.value);
+}
+
+// Apply Plate mask logic on page load
+var placa = document.getElementById('plate');
+if (placa) {
+    placa.value = formatPlaca(placa.value);
 }
 
 require('./bootstrap');

@@ -31,18 +31,22 @@ function formatPlaca(placa) {
 }
 
 // Função para validar a placa
+// function validatePlaca(placa) {
+//     regex = /^[A-Za-z]{3}-?[A-Za-z0-9]{1}[0-9]{3}$/;
+//     if (!regex.test(placa)) {
+//         return false;
+//     }
+
+//     if (placa.length > 7) {
+//         return false;
+//     }
+
+//     return true;
+// }
+
 function validatePlaca(placa) {
-    regex = /^[A-Za-z]{3}-?[A-Za-z0-9]{1}[0-9]{3}$/;
-    if (!regex.test(placa)) {
-        return false;
-    }
-
-    if (placa.length > 7) {
-        return false;
-    }
-
-    return true;
+    const regex = /^[A-Za-z]{3}-?[0-9]{4}$|^[A-Za-z]{3}-?[0-9][A-Za-z][0-9]{2}$/;
+    return regex.test(placa);
 }
 
-// Exporta as funções para serem utilizadas em outros scripts
 export { formatCPF, validateCPF, formatPlaca, validatePlaca };

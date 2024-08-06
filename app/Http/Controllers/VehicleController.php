@@ -48,41 +48,17 @@ class VehicleController extends Controller
     public function store(Request $request)
     {
 
-        // $status = '';
-        // if ($request->status == StatusType::DISPONIVEL || $request->status == StatusType::ALUGADO || $request->status == StatusType::MANUTENCAO) {
-        //     $status = $request->status;
-        // } else {
-        //     return redirect()->route('vehicles.management')
-        //         ->with('error', 'Status invalid.');
-        // }
-
-        if (!$this->match_year($request->year)) {
-            return redirect()->back()->withErrors(['year' => 'Invalid year format.'])->withInput();
-        }
-
-    // $plate = $this->sanitize_plate($request->plate);
-
     $request->validate([
-        'plate' => 'required|string|max:20|unique:vehicles',
+        'plate' => 'required|string|max:20|unique:vehicles,plate',
         'model' => 'required|string|max:255',
-        'year' => 'required|string|max:255',
+        'year' => ['required', 'string', 'max:255', 'regex:/^\d{4}$/'],
         'color' => 'required|string|max:255',
         'renavam' => 'required|string|max:255',
         'description' => 'string|max:255',
         'tracker_number' => 'required|string|max:255'
     ]);
-
-    $plate = $this->sanitize_plate($request->plate);
-
-    Vehicle::create([
-        'plate' => $plate,
-        'model' => $request->model,
-        'year' => $request->year,
-        'color' => $request->color,
-        'renavam' => $request->renavam,
-        'description' => $request->description,
-        'tracker_number' => $request->tracker_number
-    ]);
+    
+    Vehicle::create($request->all());  
 
     return redirect()->route('vehicle-management')
         ->with('success', 'Vehicle created successfully.');
@@ -155,15 +131,5 @@ class VehicleController extends Controller
 
         return redirect()->route('vehicle-management')
             ->with('success', 'Vehicle deleted successfully.');
-    }
-
-    public function sanitize_plate($plate) 
-    {
-        return strtoupper(preg_replace('/[^A-Za-z0-9]/', '', $plate));
-    }
-
-    public function match_year($year) 
-    {
-        return preg_match('/^\d{4}$/', $year);
     }
 }

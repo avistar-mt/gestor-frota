@@ -31,8 +31,8 @@ class Reservation extends Model
 
 
     protected $casts = [
-        'reservation_star' => 'datetime:d-m-Y H:i',
-        'reservation_end' => 'datetime:d-m-Y H:i',
+        'reservation_star' => 'datetime',
+        'reservation_end' => 'datetime',
         'status' => StatusType::class,
     ];
 
@@ -42,10 +42,10 @@ class Reservation extends Model
         $this->attributes['reservation_star'] = $data->setTimezone('America/Sao_Paulo')->format('Y-m-d H:i:s');
     }
 
-    public function getReservationStarAttribute($value)
-    {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('d-m-Y H:i:s');
-    }
+    // public function getReservationStarAttribute($value)
+    // {
+    //     return Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('d-m-Y H:i:s');
+    // }
 
     public function setReservationEndAttribute($value)
     {

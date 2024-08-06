@@ -22,6 +22,9 @@ class DashboardController extends Controller
         $totalDriver = User::where('role_id', 5)->count();
         $latestReservation = Reservation::latest()->take(15)->get();
 
+
+        $reservations = Reservation::all();
+
         $branchReservation = Reservation::select('branch_id', DB::raw('count(*) as total'))
             ->groupBy('branch_id')
             ->get();
@@ -29,6 +32,6 @@ class DashboardController extends Controller
         $last24Hours = Reservation::where('created_at', '>=', now()->subDay())
             ->count();
 
-        return view('dashboards.default', compact('totalVehicle', 'totalBranch', 'totalDriver','latestReservation', 'branchReservation', 'last24Hours'));
+        return view('dashboards.default', compact('totalVehicle', 'totalBranch', 'totalDriver','latestReservation', 'branchReservation', 'last24Hours', 'reservations'));
     }
 }

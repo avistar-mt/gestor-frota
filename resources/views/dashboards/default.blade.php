@@ -318,19 +318,79 @@
                                     @endforeach
                                 </tbody>
                             </table>
+
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-9 mt-4">
+                        <div class="card card-calendar">
+                            <div class="card-body p-3">
+                            <div class="calendar" data-bs-toggle="calendar" id="calendar"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- @include('layouts.footers.auth.footer') -->
-
     </div>
 @endsection
 
 @push('js')
     <script src="../../assets/js/plugins/chartjs.min.js"></script>
+    <script src="../../assets/js/plugins/fullcalendar.min.js"></script>
     <script>
+
+
+
+
+var events = [
+                @foreach($reservations as $reservation)
+
+                {
+                    title: '{{ $reservation->id }} /{{ $reservation->driver->firstname }} / {{ $reservation->driver->lastname }} {{ $reservation->vehicle->plate }}',
+                    start: '{{ $reservation->reservation_star->format('Y-m-d') }}',
+                    className: 'bg-gradient-{{ $reservation->status->color() }}',
+                },
+                @endforeach
+            ];
+
+var calendar = new FullCalendar.Calendar(document.getElementById("calendar"), {
+      initialView: "dayGridMonth",
+      locale: 'pt-br',
+      headerToolbar: {
+        start: 'title', // will normally be on the left. if RTL, will be on the right
+        center: '',
+        end: 'today prev,next' // will normally be on the right. if RTL, will be on the left
+      },
+      selectable: true,
+      editable: true,
+      initialDate: `{{ now() }}`,
+    events: events,
+      views: {
+        month: {
+          titleFormat: {
+            month: "long",
+            year: "numeric"
+          }
+        },
+        agendaWeek: {
+          titleFormat: {
+            month: "long",
+            year: "numeric",
+            day: "numeric"
+          }
+        },
+        agendaDay: {
+          titleFormat: {
+            month: "short",
+            year: "numeric",
+            day: "numeric"
+          }
+        }
+      },
+    });
+
+    calendar.render();
 
     </script>
 @endpush
