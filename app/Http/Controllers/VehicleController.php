@@ -18,9 +18,9 @@ class VehicleController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->role_id == 1) {
+        if ($user->isAdmin()) {
             $vehicles = Vehicle::all();
-        } else if ($user->role_id == 2) {
+        } else if ($user->isAdminFrota()) {
             $vehicles = DB::table('branch_vehicles')
                 ->join('vehicles', 'branch_vehicles.vehicle_id', '=', 'vehicles.id')
                 ->where('branch_vehicles.branch_id', $user->branch_id)

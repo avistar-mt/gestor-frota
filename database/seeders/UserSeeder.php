@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             'id' => 2,
             'firstname' => 'Olivan',
             'lastname' => 'Teste',
-            'email' => 'gestor@aguia.com',
+            'email' => 'frota@aguia.com',
             'password' =>  Hash::make('secret'),
             'role_id' => 2,
             'branch_id' => 1,

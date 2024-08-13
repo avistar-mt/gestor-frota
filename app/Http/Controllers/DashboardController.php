@@ -9,19 +9,20 @@ use App\Models\Branch;
 use App\Models\Driver;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
-
-
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index()
     {
+        if (Auth::user()->isDriver()) {
+            return redirect()->route('reservation-management');
+        }
 
         $totalVehicle = Vehicle::count();
         $totalBranch = Branch::count();
-        $totalDriver = User::where('role_id', 5)->count();
+        $totalDriver = User::driver()->count();
         $latestReservation = Reservation::latest()->take(15)->get();
-
 
         $reservations = Reservation::all();
 
