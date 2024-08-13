@@ -2,9 +2,7 @@
 
 namespace App\Enums;
 
-use BenSampo\Enum\Enum;
-
-final class ReservationType extends Enum
+enum ReservationType: string
 {
     const PENDENTE = 'pending';
     const APROVADO = 'approved';
@@ -13,34 +11,15 @@ final class ReservationType extends Enum
     const DESAPROVADO = 'disapproved';
     const EM_ANDAMENTO = 'ongoing';
 
-
-    public static function getDescription($value): string
+    public function string(): string
     {
-        if ($value === self::PENDENTE) {
-            return 'Pendente';
-        }
-
-        if ($value === self::APROVADO) {
-            return 'Aprovado';
-        }
-
-        if ($value === self::NEGADO) {
-            return 'Negado';
-        }
-
-        if ($value === self::COMPLETADO) {
-            return 'Completo';
-        }
-
-        if ($value === self::DESAPROVADO) {
-            return 'Desaprovado';
-        }
-
-        if ($value === self::EM_ANDAMENTO) {
-            return 'Em andamento';
-        }
-
-        return parent::getDescription($value);
+        return match ($this) {
+            self::PENDENTE => 'Pendente',
+            self::APROVADO => 'Aprovado',
+            self::NEGADO => 'Negado',
+            self::COMPLETADO => 'Completo',
+            self::DESAPROVADO => 'Desaprovado',
+            self::EM_ANDAMENTO => 'Em andamento',
+        };
     }
-
 }
