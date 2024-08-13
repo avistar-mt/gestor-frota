@@ -87,9 +87,9 @@ class VehicleController extends Controller
     public function update(Request $request, string $id)
     {
         // dd($request->all());
-        if (!$this->match_year($request->year)) {
-            return redirect()->back()->withErrors(['year' => 'Invalid year format.'])->withInput();
-        }
+        // if (!$this->match_year($request->year)) {
+        //     return redirect()->back()->withErrors(['year' => 'Invalid year format.'])->withInput();
+        // }
        
         // $status = '';
         // if ($request->status == StatusType::DISPONIVEL || $request->status == StatusType::ALUGADO || $request->status == StatusType::MANUTENCAO) {
@@ -106,7 +106,7 @@ class VehicleController extends Controller
             'renavam' => 'required|string|max:255',
             'description' => 'string|max:255',
             'tracker_number' => 'required|string|max:255', 
-            'status' => ['required', 'string', 'max:50', Rule::in([StatusType::DISPONIVEL, StatusType::ALUGADO, StatusType::MANUTENCAO])]
+            'status' => ['required', 'string', 'max:50', Rule::enum(StatusType::class)]
         ]);
 
         Vehicle::findOrFail($id)->update($request->all());

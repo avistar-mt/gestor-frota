@@ -23,6 +23,10 @@ class Vehicle extends Model
         'status',
     ];
 
+    protected $casts = [
+        'status' => StatusType::class,
+    ];
+
     public function branches()
     {
         return $this->belongsToMany(Branch::class, 'branch_vehicle');

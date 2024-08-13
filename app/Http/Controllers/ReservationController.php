@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ReservationType;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use App\Models\Driver;
@@ -15,7 +16,7 @@ use App\Models\User;
 // use Barryvdh\DomPDF\Facade as PDF;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ReservationsExport;
-
+use Illuminate\Validation\Rule;
 
 class ReservationController extends Controller
 {
@@ -128,13 +129,14 @@ class ReservationController extends Controller
         $this->authorize('manage-reservation', Reservation::class);
 
         $request->validate([
-            'status' => 'required|in:pending,approved,canceled, completed, disapproved, ongoing',
+            'status' => ['required', Rule::enum(ReservationType::class)],
+            'motive' => ['nullable', 'string', 'required_if:status,canceled']
         ]);
 
         $reservation = Reservation::find($id);
 
         if ($request->status == 'canceled') {
-            $request->validate(['motive' => 'required|string']);
+            // $request->validate(['motive' => 'required|string']);
             $reservation->motive = $request->motive;
             $reservation->status = $request->status;
         }
