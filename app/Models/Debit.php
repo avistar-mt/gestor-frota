@@ -20,9 +20,7 @@ class Debit extends Model
         'image_path',
     ];
 
-
     protected $dates = ['date'];
-
 
     public function setDateAttribute($value)
     {

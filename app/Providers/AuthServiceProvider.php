@@ -44,21 +44,36 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('manage-items', 'App\Policies\UserPolicy@manageItems');
+        Gate::before(function ($user, $ability, $context) {
+            $roles = config('roles');
+            $role_name = $user->role->name;
+            if (!isset($roles[$role_name])) {
+                return false;
+            }
 
-        Gate::define('manage-users', 'App\Policies\UserPolicy@manageUsers');
+            $roles = $roles[$role_name];
+            if (in_array('superadmin', $roles)) {
+                return true;
+            }
 
-        Gate::define('manage-drivers', 'App\Policies\UserPolicy@manageDrivers');
+            return in_array($ability, $roles);
+        });
 
-        Gate::define('manage-role', 'App\Policies\UserPolicy@create');
+        // Gate::define('manage-items', 'App\Policies\UserPolicy@manageItems');
 
-        Gate::define('view-reservation', 'App\Policies\ReservationPolicy@viewAny');
+        // Gate::define('manage-users', 'App\Policies\UserPolicy@manageUsers');
+
+        // Gate::define('manage-drivers', 'App\Policies\UserPolicy@manageDrivers');
+
+        // Gate::define('manage-role', 'App\Policies\UserPolicy@create');
+
+        // Gate::define('view-reservation', 'App\Policies\ReservationPolicy@viewAny');
         
-        Gate::define('manage-reservation', 'App\Policies\ReservationPolicy@create');
+        // Gate::define('manage-reservation', 'App\Policies\ReservationPolicy@create');
 
-        Gate::define('manage-reservation', 'App\Policies\ReservationPolicy@manage');
+        // Gate::define('manage-reservation', 'App\Policies\ReservationPolicy@manage');
 
-        Gate::define('delete-reservation', 'App\Policies\ReservationPolicy@delete');
+        // Gate::define('delete-reservation', 'App\Policies\ReservationPolicy@delete');
 
     }
 }

@@ -2,25 +2,27 @@
 
 namespace App\Models;
 
+use App\Enums\CheckoutStepType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\Stage;
 use App\Enums\StepType;
 
-class Checkin extends Model
+class Checkout extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'user_id',
         'reservation_id',
+        'image',
         'step',
         'status'
     ];
 
     protected $casts = [
         'status' => Stage::class,
-        'step' => StepType::class,
+        'step' => CheckoutStepType::class,
     ];
 
     public function reservation()

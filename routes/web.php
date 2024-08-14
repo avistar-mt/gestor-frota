@@ -15,6 +15,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DebitController;
 use App\Http\Controllers\CheckinController;
+use App\Http\Controllers\CheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,6 +107,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::controller(CheckinController::class)->group(function() {
         Route::get('/reservations/{reservation}/checkin', 'index')->name('reservation-checkin');
         Route::post('/reservations/{reservation}/checkin/{id}', 'update')->name('reservation-checkin.update');
+    });
+
+    Route::controller(CheckoutController::class)->group(function() {
+        Route::get('/reservations/{reservation}/checkout', 'index')->name('reservation-checkout');
+        Route::get('/reservations/{reservation}/checkout/{id}', 'edit')->name('reservation-checkout.edit');
+        Route::post('/reservations/{reservation}/checkout/{id}', 'update')->name('reservation-checkout.update');
     });
 
     Route::controller(BranchVehicleController::class)->group(function() {

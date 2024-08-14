@@ -2,34 +2,20 @@
 
 namespace App\Enums;
 
- enum StepType : string
+enum StepType: string
 {
-
     case RODA = 'wheels';
-
     case LATARIA = 'bodywork';
-
     case FAROL = 'lights';
-
     case DOCUMENTO = 'document';
 
-
-    public function getDescription(): string
+    public function string(): string
     {
-        if ($this === self::RODA) {
-            return 'Rodas';
-        }
-
-        if ($this === self::LATARIA) {
-            return 'Lataria';
-        }
-
-        if ($this === self::FAROL) {
-            return 'Farol';
-        }
-
-        if($this === self::DOCUMENTO){
-            return 'Documento';
-        }
+        return match ($this) {
+            self::RODA => 'Rodas',
+            self::LATARIA => 'Lataria',
+            self::FAROL => 'Farol',
+            self::DOCUMENTO => 'Documento',
+        };
     }
 }

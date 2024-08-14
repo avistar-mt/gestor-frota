@@ -9,10 +9,10 @@
                 <h3>Check-in para Reserva #{{ $reservation->id }}</h3>
                 @foreach ($reservation->checkins as $checklist)
                 <div class="card mb-4">
-                    <div class="card-header">{{ $checklist->step->getDescription() }}</div>
+                    <div class="card-header">{{ $checklist->step->string() }}</div>
                     <div class="card-body">
                         @if ($checklist->user_id)
-                        {{ $checklist->status->getDescription() }} por {{ $checklist->user->name }} em {{ $checklist->updated_at->format('d/m/Y H:i') }}
+                        {{ $checklist->status->string() }} por {{ $checklist->user->name }} em {{ $checklist->updated_at->format('d/m/Y H:i') }}
                         @else
                         <form action="{{ route('reservation-checkin.update', ['reservation' => $reservation->id, 'id' =>$checklist->id]) }}" method="POST">
                             @csrf

@@ -112,6 +112,30 @@ class User extends Authenticatable
         return $this->role_id === 4;
     }
 
+    public function isDriver() {
+        return $this->role_id === 5;
+    }
+
+    public function scopeAdmin($query): void {
+        $query->where('role_id', 1);
+    }
+
+    public function scopeAdminFrota($query): void {
+        $query->where('role_id', 2);
+    }
+
+    public function scopeGestor($query): void {
+        $query->where('role_id', 3);
+    }
+
+    public function scopeOperation($query): void {
+        $query->where('role_id', 4);
+    }
+
+    public function scopeDriver($query): void {
+        $query->where('role_id', 5);
+    }
+
     public function getNameAttribute() {
         return join(' ', array_filter([$this->firstname, $this->lastname]));
     }

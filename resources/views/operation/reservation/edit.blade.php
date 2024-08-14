@@ -73,12 +73,13 @@
 
                         <tr>
                             <th>Aprovador Por: </td>
-                            <td>{{ $reservation->approver }}</td>
+                            <td>{{ $reservation->approver?->name }}</td>
                         </tr>
                     </table>
 
                     <div class=" d-flex justify-content-end mt-4">
                         <a href="{{ route('reservation-management') }}" class="btn btn-light m-0">Volta</a>
+                        @unless($reservation->approved_by)
                         <button type="submit" name="status" value="approved" class="btn btn-success m-0 ms-2">Aprovar</button>
                         <button type="button" class="btn btn-danger m-0 ms-2" data-bs-toggle="modal" data-bs-target="#rejectModal">Negar</button>
 
@@ -92,7 +93,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <label for="motive" class="form-label">Motivo</label>
-                                        <textarea class="form-control" id="motive" name="motive" placeholder="Informe o motivo pelo qual está sendo rejeitado" required></textarea>
+                                        <textarea class="form-control" id="motive" name="motive" placeholder="Informe o motivo pelo qual está sendo rejeitado"></textarea>
                                         @error('motive')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -103,6 +104,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endunless
                         </div>
                     </div>
                 </div>

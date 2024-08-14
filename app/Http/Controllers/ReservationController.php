@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CheckoutStepType;
+use App\Enums\ReservationType;
+use App\Enums\StepType;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use App\Models\Driver;
@@ -15,7 +18,7 @@ use App\Models\User;
 // use Barryvdh\DomPDF\Facade as PDF;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ReservationsExport;
-
+use Illuminate\Validation\Rule;
 
 class ReservationController extends Controller
 {
@@ -35,42 +38,24 @@ class ReservationController extends Controller
      */
     public function create()
     {
-        
-        $user = auth()->user();
-        $drivers = User::where('role_id', 5)->whereDoesntHave('ownReservations', function ($query) {
+        $this->authorize('create-reservation');
+        $drivers = User::driver()->whereDoesntHave('ownReservations', function ($query) {
             $query->whereIn('status', ['approved', 'pending', 'ongoing']);
         })->get();
 
-        $drivers = User::where('role_id', 5)->get();
+        $vehicles = Vehicle::query()
+            ->with('branches')
+            ->where('status', 'available')
+            ->whereDoesntHave('reservations', function ($query) {
+                $query->whereIn('status', ['approved', 'pending', 'ongoing']);
+            })
+            ->when(Auth::user()->role->isAdminFrota() || Auth::user()->role->isGestor(), function ($query) {
+                $query->whereHas('branches', function ($query) {
+                    $query->where('branches.id', Auth::user()->branch_id);
+                });
+            })->get();
 
-
-        $branches = [];
-        if ($user->role->isAdminFrota() || $user->role->isGestor()){
-            $branches = Branch::with('vehicles')->get();
-        } else {
-            $branches = Branch::with('vehicles')->where('id', $user->branch_id)->get();
-        }
-        
-
-        $vehicles = [];
-        if ($user->role->isAdminFrota() || $user->role->isGestor()) {
-            $vehicles = Vehicle::all()
-                                ->where('status', 'available')
-                                ->whereDoesntHave('reservations', function ($query) {
-                                        $query->whereIn('status', ['approved', 'pending', 'ongoing']);
-                                 });
-        } else {
-            $vehicles = Vehicle::where('status', 'available')
-                ->whereDoesntHave('reservations', function ($query) {
-                    $query->whereIn('status', ['approved', 'pending', 'ongoing']);
-                })
-                ->whereHas('branches', function ($query) use ($user) {
-                    $query->where('branches.id', $user->branch_id);
-                })
-                ->get();
-        }
-        
-
+        $branches = $vehicles->pluck('branches')->flatten()->unique('name');
         return view('operation.reservation.create', compact('branches', 'drivers', 'vehicles'));
     }
 
@@ -80,6 +65,7 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
 
+        $this->authorize('create-reservation');
         $request->validate([
             'driver_id' => 'required|exists:users,id',
             'reservation_star' => 'required|after:now|date_format:d/m/Y H:i',
@@ -88,18 +74,18 @@ class ReservationController extends Controller
             'vehicle_id' => 'required|exists:vehicles,id',
         ]);
 
-       $reservation =  Reservation::create(
+        $reservation =  Reservation::create(
             [
                 'driver_id' => $request->driver_id,
                 'reservation_star' => $request->reservation_star,
                 'reservation_end' => $request->reservation_end,
                 'branch_id' => $request->branch_id,
                 'vehicle_id' => $request->vehicle_id,
-                'user_id' => auth()->user()->id, 
+                'user_id' => auth()->user()->id,
             ]
         );
 
-        foreach (['wheels', 'bodywork', 'lights', 'document'] as $checklist) {
+        foreach (StepType::cases() as $checklist) {
             $reservation->checkins()->create(['step' => $checklist]);
         }
 
@@ -122,7 +108,7 @@ class ReservationController extends Controller
 
         $this->authorize('manage-reservation', Reservation::class);
         $reservation = Reservation::find($id);
-        $drivers = User::where('role_id', 5)->get();
+        $drivers = User::driver()->get();
         $branches = Branch::all();
         $user = auth()->user();
 
@@ -145,13 +131,14 @@ class ReservationController extends Controller
         $this->authorize('manage-reservation', Reservation::class);
 
         $request->validate([
-            'status' => 'required|in:pending,approved,canceled, completed, disapproved, ongoing',
+            'status' => ['required', Rule::enum(ReservationType::class)],
+            'motive' => ['nullable', 'string', 'required_if:status,canceled']
         ]);
 
         $reservation = Reservation::find($id);
 
         if ($request->status == 'canceled') {
-            $request->validate(['motive' => 'required|string']);
+            // $request->validate(['motive' => 'required|string']);
             $reservation->motive = $request->motive;
             $reservation->status = $request->status;
         }
@@ -162,7 +149,13 @@ class ReservationController extends Controller
             $reservation->approved_by = Auth::user()->id;
         }
 
-        $reservation->save();
+        if ($reservation->save()) {
+            if ($request->status == 'approved') {
+                foreach (CheckoutStepType::cases() as $checklist) {
+                    $reservation->checkouts()->create(['step' => $checklist]);
+                }
+            }
+        }
 
         return redirect()->route('reservation-management')->with('success', 'Reserva atualizada com sucesso.');
     }
@@ -172,6 +165,7 @@ class ReservationController extends Controller
      */
     public function destroy(string $id)
     {
+        $this->authorize('delete-reservation', Reservation::class);
         $reservation = Reservation::findOrFail($id);
 
         $reservation->checkins()->delete();
@@ -182,55 +176,57 @@ class ReservationController extends Controller
 
     public function reportForm()
     {
+        $this->authorize('report-reservation', Reservation::class);
         $users = User::all();
         return view('operation.reservation.report', compact('users'));
     }
 
 
     public function generateReport(Request $request)
-{
-
-    $request->validate(
-        [
-            'start_date' => 'required|date_format:d/m/Y',
-            'end_date' => 'required|after_or_equal:start_date|date_format:d/m/Y',
-            'solicitante' => 'nullable|string',
-            'output_type' => 'nullable|string|in:pdf,excel',
-        ],
-        [
-            'start_date.required' => 'A data de início é obrigatória.',
-            'start_date.date_format' => 'A data de início deve estar no formato dd/mm/aaaa.',
-            'end_date.required' => 'A data de término é obrigatória.',
-            'end_date.date_format' => 'A data de término deve estar no formato dd/mm/aaaa.',
-            'end_date.after' => 'A data fim não pode ser maior que a data de início.',
-            'output_type.in' => 'O tipo de saída deve ser pdf ou excel.',
-        ]
-    );
-
-    $users = User::all();
-    $query = Reservation::query();
-
-    $query->where('reservation_star', '>=', Carbon::createFromFormat('d/m/Y', $request->start_date)->startOfDay());
-    $query->where('reservation_end', '<=', Carbon::createFromFormat('d/m/Y', $request->end_date)->endOfDay());
-
-    if (!empty($request->solicitante)) {
-        $query->where('user_id', $request->solicitante);
-    } else {
-        $query->where('user_id', auth()->user()->id);
-    }
-
-    $reservations = $query->get();    
-
-    return view('operation.reservation.report', compact('reservations', 'users'))->with('success', 'Relatório gerado com sucesso.');
-}
-
-
-    public function exportReport(Request $request) 
     {
 
+        $this->authorize('report-reservation', Reservation::class);
+        $request->validate(
+            [
+                'start_date' => 'required|before_or_equal:end_date|date_format:d/m/Y',
+                'end_date' => 'required|after_or_equal:start_date|date_format:d/m/Y',
+                'solicitante' => 'nullable|string',
+                'output_type' => 'nullable|string|in:pdf,excel',
+            ],
+            [
+                'start_date.required' => 'A data de início é obrigatória.',
+                'start_date.date_format' => 'A data de início deve estar no formato dd/mm/aaaa.',
+                'end_date.required' => 'A data de término é obrigatória.',
+                'end_date.date_format' => 'A data de término deve estar no formato dd/mm/aaaa.',
+                'end_date.after' => 'A data fim não pode ser maior que a data de início.',
+                'output_type.in' => 'O tipo de saída deve ser pdf ou excel.',
+            ]
+        );
+
+        $users = User::all();
+        $query = Reservation::query();
+
+        $query->where('reservation_star', '>=', Carbon::createFromFormat('d/m/Y', $request->start_date)->startOfDay());
+        $query->where('reservation_end', '<=', Carbon::createFromFormat('d/m/Y', $request->end_date)->endOfDay());
+
+        if (!empty($request->solicitante)) {
+            $query->where('user_id', $request->solicitante);
+        } else {
+            $query->where('user_id', auth()->user()->id);
+        }
+
+        $reservations = $query->get();
+
+        return view('operation.reservation.report', compact('reservations', 'users'))->with('success', 'Relatório gerado com sucesso.');
+    }
+
+
+    public function exportReport(Request $request)
+    {
+        $this->authorize('report-reservation', Reservation::class);
         $request->validate([
             'start_date' => 'required|date_format:d/m/Y',
-            'end_date' => 'required|date_format:d/m/Y|after_or_equal:start_date', 
+            'end_date' => 'required|date_format:d/m/Y|after_or_equal:start_date',
             'solicitante' => 'nullable|string'
         ]);
 
@@ -240,7 +236,7 @@ class ReservationController extends Controller
         $query->where('reservation_end', '<=', Carbon::createFromFormat('d/m/Y', $request->end_date)->endOfDay());
 
         if (!empty($request->solicitante)) {
-            $query->whereHas('user', function($q) use ($request) {
+            $query->whereHas('user', function ($q) use ($request) {
                 $q->where('id',  $request->solicitante);
             });
         } else {

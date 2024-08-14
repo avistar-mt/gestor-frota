@@ -14,11 +14,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('checkins', function (Blueprint $table) {
+        Schema::create('checkouts', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Reservation::class)->constrained()->cascadeOnDelete();
             $table->string('step');
             $table->string('status')->default(Stage::PENDENTE->value);
+            $table->string('image')->nullable();
             $table->foreignIdFor(User::class)->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('checkins');
+        Schema::dropIfExists('checkouts');
     }
 };

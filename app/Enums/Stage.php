@@ -2,14 +2,12 @@
 
 namespace App\Enums;
 
-enum ReservationType: string
+enum Stage: string
 {
+
     case PENDENTE = 'pending';
     case APROVADO = 'approved';
-    case NEGADO = 'canceled';
-    case COMPLETADO = 'completed';
-    case DESAPROVADO = 'disapproved';
-    case EM_ANDAMENTO = 'ongoing';
+    case NEGADO = 'rejected';
 
     public function string(): string
     {
@@ -17,9 +15,6 @@ enum ReservationType: string
             self::PENDENTE => 'Pendente',
             self::APROVADO => 'Aprovado',
             self::NEGADO => 'Negado',
-            self::COMPLETADO => 'Completo',
-            self::DESAPROVADO => 'Desaprovado',
-            self::EM_ANDAMENTO => 'Em andamento',
         };
     }
 }
