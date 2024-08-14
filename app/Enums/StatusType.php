@@ -2,9 +2,6 @@
 
 namespace App\Enums;
 
-use BenSampo\Enum\Enum;
-
-
 enum StatusType: string
 {
     case DISPONIVEL = 'available';

@@ -2,14 +2,14 @@
 
 namespace App\Enums;
 
-enum CheckinType: string
+enum Stage: string
 {
 
     case PENDENTE = 'pending';
     case APROVADO = 'approved';
     case NEGADO = 'rejected';
 
-    public function getDescription(): string
+    public function string(): string
     {
         return match ($this) {
             self::PENDENTE => 'Pendente',

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CheckoutStepType;
 use App\Enums\ReservationType;
+use App\Enums\StepType;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use App\Models\Driver;
@@ -83,7 +85,7 @@ class ReservationController extends Controller
             ]
         );
 
-        foreach (['wheels', 'bodywork', 'lights', 'document'] as $checklist) {
+        foreach (StepType::cases() as $checklist) {
             $reservation->checkins()->create(['step' => $checklist]);
         }
 
@@ -147,7 +149,13 @@ class ReservationController extends Controller
             $reservation->approved_by = Auth::user()->id;
         }
 
-        $reservation->save();
+        if ($reservation->save()) {
+            if ($request->status == 'approved') {
+                foreach (CheckoutStepType::cases() as $checklist) {
+                    $reservation->checkouts()->create(['step' => $checklist]);
+                }
+            }
+        }
 
         return redirect()->route('reservation-management')->with('success', 'Reserva atualizada com sucesso.');
     }
@@ -180,7 +188,7 @@ class ReservationController extends Controller
         $this->authorize('report-reservation', Reservation::class);
         $request->validate(
             [
-                'start_date' => 'required|date_format:d/m/Y',
+                'start_date' => 'required|before_or_equal:end_date|date_format:d/m/Y',
                 'end_date' => 'required|after_or_equal:start_date|date_format:d/m/Y',
                 'solicitante' => 'nullable|string',
                 'output_type' => 'nullable|string|in:pdf,excel',

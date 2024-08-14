@@ -4,12 +4,12 @@ namespace App\Enums;
 
 enum ReservationType: string
 {
-    const PENDENTE = 'pending';
-    const APROVADO = 'approved';
-    const NEGADO = 'canceled';
-    const COMPLETADO = 'completed';
-    const DESAPROVADO = 'disapproved';
-    const EM_ANDAMENTO = 'ongoing';
+    case PENDENTE = 'pending';
+    case APROVADO = 'approved';
+    case NEGADO = 'canceled';
+    case COMPLETADO = 'completed';
+    case DESAPROVADO = 'disapproved';
+    case EM_ANDAMENTO = 'ongoing';
 
     public function string(): string
     {

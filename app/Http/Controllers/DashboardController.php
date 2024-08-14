@@ -22,9 +22,14 @@ class DashboardController extends Controller
         $totalVehicle = Vehicle::count();
         $totalBranch = Branch::count();
         $totalDriver = User::driver()->count();
-        $latestReservation = Reservation::latest()->take(15)->get();
-
-        $reservations = Reservation::all();
+        $latestReservation = Reservation::with('driver', 'vehicle')->latest()->take(15)->get();
+        $reservations = Reservation::all()->map(function ($reservation) {
+            return [
+                'title' => "{$reservation->id}/{$reservation->driver->name} {$reservation->vehicle->plate}",
+                'start' => $reservation->reservation_star->format('Y-m-d'),
+                'className' => "bg-gradient-{$reservation->status->color()}",
+            ];
+        });
 
         $branchReservation = Reservation::select('branch_id', DB::raw('count(*) as total'))
             ->groupBy('branch_id')

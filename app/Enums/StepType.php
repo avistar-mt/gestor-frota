@@ -9,7 +9,7 @@ enum StepType: string
     case FAROL = 'lights';
     case DOCUMENTO = 'document';
 
-    public function getDescription(): string
+    public function string(): string
     {
         return match ($this) {
             self::RODA => 'Rodas',

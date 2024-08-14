@@ -38,7 +38,7 @@ class Reservation extends Model
 
     public function setReservationStarAttribute($value)
     {
-        $data = Carbon::createFromFormat('d/m/Y H:i',$value);
+        $data = Carbon::createFromFormat('d/m/Y H:i', $value);
         $this->attributes['reservation_star'] = $data->setTimezone('America/Sao_Paulo')->format('Y-m-d H:i:s');
     }
 
@@ -92,5 +92,10 @@ class Reservation extends Model
     public function checkins()
     {
         return $this->hasMany(Checkin::class);
+    }
+
+    public function checkouts()
+    {
+        return $this->hasMany(Checkout::class);
     }
 }
