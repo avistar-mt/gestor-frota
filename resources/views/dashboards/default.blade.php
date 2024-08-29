@@ -83,7 +83,7 @@
                                 <div class="col-4 text-end">
                                     <div
                                         class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
-                                        <i class="fa fa-building-o text-lg opacity-10" aria-hidden="true"></i>
+                                        <i class="fa fa-industry text-lg opacity-10" aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                                 <div class="col-4 text-end">
                                     <div
                                         class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                                        <i class="fa fa-id-card-o text-lg opacity-10" aria-hidden="true"></i>
+                                        <i class="fa fa-address-card text-lg opacity-10" aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </div>
