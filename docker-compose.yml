@@ -12,12 +12,15 @@ services:
             - ./:/var/www
         depends_on:
             - redis
+            - db
         networks:
             - laravel
+        links:
+            - db
 
     # nginx
     nginx:
-        image: nginx:alpine
+        image: nginx:1.27.0
         restart: unless-stopped
         ports:
             - "8989:80"
@@ -26,6 +29,8 @@ services:
             - ./docker/nginx/:/etc/nginx/conf.d/
         networks:
             - laravel
+        depends_on:
+            - app
 
     # db mysql
     db:
@@ -55,6 +60,8 @@ services:
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-userpass}
         networks:
             - laravel
+        depends_on:
+            - db
 
     # redis
     redis:
@@ -64,4 +71,3 @@ services:
 
 networks:
     laravel:
-        driver: bridge
