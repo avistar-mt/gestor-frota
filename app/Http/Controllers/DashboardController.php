@@ -25,7 +25,7 @@ class DashboardController extends Controller
         $latestReservation = Reservation::with('driver', 'vehicle')->latest()->take(15)->get();
         $reservations = Reservation::all()->map(function ($reservation) {
             return [
-                'title' => "{$reservation->id}/{$reservation->driver->name} {$reservation->vehicle->plate}",
+                'title' => "{$reservation->vehicle->plate }/{$reservation->driver->name}",
                 'start' => $reservation->reservation_star->format('Y-m-d'),
                 'className' => "bg-gradient-{$reservation->status->color()}",
             ];
