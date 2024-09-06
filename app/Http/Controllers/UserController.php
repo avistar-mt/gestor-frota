@@ -51,7 +51,7 @@ class UserController extends Controller
             'confirm-password' => ['same:password'],
             'role_id' => ['nullable','required', 'exists:roles,id'],
             'cnh_number' => ['nullable', 'required_if:role_id,5'], 
-            'cnh_due_date' => ['nullable', 'required_if:role_id,5', 'date_format:d/m/Y', 'after:today'],
+            'cnh_due_date' => ['nullable', 'required_if:role_id,5', 'after:today'],
             'cnh_category' => ['nullable', 'required_if:role_id,5'],
             'branch_id' => ['required'],
             'phone' => ['max:20'], 
