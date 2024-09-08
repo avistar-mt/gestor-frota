@@ -28,7 +28,7 @@ class ReservationController extends Controller
     public function index()
     {
 
-        $this->authorize('view-reservation', Reservation::class);
+        $this->authorize('view-reservation');
         $reservations = Reservation::orderBy('created_at', 'desc')->take(15)->get();
         return view('operation.reservation.index', compact('reservations'));
     }
@@ -39,9 +39,10 @@ class ReservationController extends Controller
     public function create()
     {
         $this->authorize('create-reservation');
-        $drivers = User::driver()->whereDoesntHave('ownReservations', function ($query) {
-            $query->whereIn('status', ['approved', 'pending', 'ongoing']);
-        })->get();
+
+            $drivers = User::driver()->whereDoesntHave('ownReservations', function ($query) {
+                $query->whereIn('status', ['approved', 'pending', 'ongoing']);
+            })->get();
 
         $vehicles = Vehicle::query()
             ->with('branches')
@@ -106,7 +107,7 @@ class ReservationController extends Controller
     public function edit(string $id)
     {
 
-        $this->authorize('manage-reservation', Reservation::class);
+        $this->authorize('edit-reservation');
         $reservation = Reservation::find($id);
         $drivers = User::driver()->get();
         $branches = Branch::all();
@@ -176,8 +177,12 @@ class ReservationController extends Controller
 
     public function reportForm()
     {
+        
         $this->authorize('report-reservation', Reservation::class);
         $users = User::all();
+
+        $branches = Branch::all(); 
+
         return view('operation.reservation.report', compact('users'));
     }
 
@@ -185,7 +190,7 @@ class ReservationController extends Controller
     public function generateReport(Request $request)
     {
 
-        $this->authorize('report-reservation', Reservation::class);
+        $this->authorize('report-reservation');
         $request->validate(
             [
                 'start_date' => 'required|before_or_equal:end_date|date_format:d/m/Y',
@@ -203,7 +208,8 @@ class ReservationController extends Controller
             ]
         );
 
-        $users = User::all();
+
+        $users = User::find(Auth::user()->id);
         $query = Reservation::query();
 
         $query->where('reservation_star', '>=', Carbon::createFromFormat('d/m/Y', $request->start_date)->startOfDay());
@@ -223,7 +229,7 @@ class ReservationController extends Controller
 
     public function exportReport(Request $request)
     {
-        $this->authorize('report-reservation', Reservation::class);
+        $this->authorize('report-reservation');
         $request->validate([
             'start_date' => 'required|date_format:d/m/Y',
             'end_date' => 'required|date_format:d/m/Y|after_or_equal:start_date',
@@ -242,6 +248,8 @@ class ReservationController extends Controller
         } else {
             $query->where('user_id', auth()->user()->id);
         }
+
+        
 
         $reservations = $query->get();
 

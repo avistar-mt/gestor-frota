@@ -71,11 +71,13 @@
                                         <td class="text-sm font-weight-normal">{{ $branch->created_at->format('d/m/y H:i:s') }}</td>
                                         <td class="text-sm">
                                             <span class="d-flex">
-                                                @can('manage-users', auth()->user())
+                                                @can('edit-branch', auth()->user())
                                                     <a href="{{ route('branch-edit', $branch->id) }}" class="me-3" data-bs-toggle="tooltip"
                                                         data-bs-original-title="Edit branch">
                                                         <i class="fas fa-user-edit text-secondary"></i>
                                                     </a>
+                                                @endcan
+                                                @can('delete-branch', auth()->user())
                                                     <form action="{{ route('branch-destroy', $branch->id) }}" method="post">
                                                         @csrf
                                                         <button onclick="if(!confirm('Deseja deletar a filial?')) {event.preventDefault();}"

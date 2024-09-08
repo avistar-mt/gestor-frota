@@ -63,11 +63,13 @@
                                 <td class="text-sm font-weight-normal">{{ $branchVehicle->countVehicle }}</td>
                                 <td class="text-sm">
                                     <span class="d-flex">
-                                        @can('manage-users', auth()->user())
+                                        @can('edit-branch-vehicle', auth()->user())
                                         <a href="{{ route('branch-vehicle-edit', $branchVehicle->id) }}" class="me-3"
                                             data-bs-toggle="tooltip" data-bs-original-title="Edit city">
                                             <i class="fas fa-user-edit text-secondary"></i>
                                         </a>
+                                        @endcan
+                                        @can('delete-branch-vehicle', auth()->user())
                                         <form action="{{ route('branch-vehicle-destroy', $branchVehicle->id) }}"
                                             method="post">
                                             @csrf

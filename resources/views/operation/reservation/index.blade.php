@@ -84,15 +84,19 @@
                                         </td>
                                         <td class="text-sm">
                                             <span class="d-flex">
-                                                @can('manage-reservation', auth()->user())
+                                                @can('edit-reservation', auth()->user())
                                                     <a href="{{ route('reservation-edit', $reservation->id) }}" class="me-3" data-bs-toggle="tooltip"
                                                         data-bs-original-title="View reservation">
                                                         <i class="far fa-eye text-secondary"></i>
                                                     </a>
+                                                @endcan
+                                                @can('checking-reservation', auth()->user())
                                                     <a href="{{ route('reservation-checkin', $reservation) }}" class="me-3" data-bs-toggle="tooltip"
                                                         data-bs-original-title="Checking reservation">
                                                         <i class="fa fa-check text-secondary"></i>
                                                     </a>
+                                                @endcan
+                                                @can('delete-reservation', auth()->user())
                                                     <form action="{{ route('reservation-destroy', $reservation->id) }}" method="post">
                                                         @csrf
                                                         <button onclick="if(!confirm('Deseja deletar a reserva?')) { event.preventDefault(); }"

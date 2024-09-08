@@ -13,6 +13,7 @@ class DebitController extends Controller
      */
     public function index()
     {
+        $this->authorize('manage-debit');
         $debits = Debit::orderBy('created_at', 'desc')->get();
         return view('operation.debit.index', compact('debits'));
     }
@@ -22,6 +23,7 @@ class DebitController extends Controller
      */
     public function create()
     {
+        $this->authorize('create-debit');
         $reservations = Reservation::all();
         // dd($reservations);
         return view('operation.debit.create', compact('reservations'));
@@ -32,6 +34,7 @@ class DebitController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create-debit');
         $data = $request->validate([
             'reservation_id' => 'required|exists:reservations,id',
             'amount' => 'required|numeric',
@@ -65,6 +68,7 @@ class DebitController extends Controller
      */
     public function edit(string $id)
     {
+        $this->authorize('edit-debit');
         $reservations = Reservation::all();
         $debit = Debit::find($id);
         return view('operation.debit.edit', compact('debit', 'reservations'));
@@ -75,7 +79,7 @@ class DebitController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
+        $this->authorize('edit-debit');
         $data = $request->validate([
             'reservation_id' => 'required|exists:reservations,id',
             'amount' => 'required|numeric',
@@ -120,6 +124,7 @@ class DebitController extends Controller
      */
     public function destroy(string $id)
     {
+        $this->authorize('delete-debit');
         $debit = Debit::find($id);
         if($debit->image_path) {
             unlink(public_path('images/'.$debit->image_path));

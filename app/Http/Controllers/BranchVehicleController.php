@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 use function Laravel\Prompts\select;
 
+
 class BranchVehicleController extends Controller
 {
 
@@ -18,6 +19,7 @@ class BranchVehicleController extends Controller
      */
     public function index()
     {
+        $this->authorize('manage-branch-vehicle');
         $branchVehicles  = Branch::with('vehicles')->get();
     
         return view('laravel.branch_vehicle.index', compact('branchVehicles'));
@@ -28,6 +30,7 @@ class BranchVehicleController extends Controller
      */
     public function create()
     {
+        $this->authorize('create-branch-vehicle');
         $branches = Branch::all();
         $vehicles = Vehicle::pluck('plate', 'id');
         return view('laravel.branch_vehicle.create', compact('branches', 'vehicles'));
@@ -38,6 +41,7 @@ class BranchVehicleController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create-branch-vehicle');
         $request->validate([
             'branch' => 'required|exists:branches,id',
             'vehicles' => 'required|array',
@@ -63,6 +67,7 @@ class BranchVehicleController extends Controller
      */
     public function edit(string $id)
     {
+        $this->authorize('edit-branch-vehicle');
         $branchVehicle = Branch::with('vehicles')->findOrFail($id);
         $vehicles = Vehicle::pluck('plate', 'id');
         $selectedVehicles = $branchVehicle->vehicles->pluck('id')->toArray();
@@ -80,6 +85,7 @@ class BranchVehicleController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $this->authorize('edit-branch-vehicle');
         $request->validate([
             'branch' => 'required|exists:branches,id',
             'vehicles' => 'required|array',
@@ -98,6 +104,7 @@ class BranchVehicleController extends Controller
      */
     public function destroy(string $id)
     {
+        $this->authorize('delete-branch-vehicle');
         BranchVehicle::destroy($id);
         
         return redirect()->route('branch-vehicle-management')->with('success', 'Branch deleted successfully.');
@@ -105,8 +112,8 @@ class BranchVehicleController extends Controller
 
 
 
-    public function getVehicleByBranchId($id)
-    {
+    // public function getVehicleByBranchId($id)
+    // {
     //     $data = DB::table('branch_vehicle')
     //         ->join('vehicles', 'branch_vehicle.vehicle_id', '=', 'vehicles.id')
     //         ->join('branches', 'branch_vehicle.branch_id', '=', 'branches.id')
@@ -114,8 +121,8 @@ class BranchVehicleController extends Controller
     //         ->select('vehicles.id', 'vehicles.plate')
     //         ->get();
 
-        $data = Vehicle::with('branch')->where('branch_id', $id)->select('vehicles.id', 'vehicles.plate')->get();
+    //     $data = Vehicle::with('branch')->where('branch_id', $id)->select('vehicles.id', 'vehicles.plate')->get();
 
-        return response()->json($data);
-    }
+    //     return response()->json($data);
+    // }
 }

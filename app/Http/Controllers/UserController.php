@@ -16,14 +16,15 @@ class UserController extends Controller
     {
         $title = 'Gerenciamento de Usuário';
 
-        $this->authorize('manage-users', User::class);
+
+        $this->authorize('manage-user');
 
         return view('laravel.users.index', ['users' => $model->all(), 'title' => $title]);
     }
 
     public function create()
     {
-        $this->authorize('manage-users', User::class);
+        // $this->authorize('manage-users', User::class);
         $title = 'Criar Usuário';
         $roles = Role::all();
         $branches = Branch::all();
@@ -32,9 +33,9 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-
-        // dd($request->all());
         
+
+        $this->authorize('create-user');
         $data = request()->validate([
             'firstname' => ['required'],
             'lastname' => ['nullable'],
@@ -51,7 +52,7 @@ class UserController extends Controller
             'confirm-password' => ['same:password'],
             'role_id' => ['nullable','required', 'exists:roles,id'],
             'cnh_number' => ['nullable', 'required_if:role_id,5'], 
-            'cnh_due_date' => ['nullable', 'required_if:role_id,5', 'after:today'],
+            'cnh_due_date' => ['nullable', 'required_if:role_id,5', 'date_format:d/m/Y', 'after:today'],
             'cnh_category' => ['nullable', 'required_if:role_id,5'],
             'branch_id' => ['required'],
             'phone' => ['max:20'], 
@@ -77,7 +78,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $this->authorize('manage-users', User::class);
+        $this->authorize('edit-user');
         $user = User::find($id);
         $roles = Role::all();
         $branches = Branch::all();
@@ -87,6 +88,8 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+        
+        $this->authorize('edit-user');
         $user = User::find($id);
 
         $attributes = request()->validate([
@@ -119,6 +122,8 @@ class UserController extends Controller
 
     public function destroy($id)
     {
+
+        $this->authorize('delete-user');
         $user = User::find($id);
 
         if(!$user->reservations->isEmpty()) {

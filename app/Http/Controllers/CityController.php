@@ -13,6 +13,7 @@ class CityController extends Controller
      */
     public function index()
     {
+        $this->authorize('manage-city');
         $cities = City::with('state')->get();
         return view('laravel.city.index', compact('cities'));
         
@@ -23,6 +24,7 @@ class CityController extends Controller
      */
     public function create()
     {
+        $this->authorize('create-city');
         $states = State::all();
         return view('laravel.city.create', compact('states'));
     }
@@ -32,6 +34,7 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create-city');
         $request->validate([
             'name' => 'required|string|max:255',
             'state' => 'required|exists:states,id'
@@ -58,6 +61,7 @@ class CityController extends Controller
      */
     public function edit(string $id)
     {
+        $this->authorize('edit-city');
         $city = City::find($id);
         $states = State::all();
         return view('laravel.city.edit', compact('city', 'states'));
@@ -68,6 +72,7 @@ class CityController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $this->authorize('edit-city');
         $request->validate([
             'name' => 'required|string|max:255',
             'state' => 'required|exists:states,id'
@@ -86,6 +91,7 @@ class CityController extends Controller
      */
     public function destroy(string $id)
     {
+        $this->authorize('delete-city');
         $city = City::findOrFail($id);
 
         if(!$city->branches->isEmpty()) {

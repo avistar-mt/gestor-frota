@@ -22,7 +22,7 @@ class BranchController extends Controller
      */
     public function index()
     {
-        $this->authorize('manage-users', User::class);
+        $this->authorize('manage-branch');
 
         $branches = Branch::join('cities', 'cities.id', 'branches.city_id')
             ->join('states', 'states.id', 'cities.state_id')
@@ -36,6 +36,7 @@ class BranchController extends Controller
      */
     public function create()
     {
+        $this->authorize('create-branch');
         $cities = City::orderBy('name')->get();
         $states = State::all();
         return view('operation.branch.create', compact('cities', 'states'));
@@ -46,7 +47,7 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('manage-users', User::class);
+        $this->authorize('create-branch');
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -74,7 +75,7 @@ class BranchController extends Controller
      */
     public function edit(string $id)
     {
-        $this->authorize('manage-users', User::class);
+        $this->authorize('edit-branch');
         $branch = Branch::find($id);
         $cities = City::all();
         $states = State::all();
@@ -86,6 +87,7 @@ class BranchController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $this->authorize('edit-branch');
         $request->validate([
             'name' => 'required|string|max:255',
             // 'state' => 'required|exists:states,id',
@@ -106,7 +108,7 @@ class BranchController extends Controller
      */
     public function destroy(string $id)
     {
-        $this->authorize('manage-users', User::class);
+        $this->authorize('delete-branch');
         $branch = Branch::findOrFail($id);
 
         // Check if there are vehicles linked to the branch

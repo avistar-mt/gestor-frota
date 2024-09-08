@@ -38,7 +38,7 @@
                     <!-- Card header -->
                     <div class="card-header d-flex justify-content-between">
                         <h5 class="mb-0">Gerenciamento Débito</h5>
-                        @can('manage-users', auth()->user())
+                        @can('create-debit', auth()->user())
                             <a href="{{ route('debit-new') }}" class="btn bg-gradient-dark btn-sm float-end mb-0">Adicionar Débito</a>
                         @endcan
                     </div>
@@ -80,11 +80,13 @@
                                         <td class="text-sm font-weight-normal">{{ $debit->description }}</td>
                                         <td class="text-sm">
                                             <span class="d-flex">
-                                                @can('manage-users', auth()->user())
+                                                @can('edit-debit', auth()->user())
                                                     <a href="{{ route('debit-edit', $debit->id) }}" class="me-3" data-bs-toggle="tooltip"
                                                         data-bs-original-title="Editar Débito">
                                                         <i class="fas fa-user-edit text-secondary"></i>
                                                     </a>
+                                                @endcan
+                                                @can('delete-debit', auth()->user())
                                                     <form action="{{ route('debit-destroy', $debit->id) }}" method="post">
                                                         @csrf
                                                         <button onclick="if(!confirm('Deseja deletar o debíto?')) {event.preventDefault();}"

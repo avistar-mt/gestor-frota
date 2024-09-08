@@ -76,11 +76,14 @@
                                         <td class="text-sm font-weight-normal">{{ $user->role->name }}</td>
                                         <td class="text-sm">
                                             <span class="d-flex">
+                                                @can('edit-user', auth()->user())
                                                     <a href="{{ route('user-edit', $user->id) }}" class="me-3"
                                                         data-bs-toggle="tooltip" data-bs-original-title="Edit user">
                                                         <i class="fas fa-user-edit text-secondary"></i>
                                                     </a>
+                                                @endcan
 
+                                                @can('delete-user', auth()->user())
                                                     <form action="{{ route('user-destroy', $user->id) }}" method="post">
                                                         @csrf
                                                         <button
@@ -90,6 +93,7 @@
                                                             <i class="fas fa-trash text-secondary"></i>
                                                         </button>
                                                     </form>
+                                                @endcan
                                             </span>
                                         </td>
                                     </tr>

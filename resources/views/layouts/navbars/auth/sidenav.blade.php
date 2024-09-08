@@ -30,7 +30,6 @@
             </li>
 
             <!-- OPERATION -->
-
             <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#operation" class="nav-link {{ Route::currentRouteName() == 'operation' ? 'active' : ''}}" aria-controls="operation" role="button" aria-expanded="false">
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-end justify-content-center">
@@ -50,12 +49,14 @@
                         </li>
                         @endcan
 
+                        @can('manage-debit', auth()->user())
                         <li class="nav-item show">
                             <a class="nav-link {{ Route::currentRouteName() == 'debit-management' ? 'active' : '' }}" href="{{ route('debit-management') }}">
                                 <span class="sidenav-mini-icon"> M </span>
                                 <span class="sidenav-normal"> Debito </span>
                             </a>
                         </li>
+                        @endcan
 
                         @can('manage-reservation', auth()->user())
                         <li class="nav-item show">
@@ -70,8 +71,6 @@
                 </div>
             </li>
 
-
-
             <!-- CADASTRO -->
             <li class="nav-item mt-3">
                 <a data-bs-toggle="collapse" href="#cadastro" class="nav-link" aria-controls="cadastro" role="button" aria-expanded="false">
@@ -83,14 +82,16 @@
 
                 <div class="collapse show" id="cadastro">
                     <ul class="nav ms-4">
-                    <li class="nav-item">
+                        @can('view-user', auth()->user())
+                        <li class="nav-item">
                             <a class="nav-link {{ Route::currentRouteName() == 'user-management' ? 'active' : '' }}" href="{{ route('user-management') }}">
                                 <span class="sidenav-mini-icon"> U </span>
                                 <span class="sidenav-normal"> Usuário </span>
                             </a>
                         </li>
+                        @endcan
 
-                        @can('manage-role', auth()->user())
+                        @can('view-role', auth()->user())
                         <li class="nav-item show">
                             <a class="nav-link {{ Route::currentRouteName() == 'role-management' ? 'active' : '' }}" href="{{ route('role-management') }}">
                                 <span class="sidenav-mini-icon"> P </span>
@@ -98,21 +99,26 @@
                             </a>
                         </li>
                         @endcan
+
+                        @can('view-city', auth()->user())
                         <li class="nav-item show">
                             <a class="nav-link {{ Route::currentRouteName() == 'city-management' ? 'active' : '' }}" href="{{ route('city-management') }}">
                                 <span class="sidenav-mini-icon"> C </span>
                                 <span class="sidenav-normal"> Cidade </span>
                             </a>
                         </li>
+                        @endcan
 
+                        @can('view-vehicle', auth()->user())
                         <li class="nav-item show">
                             <a class="nav-link {{ Route::currentRouteName() == 'vehicle-management' ? 'active' : '' }}" href="{{ route('vehicle-management') }}">
                                 <span class="sidenav-mini-icon"> V </span>
                                 <span class="sidenav-normal"> Veículo </span>
                             </a>
                         </li>
+                        @endcan
 
-                        @can('manage-users', auth()->user())
+                        @can('manage-branch', auth()->user())
                         <li class="nav-item ">
                             <a class="nav-link {{ Route::currentRouteName() == 'branch-management' ? 'active' : '' }}" href="{{ route('branch-management') }}">
                                 <span class="sidenav-mini-icon"> F </span>
@@ -121,12 +127,14 @@
                         </li>
                         @endcan
 
+                        @can('view-branch-vehicle', auth()->user())
                         <li class="nav-item show">
                             <a class="nav-link {{ Route::currentRouteName() == 'branch-vehicle-management' ? 'active' : '' }}" href="{{ route('branch-vehicle-management') }}">
-                                <span class="sidenav-mini-icon"> F </span>
+                                <span class="sidenav-mini-icon"> Fro </span>
                                 <span class="sidenav-normal"> Frota </span>
                             </a>
                         </li>
+                        @endcan
                     </ul>
                 </div>
             </li>
@@ -139,15 +147,17 @@
                     </div>
                     <span class="nav-link-text ms-1">Relatório </span>
                 </a>
-
+                
                 <div class="collapse show" id="relatorio">
                     <ul class="nav ms-4">
-                    <li class="nav-item">
+                        @can('report-reservation', auth()->user())
+                        <li class="nav-item">
                             <a class="nav-link {{ Route::currentRouteName() == 'reservation-reportForm' ? 'active' : '' }}" href="{{ route('reservation-reportForm') }}">
-                                <span class="sidenav-mini-icon"> U </span>
+                                <span class="sidenav-mini-icon"> Viag. </span>
                                 <span class="sidenav-normal"> Viagens </span>
                             </a>
                         </li>
+                        @endcan
                     </ul>
                 </div>
             </li>

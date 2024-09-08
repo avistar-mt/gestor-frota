@@ -8,7 +8,7 @@
             <div class="card card-body mt-4">
                 <h3>Check-out para Reserva #{{ $checkout->reservation->getKey() }}</h3>
                 <div class="alert alert-warning">
-                    <h3>Tira uma foto do <strong>{{ $checkout->step->string() }}</strong>. A PLACA DEVE APARECER NA FOTO</h3>
+                    <h4>Tira uma foto do <strong>{{ $checkout->step->string() }}</strong>. A PLACA DEVE APARECER NA FOTO</h4>
                 </div>
                 <form enctype="multipart/form-data" action="{{ route('reservation-checkout.update', ['reservation' => $checkout->reservation->getKey(), 'id' => $checkout->id]) }}" method="POST">
                     @csrf

@@ -38,7 +38,7 @@
                     <!-- Card header -->
                     <div class="card-header d-flex justify-content-between">
                         <h5 class="mb-0">Gerenciamento Cidade</h5>
-                        @can('manage-users', auth()->user())
+                        @can('create-city', auth()->user())
                             <a href="{{ route('city-new') }}" class="btn bg-gradient-dark btn-sm float-end mb-0">Adicionar Cidade</a>
                         @endcan
                     </div>
@@ -67,11 +67,13 @@
                                         <td class="text-sm font-weight-normal">{{ $city->created_at }}</td>
                                         <td class="text-sm">
                                             <span class="d-flex">
-                                                @can('manage-users', auth()->user())
+                                                @can('edit-city', auth()->user())
                                                     <a href="{{ route('city-edit', $city->id) }}" class="me-3" data-bs-toggle="tooltip"
                                                         data-bs-original-title="Edit city">
                                                         <i class="fas fa-user-edit text-secondary"></i>
                                                     </a>
+                                                @endcan
+                                                @can('delete-city', auth()->user())
                                                     <form action="{{ route('city-destroy', $city->id) }}" method="post">
                                                         @csrf
                                                         <button onclick="if(!confirm('Deseja deletar cidade?')) { event.preventDefault(); }"
