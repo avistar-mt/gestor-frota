@@ -75,6 +75,19 @@
                             <th>Aprovador Por: </td>
                             <td>{{ $reservation->approver?->name }}</td>
                         </tr>
+
+                        <tr>
+                            <th>Checklist Status:</th>
+                            <tr>
+                                @foreach($reservation->checkins as $checkin)
+                                <tr>
+                                    <th>{{ $checkin->step?->string() }}: </th>  
+                                    <td>{{ $checkin->status?->string() }}</td>
+                                </tr>
+                                    @endforeach
+                            </tr>
+                        </tr>
+
                     </table>
 
                     <div class=" d-flex justify-content-end mt-4">
