@@ -99,20 +99,19 @@
                             <input class="form-control" type="file" name="image_path" id="image_path" value="{{ old('image_path', $debit->image_path)}}">
                         </div>
                         @if (isset($debit->image_path))
-                            <img src="{{ asset($debit->image_path) }}" alt="Imagem" class="img-thumbnail">
-                            <div class="form-check mt-3"></div>
-                                <input class="form-check-input" type="checkbox" name="delete_image" id="delete_image">
-                                <label class="form-check-label" for="delete_image">
-                                    Deletar imagem
-                                </label>
-                            </div>
+                        <img src="{{ route('debit-show-thumbnail', $debit->image_path) }}" alt="Thumbnail da Imagem" class="img-thumbnail">
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" name="delete_image" id="delete_image">
+                            <label class="form-check-label" for="delete_image">
+                                Deletar imagem
+                            </label>
+                        </div>
                         @else
                             <p>Sem upload de imagem.</p>
                         @endif
                         @error('image_path')
                         <p class='text-danger text-xs pt-1'> {{ $message }} </p>
                         @enderror
-
 
                         <div class="d-flex justify-content-end mt-4">
                             <a href="{{ route('debit-management') }}" class="btn btn-light m-0">Volta</a>
@@ -131,7 +130,6 @@
     <script src="/assets/js/plugins/choices.min.js"></script>
     <script src="../../../assets/js/plugins/flatpickr.min.js"></script>
     <script src="../../../assets/js/plugins/dropzone.min.js"></script>
-
 
     <script>
         if (document.getElementById('editor')) {
@@ -155,7 +153,6 @@
             var reservation = document.getElementById('choices-reservation');
             const example = new Choices(reservation);
          }
-
         
         if (document.getElementById('choices-type')) {
             var type = document.getElementById('choices-type');

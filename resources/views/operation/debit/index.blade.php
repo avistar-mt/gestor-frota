@@ -53,7 +53,7 @@
                                         Data
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                       Número Reserva
+                                       Reserva
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Tipo

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Debit;
 use App\Models\Reservation;
+use Illuminate\Support\Facades\Storage;
 
 class DebitController extends Controller
 {
@@ -43,15 +44,23 @@ class DebitController extends Controller
             'type' => 'required|string',
             'image_path' => 'image|mimes:jpeg,png,jpg|max:2048',
         ]);
-
+        
+        $debit = Debit::create($data);
         if($request->hasFile('image_path')) {
-            $image = $request->file('image_path');
-            $imageName = time().'.'.$image->extension();
-            $image->move(public_path('images'), $imageName);
-            $data['image_path'] = 'images/'.$imageName;
+            $folderId = env('GOOGLE_DRIVE_FOLDER_ID');
+            
+            $file = $request->file('image_path');
+            $filename = $file->getClientOriginalName();
+            $path = "$folderId/$filename";
+            $stream = fopen($file->getRealPath(), 'r+'); 
+
+            Storage::disk('google')->writeStream($path, $stream);
+
+            //save new path in the database
+            $debit->image_path = $path;
+            $debit->save();
         }
 
-        Debit::create($data);
         return redirect()->route('debit-management')->with('success', 'Debit created successfully.');
     }
 
@@ -79,6 +88,8 @@ class DebitController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
+        // dd($request);
         $this->authorize('edit-debit');
         $data = $request->validate([
             'reservation_id' => 'required|exists:reservations,id',
@@ -89,32 +100,32 @@ class DebitController extends Controller
             'image_path' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
+        $debit = Debit::findOrFail($id);
 
-        $debit = Debit::find($id);
-
-        // Deletar imagem anterior
-        if ($request->input('delete_image')) {
-            if (isset($debit->image_path)) {
-            unlink(public_path("/{$debit->image_path}"));
-            $data['image_path'] = $debit->image_path = null;
+        // Verificar se a imagem deve ser deletada
+        if ($request->has('delete_image')) {
+            if (Storage::disk('google')->has($debit->image_path)) {
+                Storage::disk('google')->delete($debit->image_path);
             }
-        }   
-      
-        if($request->hasFile('image_path')) {
-            if (isset($debit->image_path)) {
-                return back()->with('error', 'Você não pode adicionar nova imagem, por favor delete a anterior.')->withInput();
-            }
+            $debit->image_path = null;
         }
 
-        //Atualizar imagem
-        if($request->hasFile('image_path')) {
-            $image = $request->file('image_path');
-            $imageName = time().'.'.$image->extension();
-            $image->move(public_path('images'), $imageName);    
-            $data['image_path'] = 'images/'.$imageName;
-        }
+        if($request->file('image_path')) {
 
-        $debit = Debit::find($id);
+            $folderId = env('GOOGLE_DRIVE_FOLDER_ID');
+            $file = $request->file('image_path');
+            $filename = $file->getClientOriginalName();
+            $path = "$folderId/$filename";
+            $stream = fopen($file->getRealPath(), 'r+');
+
+            if (Storage::disk('google')->has($path)) {
+                    Storage::disk('google')->delete($path); // Remove o arquivo anterior
+                    Storage::disk('google')->writeStream($path, $stream); // Substitui pelo novo arquivo
+            }
+
+            $data['image_path'] = $path;
+        }
+        
         $debit->update($data);
         return redirect()->route('debit-management')->with('success', 'Debit updated successfully.');
     }
@@ -125,12 +136,30 @@ class DebitController extends Controller
     public function destroy(string $id)
     {
         $this->authorize('delete-debit');
-        $debit = Debit::find($id);
-        if($debit->image_path) {
-            unlink(public_path('images/'.$debit->image_path));
+        $debit = Debit::findOrFail($id);
+
+        $folderId = env('GOOGLE_DRIVE_FOLDER_ID');
+        $path = "$folderId/$debit->image_path";
+
+        if(Storage::disk('google')->has($path)) {
+            Storage::disk('google')->delete($path);
         }
 
         $debit->delete();
         return redirect()->route('debit-management')->with('success', 'Debit deleted successfully.');
     }
+
+    public function showThumbnail($path)
+{
+    // Verificar se o arquivo existe no Google Drive
+    if (Storage::disk('google')->has($path)) {
+        $content = Storage::disk('google')->get($path);
+        $mime = Storage::disk('google')->mimeType($path);
+
+        return response($content)
+            ->header('Content-Type', $mime);
+    }
+
+    return response()->json(['message' => 'Arquivo não encontrado'], 404);
+}
 }
