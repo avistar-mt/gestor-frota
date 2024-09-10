@@ -133,6 +133,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/debit-management/edit/{id}', 'edit')->name('debit-edit');
         Route::post('/debit-management/edit/{id}', 'update')->name('debit-edit.update');
         Route::post('/debit-delete/{id}', 'destroy')->name('debit-destroy');
+        Route::get('/thumbnail/{path}',  'showThumbnail')->name('debit-show-thumbnail');
     }); 
 
     Route::get('/{page}', [PageController::class, 'dashboards'])->name('dashboards');
