@@ -37,7 +37,7 @@
                     <!-- Card header -->
                     <div class="card-header d-flex justify-content-between">
                         <h5 class="mb-0">Gerenciamento Veiculo</h5>
-                        @can('manage-users', auth()->user())
+                        @can('manage-vehicle', auth()->user())
                             <a href="{{ route('vehicle-new') }}" class="btn bg-gradient-dark btn-sm float-end mb-0">Adicionar Veiculo</a>
                         @endcan
                     </div>
@@ -81,7 +81,6 @@
                                                         <i class="fas fa-user-edit text-secondary"></i>
                                                     </a>
                                                     @endcan
-
                                                     @can('delete-vehicle', auth()->user())
                                                     <form action="{{ route('vehicle-destroy', $vehicle->id) }}" method="post">
                                                         @csrf

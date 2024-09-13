@@ -17,9 +17,9 @@ class VehicleController extends Controller
     public function index()
     {
         $this->authorize('manage-vehicle');
-        $user = Auth::user();
 
-            $vehicles = Vehicle::all();
+        $user = Auth::user();
+        $vehicles = Vehicle::all();
 
 
         return view('laravel.vehicle.index', compact('vehicles'));
@@ -32,6 +32,7 @@ class VehicleController extends Controller
     {
 
         $this->authorize('create-vehicle');
+        
         return view('laravel.vehicle.create');
     }
 
