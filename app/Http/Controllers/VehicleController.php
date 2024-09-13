@@ -16,6 +16,7 @@ class VehicleController extends Controller
      */
     public function index()
     {
+        $this->authorize('manage-vehicle');
         $user = Auth::user();
 
             $vehicles = Vehicle::all();
@@ -29,6 +30,8 @@ class VehicleController extends Controller
      */
     public function create()
     {
+
+        $this->authorize('create-vehicle');
         return view('laravel.vehicle.create');
     }
 
@@ -37,6 +40,8 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
+
+        $this->authorize('create-vehicle');
 
     $request->validate([
         'plate' => 'required|string|max:20|unique:vehicles,plate',
@@ -67,6 +72,8 @@ class VehicleController extends Controller
      */
     public function edit(string $id)
     {
+
+        $this->authorize('edit-vehicle');   
         $vehicle = Vehicle::findOrFail($id);
         return view('laravel.vehicle.edit', compact('vehicle'));
     }
@@ -76,6 +83,8 @@ class VehicleController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
+        $this->authorize('edit-vehicle');
         // dd($request->all());
         // if (!$this->match_year($request->year)) {
         //     return redirect()->back()->withErrors(['year' => 'Invalid year format.'])->withInput();
@@ -110,6 +119,8 @@ class VehicleController extends Controller
      */
     public function destroy(string $id)
     {
+
+        $this->authorize('delete-vehicle');
         $vehicle = Vehicle::findOrFail($id);
 
 

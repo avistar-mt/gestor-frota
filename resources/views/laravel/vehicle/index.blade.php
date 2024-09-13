@@ -75,11 +75,14 @@
                 
                                         <td class="text-sm">
                                             <span class="d-flex">
-                                                @can('manage-users', auth()->user())
+                                                @can('edit-vehicle', auth()->user())
                                                     <a href="{{ route('vehicle-edit', $vehicle->id) }}" class="me-3" data-bs-toggle="tooltip"
                                                         data-bs-original-title="Edit vehicle">
                                                         <i class="fas fa-user-edit text-secondary"></i>
                                                     </a>
+                                                    @endcan
+
+                                                    @can('delete-vehicle', auth()->user())
                                                     <form action="{{ route('vehicle-destroy', $vehicle->id) }}" method="post">
                                                         @csrf
                                                         <button onclick="if(!confirm('Você deseja deletar o veículo?')) { event.preventDefault(); }"
