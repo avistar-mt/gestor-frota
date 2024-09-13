@@ -49,6 +49,7 @@ return [
         'edit-reservation',
         'report-reservation',
         'manage-vehicle',
+        'create-vehicle',
         'view-vehicle',
         'edit-vehicle',
         'manage-user',
