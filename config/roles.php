@@ -50,6 +50,7 @@ return [
         'report-reservation',
         'manage-vehicle',
         'view-vehicle',
+        'edit-vehicle',
         'manage-user',
         'view-user',
         'create-user',
