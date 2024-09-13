@@ -178,7 +178,7 @@ use App\Enums\StatusType;
                         </div>
                         <div class="row mt-4">
                             <div class="col-4">
-                                <label class="form-label">Model</label>
+                                <label class="form-label"> Marca / Model</label>
                                 <div class="input-group">
                                     <input id="model" name="model" class="form-control" type="text" placeholder="Model" value="{{ old('model') ?? $vehicle->model }}">
                                 </div>
@@ -196,7 +196,7 @@ use App\Enums\StatusType;
                                 @enderror
                             </div>
                             <div class="col-4">
-                                <label class="form-label">Tracker Number</label>
+                                <label class="form-label">Rastreador</label>
                                 <div class="input-group">
                                     <input id="tracker_number" name="tracker_number" class="form-control" type="text" placeholder="Tracker Number" value="{{ old('tracker_number') ?? $vehicle->tracker_number}}">
                                 </div>

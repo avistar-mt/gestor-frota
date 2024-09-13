@@ -38,7 +38,7 @@
                     <!-- Card header -->
                     <div class="card-header d-flex justify-content-between">
                         <h5 class="mb-0">Gerenciamento Filial</h5>
-                        @can('manage-users', auth()->user())
+                        @can('create-branch', auth()->user())
                             <a href="{{ route('branch-new') }}" class="btn bg-gradient-dark btn-sm float-end mb-0">Adicionar Filial</a>
                         @endcan
                     </div>

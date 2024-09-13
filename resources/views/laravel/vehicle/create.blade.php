@@ -76,7 +76,7 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col-4">
-                                <label class="form-label">Modelo</label>
+                                <label class="form-label">Marcar / Modelo</label>
                                 <div class="input-group">
                                     <input id="model" name="model" class="form-control" type="text" placeholder="Modelo" value="{{ old('model') }}">
                                 </div>
