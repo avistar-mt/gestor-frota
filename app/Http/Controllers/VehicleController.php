@@ -20,16 +20,14 @@ class VehicleController extends Controller
 
         if ($user->isAdmin()) {
             $vehicles = Vehicle::all();
-        } else if ($user->isAdminFrota()) {
+        } else {
             $vehicles = DB::table('branch_vehicles')
                 ->join('vehicles', 'branch_vehicles.vehicle_id', '=', 'vehicles.id')
                 ->where('branch_vehicles.branch_id', $user->branch_id)
                 ->where('vehicles.status', StatusType::DISPONIVEL)
                 ->select('vehicles.*')
                 ->get();
-        } else {
-            return redirect('/')->with('error', 'Você não tem permissão para acessar essa página.');
-        }
+        } e
 
         return view('laravel.vehicle.index', compact('vehicles'));
     }
