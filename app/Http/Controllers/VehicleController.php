@@ -18,16 +18,8 @@ class VehicleController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->isAdmin()) {
             $vehicles = Vehicle::all();
-        } else {
-            $vehicles = DB::table('branch_vehicles')
-                ->join('vehicles', 'branch_vehicles.vehicle_id', '=', 'vehicles.id')
-                ->where('branch_vehicles.branch_id', $user->branch_id)
-                ->where('vehicles.status', StatusType::DISPONIVEL)
-                ->select('vehicles.*')
-                ->get();
-        } 
+
 
         return view('laravel.vehicle.index', compact('vehicles'));
     }
