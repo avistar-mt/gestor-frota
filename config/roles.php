@@ -67,6 +67,7 @@ return [
         'view-debit',
         'create-debit',
         'edit-debit',
+        'delete-debit',
     ],
     'Operador' => [],
     'Motorista' => [
