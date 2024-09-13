@@ -45,6 +45,7 @@ return [
     ],
     'Gestor' => [
         'manage-reservation',
+        'create-reservation',
         'view-reservation',
         'edit-reservation',
         'report-reservation',
