@@ -27,7 +27,7 @@ class VehicleController extends Controller
                 ->where('vehicles.status', StatusType::DISPONIVEL)
                 ->select('vehicles.*')
                 ->get();
-        } e
+        } 
 
         return view('laravel.vehicle.index', compact('vehicles'));
     }
