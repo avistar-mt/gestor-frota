@@ -121,7 +121,7 @@
                         <td>{{ $reservation->reservation_star }}</td>
                         <td>{{ $reservation->reservation_end }}</td>
                         <td>{{ $reservation->user->firstname . ' ' . $reservation->user->lastname }}</td>
-                        <td>{{ $reservation->status }}</td>
+                        <td>{{ $reservation->status->string() }}</td>
                     </tr>
                     @endforeach
                 </tbody>

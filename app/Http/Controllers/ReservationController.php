@@ -44,7 +44,7 @@ class ReservationController extends Controller
                 $query->whereIn('status', ['approved', 'pending', 'ongoing']);
             })->get();
 
-        $vehicles = Vehicle::query()
+            $vehicles = Vehicle::query()
             ->with('branches')
             ->where('status', 'available')
             ->whereDoesntHave('reservations', function ($query) {
@@ -181,7 +181,6 @@ class ReservationController extends Controller
         $this->authorize('report-reservation', Reservation::class);
         $users = User::all();
 
-        $branches = Branch::all(); 
 
         return view('operation.reservation.report', compact('users'));
     }
@@ -195,7 +194,7 @@ class ReservationController extends Controller
             [
                 'start_date' => 'required|before_or_equal:end_date|date_format:d/m/Y',
                 'end_date' => 'required|after_or_equal:start_date|date_format:d/m/Y',
-                'solicitante' => 'nullable|string',
+                'solicitante' => 'nullable|exists:users,id',
                 'output_type' => 'nullable|string|in:pdf,excel',
             ],
             [
@@ -209,7 +208,6 @@ class ReservationController extends Controller
         );
 
 
-        $users = User::find(Auth::user()->id);
         $query = Reservation::query();
 
         $query->where('reservation_star', '>=', Carbon::createFromFormat('d/m/Y', $request->start_date)->startOfDay());
@@ -222,6 +220,8 @@ class ReservationController extends Controller
         }
 
         $reservations = $query->get();
+        $users = User::all();
+
 
         return view('operation.reservation.report', compact('reservations', 'users'))->with('success', 'Relatório gerado com sucesso.');
     }
