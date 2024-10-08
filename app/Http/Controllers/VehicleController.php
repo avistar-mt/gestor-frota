@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Enums\StatusType;
 use Illuminate\Validation\Rule;
 use App\Models\Vehicle;
+use App\Models\ModelVehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Branch;
 
 class VehicleController extends Controller
 {
@@ -32,8 +34,10 @@ class VehicleController extends Controller
     {
 
         $this->authorize('create-vehicle');
-        
-        return view('laravel.vehicle.create');
+
+        $branches = Branch::all();
+        $modelVehicle = ModelVehicle::all();
+        return view('laravel.vehicle.create', compact('branches', 'modelVehicle'));
     }
 
     /**
@@ -42,19 +46,29 @@ class VehicleController extends Controller
     public function store(Request $request)
     {
 
-        $this->authorize('create-vehicle');
+    $this->authorize('create-vehicle');
 
-    $request->validate([
+    $params = $request->validate([
         'plate' => 'required|string|max:20|unique:vehicles,plate',
         'model' => 'required|string|max:255',
         'year' => ['required', 'string', 'max:255', 'regex:/^\d{4}$/'],
         'color' => 'required|string|max:255',
         'renavam' => 'required|string|max:255',
         'description' => 'string|max:255',
-        'tracker_number' => 'required|string|max:255'
+        'tracker_number' => 'required|string|max:255',
+        'branch_id' => 'required|exists:branches,id',
     ]);
     
-    Vehicle::create($request->all());  
+    
+
+    $branchIds = $params['branch_id'];
+    unset($params['branch_id']);
+    $params['branch_id'] = $branchIds[0];
+    
+    $vehicle = Vehicle::create($params);  
+    $vehicle->branches()->sync($branchIds);
+    $vehicle->save();
+
 
     return redirect()->route('vehicle-management')
         ->with('success', 'Vehicle created successfully.');
@@ -76,7 +90,9 @@ class VehicleController extends Controller
 
         $this->authorize('edit-vehicle');   
         $vehicle = Vehicle::findOrFail($id);
-        return view('laravel.vehicle.edit', compact('vehicle'));
+        $branches = Branch::pluck('name', 'id');
+        $modelVehicle = ModelVehicle::all();
+        return view('laravel.vehicle.edit', compact('vehicle', 'branches', 'modelVehicle'));
     }
 
     /**
@@ -98,7 +114,7 @@ class VehicleController extends Controller
         //     return redirect()->back()->withErrors(['status' => 'Invalid status.'])->withInput();
         // }
 
-        $request->validate([
+        $params = $request->validate([
             'plate' => 'required|string|max:20|unique:vehicles,plate,'.$id,
             'model' => 'required|string|max:255',
             'year' => 'required|string|max:255',
@@ -106,10 +122,20 @@ class VehicleController extends Controller
             'renavam' => 'required|string|max:255',
             'description' => 'string|max:255',
             'tracker_number' => 'required|string|max:255', 
-            'status' => ['required', 'string', 'max:50', Rule::enum(StatusType::class)]
+            'status' => ['required', 'string', 'max:50', Rule::enum(StatusType::class)], 
+            'branch_id' => 'required|exists:branches,id',
         ]);
 
-        Vehicle::findOrFail($id)->update($request->all());
+
+        $branchIds = $params['branch_id'];
+        unset($params['branch_id']);
+        $params['branch_id'] = $branchIds[0];
+
+
+        $vehicle  = Vehicle::find($id);
+        $vehicle->update($params);
+        $vehicle->branches()->sync($branchIds);
+        $vehicle->save();
 
         return redirect()->route('vehicle-management')
             ->with('success', 'Vehicle updated successfully.');

@@ -38,6 +38,19 @@
                     <hr class="horizontal dark my-3">
                     <form method="POST" action="{{ route('branch-edit.update', $branch) }}">
                         @csrf
+
+
+                        <label class="mb-3">Sede</label>
+                        <select class="form-select form-control" id="choices-headquarter" name="headquarters_id">
+                            @foreach ($headquarters as $headquarter)
+                                <option value="{{ $headquarter->id }}" {{ old('headquarter', $branch->headquarter) == $headquarter->id ? 'selected' : '' }}>
+                                    {{ $headquarter->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('headquarters_id')
+                            <p class='text-danger text-xs pt-1'> {{ $message }} </p>
+                        @enderror
                         <label for="name" class="form-label">Name</label>
                         <div class="mb-3">
                             <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $branch->name) }}">
@@ -52,7 +65,6 @@
                                     {{ $city->name . ' - ' . $city->state->uf }}
                                 </option>
                             @endforeach
-                        </select>
                         </select>
                         @error('city')
                             <p class='text-danger text-xs pt-1'> {{ $message }} </p>
@@ -86,5 +98,11 @@
         var city = document.getElementById('choices-cities');
         const example = new Choices(city);
          }
+
+
+        if (document.getElementById('choices-headquarter')) {
+        var headquarter = document.getElementById('choices-headquarter');
+        const example = new Choices(headquarter);
+        }
     </script>
 @endpush

@@ -7,15 +7,10 @@ use App\Models\Branch;
 use App\Models\City;
 use App\Models\State;
 use App\Models\User;
+use App\Models\Headquarter;
 
 class BranchController extends Controller
 {
-
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    //     // $this->middleware('role:admin,manager')->except(['index', 'show']);
-    // }
 
     /**
      * Display a listing of the resource.
@@ -24,10 +19,8 @@ class BranchController extends Controller
     {
         $this->authorize('manage-branch');
 
-        $branches = Branch::join('cities', 'cities.id', 'branches.city_id')
-            ->join('states', 'states.id', 'cities.state_id')
-            ->select('branches.*', 'cities.name as city', 'states.uf as state')
-            ->get();
+        $branches = Branch::with('city', 'headquarter')->get();
+        // dd($branches); 
         return view('operation.branch.index', compact('branches'));
     }
 
@@ -39,7 +32,8 @@ class BranchController extends Controller
         $this->authorize('create-branch');
         $cities = City::orderBy('name')->get();
         $states = State::all();
-        return view('operation.branch.create', compact('cities', 'states'));
+        $headquarters = Headquarter::all();
+        return view('operation.branch.create', compact('cities', 'states', 'headquarters'));
     }
 
     /**
@@ -49,15 +43,13 @@ class BranchController extends Controller
     {
         $this->authorize('create-branch');
 
-        $request->validate([
+        $params = $request->validate([
             'name' => 'required|string|max:255',
-            'city' => 'required|exists:cities,id'
+            'city_id' => 'required|exists:cities,id',
+            'headquarters_id' => 'required|exists:headquarters,id'
         ]);
 
-        Branch::create([
-            'name' => $request->name,
-            'city_id' => $request->city
-        ]);
+        Branch::create($params);
 
         return redirect()->route('branch-management')->with('success', 'Branch created successfully.');
     }
@@ -79,7 +71,8 @@ class BranchController extends Controller
         $branch = Branch::find($id);
         $cities = City::all();
         $states = State::all();
-        return view('operation.branch.edit', compact('branch', 'cities', 'states'));
+        $headquarters = Headquarter::all();
+        return view('operation.branch.edit', compact('branch', 'cities', 'states', 'headquarters'));
     }
 
     /**
@@ -88,17 +81,15 @@ class BranchController extends Controller
     public function update(Request $request, string $id)
     {
         $this->authorize('edit-branch');
-        $request->validate([
-            'name' => 'required|string|max:255',
-            // 'state' => 'required|exists:states,id',
-            'city' => 'required|exists:cities,id'
-        ]);
 
         $branch = Branch::findOrFail($id);
-        $branch->update([
-            'name' => $request->name,
-            'city_id' => $request->city
+        $params = $request->validate([
+            'name' => 'required|string|max:255',
+            'city' => 'required|exists:cities,id',
+            'headquarters_id' => 'required|exists:headquarters,id'
         ]);
+
+        $branch->update($params);
 
         return redirect()->route('branch-management')->with('success', 'Branch updated successfully.');
     }

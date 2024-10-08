@@ -38,7 +38,21 @@
                     <hr class="horizontal dark my-3">
                     <form method="POST" action="{{ route('branch-new.store') }}">
                         @csrf
-                        <label for="name" class="form-label">Nome</label>
+
+                        <label class="mb-3">Sede</label>
+                        <select class="form-select form-control" id="choices-headquarter" name="headquarters_id">
+                            <option value="" selected>Selecione sede</option>
+                            @foreach ($headquarters as $headquarter)
+                                <option value="{{ $headquarter->id }}" {{ old('headquarters_id') == $headquarter->id ? 'selected' : '' }}>
+                                    {{ $headquarter->name }}</option>
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('headquarters_id')
+                            <p class='text-danger text-xs pt-1'> {{ $message }} </p>
+                        @enderror
+
+                        <label for="name" class="form-label">Nome SubFilial</label>
                         <div class="mb-3">
                             <input type="text" class="form-control" id="name" name="name" value="{{ old('name')}}">
                             @error('name')
@@ -46,7 +60,7 @@
                             @enderror
                         </div>
                         <label class="mb-3"> Cidade</label>
-                        <select class="form-select form-control" id="choices-cities" name="city">
+                        <select class="form-select form-control" id="choices-cities" name="city_id">
                             <option value="" selected>Selecione cidade</option>
                             @foreach ($cities as $city)
                                 <option value="{{ $city->id }}" {{ old('city_id') == $city->id ? 'selected' : 'Select City' }}>
@@ -54,7 +68,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        @error('description')
+                        @error('city_id')
                             <p class='text-danger text-xs pt-1'> {{ $message }} </p>
                         @enderror
                         <div class="d-flex justify-content-end mt-4">
@@ -86,6 +100,11 @@
         var city = document.getElementById('choices-cities');
         const example = new Choices(city);
          }
+
+        if (document.getElementById('choices-headquarter')) {
+        var headquarter = document.getElementById('choices-headquarter');
+        const example = new Choices(headquarter);
+        }
 
 
     </script>

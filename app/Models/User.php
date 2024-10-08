@@ -32,8 +32,8 @@ class User extends Authenticatable
         'role_id',
         'birthday',
         'avatar',
-        'role_id',
-        'branch_id'
+        'branch_id',
+        'model_vehicle'
     ];
 
     /**
@@ -72,11 +72,6 @@ class User extends Authenticatable
         $this->attributes['birthday'] = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
     }
 
-    // public function getBirthdayAttribute($value)
-    // {
-    //     return Carbon::createFromFormat('Y-m-d', $value)->format('d/m/Y');
-    // }
-
     public function reservations() {
         return $this->hasMany(Reservation::class);
     }
@@ -90,7 +85,15 @@ class User extends Authenticatable
     }
 
     public function branch() {
-        return $this->belongsTo(Branch::class);
+        return $this->belongsToMany(Branch::class);
+    }
+
+    public function vehicles() {
+        return $this->belongsToMany(Vehicle::class);
+    }
+
+    public function modelVehicle() {
+        return $this->belongsToMany(ModelVehicle::class);
     }
 
     /**

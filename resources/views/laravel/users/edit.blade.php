@@ -59,6 +59,9 @@
                                         <input id="lastname" name="lastname" value="{{ old('lastname') ?? $user->lastname }}" class="form-control" type="text" placeholder="Sobrenome">
                                     </div>
                                 </div>
+                                @error('lastname')
+                                    <p class='text-danger text-xs pt-1'> {{ $message }} </p>
+                                @enderror
                             </div>
                             <div class="row mt-4">
                                 <div class="col-6">
@@ -106,7 +109,6 @@
                                 <div class="col-sm">
                                     <label class="form-label">Perfil</label>
                                     <select name="role_id" id="choices-role" class="form-control">
-                                        <option value="">Perfil</option>
                                         @foreach ($roles as $role)
                                             <option value="{{ $role->id }}" {{ $role->id == old('role', $user->role_id) ? 'selected' : '' }}>{{ $role->name }}</option>
                                         @endforeach
@@ -117,10 +119,9 @@
                                 </div>
                                 <div class="col-sm">
                                     <label class="form-label">Filial</label>
-                                    <select name="branch_id" id="choices-branch" class="form-control">
-                                        <option value="">Filial</option>
-                                        @foreach ($branches as $branch)
-                                        <option value="{{ $branch->id }}" {{ $branch->id == old('branch', $user->branch_id) ? 'selected' : '' }}>{{ $branch->name }}
+                                    <select name="branch_id[]" id="choices-branch" class="form-control" multiple>
+                                        @foreach ($branches as $id => $branch)
+                                        <option value="{{ $id }}" {{ isset($selectedBranches) && in_array($id, $selectedBranches) ? 'selected' : '' }}>{{  $branch  }}
                                         </option>
                                         @endforeach
                                     </select>
@@ -129,7 +130,22 @@
                                     @enderror
                                 </div>
                             </div>
-                           
+
+                            <div class="row mt-3">
+                        <div class="col-sm">
+                            <div class="form-label"> Frota de Veículo </div>
+                        <select class="form-select form-control" id="choices-model-vehicle" name="model_vehicle[]" multiple>
+                            <option value="">Selecione um modelo</option>
+                            @foreach ($modelVehicle as $id => $model)
+                                <option value="{{ $id }}" {{ in_array($id, old('model_vehicle', $selectedModels)) ? 'selected' : '' }}>{{ $model->name }}</option>
+                            @endforeach
+                        </select>
+                        </select>
+                            @error('model_vehicle')
+                            <p class='text-danger text-xs pt-1'> {{ $message }} </p>
+                            @enderror
+                            </div>
+                        </div>
                             <div class="row">
                                 <div class="col-6">
                                     <label class="form-label mt-4">Email</label>
@@ -157,11 +173,14 @@
                                     <div class="input-group">
                                         <input id="location" name="location" value="{{ old('location', $user->location) }}" class="form-control" type="text" placeholder="Cuiabá - MT">
                                     </div>
+                                    @error('location')
+                                        <p class='text-danger text-xs pt-1'> {{ $message }} </p>
+                                    @enderror
                                 </div>
                                 <div class="col-6">
                                     <label class="form-label mt-4">Celular</label>
                                     <div class="input-group">
-                                        <input id="phone" name="phone" value="{{ $user->phone }}" class="form-control" type="number" placeholder="+65 999234546 ">
+                                        <input id="phone" name="phone" value="{{ $user->phone }}" class="form-control" type="number" placeholder="(DDD)  + Número Telefone  ">
                                     </div>
                                     @error('phone')
                                         <p class='text-danger text-xs pt-1'> {{ $message }} </p>
@@ -276,6 +295,11 @@
         if (document.getElementById('choices-category')) {
             var cnh_category = document.getElementById('choices-category');
             const example = new Choices(cnh_category);
+        }
+
+        if (document.getElementById('choices-model-vehicle')) {
+            var modelVehicle = document.getElementById('choices-model-vehicle');
+            const example = new Choices(modelVehicle);
         }
 
         function toggleDriverFields() {

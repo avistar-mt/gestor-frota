@@ -21,15 +21,32 @@ class Vehicle extends Model
         'description',
         'tracker_number',
         'status',
+        'branch_id',
     ];
 
     protected $casts = [
         'status' => StatusType::class,
     ];
 
+    public function models()
+    {
+        return $this->belongsTo(ModelVehicle::class);
+    }
+
+
     public function branches()
     {
         return $this->belongsToMany(Branch::class, 'branch_vehicle');
+    }
+
+    // public function branches()
+    // {
+    //     return $this->belongsToMany(Branch::class);
+    // }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'vehicle_user');
     }
 
     public function reservations()

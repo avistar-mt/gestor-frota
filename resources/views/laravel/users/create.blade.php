@@ -119,16 +119,29 @@
                             </div>
                             <div class="col-sm">
                                 <label class="form-label">Filial</label>
-                                <select name="branch_id" id="choices-branch" class="form-control">
-                                    <option value="">Filial</option>
+                                <select name="branch_id[]" id="choices-branch" class="form-control" multiple>
                                     @foreach ($branches as $branch)
-                                    <option value="{{ $branch->id }}" {{ $branch->id == old('branch') ? 'selected' : '' }}>{{ $branch->name }}
-                                    </option>
+                                    <option value="{{ $branch->id }}" {{ $branch->id == old('branch') ? 'selected' : '' }}> {{ $branch->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('branch_id')
                                 <p class='text-danger text-xs pt-1'> {{ $message }} </p>
                                 @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                        <div class="col-sm">
+                            <div class="form-label"> Frota de Veículo </div>
+                        <select class="form-select form-control" id="choices-model-vehicle" name="model_vehicle[]" multiple>
+                            <option value="">Selecione um modelo</option>
+                                @foreach($modelVehicle as $model)
+                                <option value="{{ $model->id }}" {{ old('model_vehicle') == $model->name ? 'selected' : '' }}>{{ $model->name }}</option>
+                                @endforeach
+                        </select>
+                            @error('model_vehicle')
+                            <p class='text-danger text-xs pt-1'> {{ $message }} </p>
+                            @enderror
                             </div>
                         </div>
 
@@ -250,6 +263,21 @@
     if (document.getElementById('choices-branch')) {
         var branch = document.getElementById('choices-branch');
         const example = new Choices(branch);
+    }
+
+    if (document.getElementById('choices-headquarter')) {
+        var headquarter = document.getElementById('choices-headquarter');
+        const example = new Choices(headquarter);
+    }
+
+    if (document.getElementById('choices-vehicles')) {
+        var vehicles = document.getElementById('choices-vehicles');
+        const example = new Choices(vehicles);
+    }
+
+    if (document.getElementById('choices-model-vehicle')) {
+        var model = document.getElementById('choices-model-vehicle');
+        const example = new Choices(model);
     }
 
 

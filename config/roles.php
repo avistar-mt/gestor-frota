@@ -7,6 +7,7 @@ return [
     ],
     'Admin Frota' => [
         'manage-reservation',
+        'create-reservation',
         'view-reservation',
         'delete-reservation',
         'report-reservation',

@@ -67,7 +67,7 @@
                                 @foreach ($branches as $branch)
                                     <tr>
                                         <td class="text-sm font-weight-normal">{{ $branch->name }}</td>
-                                        <td class="text-sm font-weight-normal">{{ $branch->city . '-' . $branch->state  }}</td>
+                                        <td class="text-sm font-weight-normal">{{ $branch->city->name . ' - ' . $branch->city->state->uf }}</td>
                                         <td class="text-sm font-weight-normal">{{ $branch->created_at->format('d/m/y H:i:s') }}</td>
                                         <td class="text-sm">
                                             <span class="d-flex">

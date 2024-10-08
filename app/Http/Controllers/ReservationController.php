@@ -7,7 +7,6 @@ use App\Enums\ReservationType;
 use App\Enums\StepType;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
-use App\Models\Driver;
 use App\Models\Branch;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -38,26 +37,48 @@ class ReservationController extends Controller
      */
     public function create()
     {
-        $this->authorize('create-reservation');
+        // $this->authorize('create-reservation');
 
-            $drivers = User::driver()->whereDoesntHave('ownReservations', function ($query) {
-                $query->whereIn('status', ['approved', 'pending', 'ongoing']);
-            })->get();
 
-            $vehicles = Vehicle::query()
-            ->with('branches')
-            ->where('status', 'available')
-            ->whereDoesntHave('reservations', function ($query) {
-                $query->whereIn('status', ['approved', 'pending', 'ongoing']);
-            })
-            ->when(Auth::user()->role->isAdminFrota() || Auth::user()->role->isGestor(), function ($query) {
-                $query->whereHas('branches', function ($query) {
-                    $query->where('branches.id', Auth::user()->branch_id);
-                });
-            })->get();
+            $user = User::find(Auth::user()->id);
 
-        $branches = $vehicles->pluck('branches')->flatten()->unique('name');
-        return view('operation.reservation.create', compact('branches', 'drivers', 'vehicles'));
+            if ($user->isDriver()) {
+            $drivers = User::driver()->get();
+            } else {
+                $drivers = User::driver()->whereDoesntHave('ownReservations', function ($query) {
+                    $query->whereIn('status', ['approved', 'pending', 'ongoing']);
+                })->get();
+            }
+
+            
+            if($user->isDriver()) {
+                $vehicles = Vehicle::query()
+                ->with('branches.users')
+                ->where('status', 'available')
+                ->where('branch_id', $user->branch_id)
+                ->whereDoesntHave('reservations', function ($query) {
+                    $query->whereIn('status', ['approved', 'pending', 'ongoing']);
+                })
+                ->get();
+            } else {
+
+                $vehicles = Vehicle::query()
+                ->with('branches')
+                ->where('status', 'available')
+                ->whereDoesntHave('reservations', function ($query) {
+                    $query->whereIn('status', ['approved', 'pending', 'ongoing']);
+                })
+                ->when(Auth::user()->role->isAdminFrota() || Auth::user()->role->isGestor(), function ($query) {
+                    $query->whereHas('branches', function ($query) {
+                        $query->where('branches.id', Auth::user()->branch_id);
+                    });
+                })->get();
+            }
+
+
+        $branches = Branch::where('id', $user->branch_id)->get();
+
+        return view('operation.reservation.create', compact( 'drivers', 'vehicles', 'branches', 'user'));
     }
 
     /**
@@ -115,9 +136,11 @@ class ReservationController extends Controller
 
         $vehicles = DB::table('branch_vehicle')
             ->join('vehicles', 'branch_vehicle.vehicle_id', '=', 'vehicles.id')
-            ->where('branch_id', $reservation->branch_id)
+            ->where('branch_vehicle.branch_id', $reservation->branch_id)
             ->select('vehicles.*')
             ->get();
+        
+        $reservation->vehicle = Vehicle::find($reservation->vehicle_id);
 
 
         return view('operation.reservation.edit', compact('reservation', 'branches', 'drivers', 'user', 'vehicles'));

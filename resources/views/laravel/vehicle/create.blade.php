@@ -76,13 +76,16 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col-4">
-                                <label class="form-label">Marcar / Modelo</label>
-                                <div class="input-group">
-                                    <input id="model" name="model" class="form-control" type="text" placeholder="Modelo" value="{{ old('model') }}">
-                                </div>
-                                @error('model')
-                                <p class='text-danger text-xs pt-1'> {{ $message }} </p>
-                                @enderror
+                            <div class="form-label"> Modelo </div>
+                        <select class="form-select form-control" id="choices-model" name="model">
+                            <option value="">Selecione um modelo</option>
+                            @foreach($modelVehicle as $model)
+                                <option value="{{ $model->name }}" {{ old('model') == $model->name ? 'selected' : '' }}>{{ $model->name }}</option>
+                            @endforeach
+                        </select>
+                            @error('model')
+                            <p class='text-danger text-xs pt-1'> {{ $message }} </p>
+                            @enderror
                             </div>
                             <div class="col-4">
                                 <div class="form-label">Renavam</div>
@@ -103,6 +106,23 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="row mt-3">
+                            <div class="col">
+                                <div class="form-label">Filais</div>
+
+                                <select name="branche_id[]" class="form-select form-control" id="choices-branches" multiple>
+                                    <option value="">Selecione uma filial</option>
+                                    @foreach ($branches as $branch)
+                                        <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('branche_id')
+                                    <p class='text-danger text-xs pt-1'> {{ $message }} </p>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="row mt-4">
                             <div class="col-12">
                                 <label class="form-label">Descrição</label>
@@ -130,11 +150,22 @@
 @push('js')
     <script src=" {{ asset('js/app.js') }}"></script>
     <script src="/assets/js/plugins/quill.min.js"></script>
+    <script src="/assets/js/plugins/choices.min.js"></script>
     <script>
         if (document.getElementById('editor')) {
             var quill = new Quill('#editor', {
                 theme: 'snow' // Specify theme in configuration
             });
+        }
+
+        if (document.getElementById('choices-model')) {
+        var model = document.getElementById('choices-model');
+        const example = new Choices(model);
+        }
+
+        if (document.getElementById('choices-branches')) {
+        var branches = document.getElementById('choices-branches');
+        const example = new Choices(branches);
         }
     </script>
 @endpush

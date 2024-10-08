@@ -127,7 +127,7 @@
                         </li>
                         @endcan
 
-                        @can('view-branch-vehicle', auth()->user())
+                        @can('xablau', auth()->user())
                         <li class="nav-item show">
                             <a class="nav-link {{ Route::currentRouteName() == 'branch-vehicle-management' ? 'active' : '' }}" href="{{ route('branch-vehicle-management') }}">
                                 <span class="sidenav-mini-icon"> Fro </span>
