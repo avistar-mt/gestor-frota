@@ -40,12 +40,8 @@ WORKDIR /var/www
 # Copy custom configurations PHP
 COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 
-# Copy PHP-FPM configuration
-COPY docker/php-fpm/php-fpm.conf /usr/local/etc/php-fpm.conf
-COPY docker/php-fpm/www.conf /usr/local/etc/php-fpm.d/www.conf
-
-# Remove conflicting files and ensure only www.conf is present
-RUN find /usr/local/etc/php-fpm.d/ -type f -name "*.conf" ! -name "www.conf" -delete
+# Opção 1: Configuração simplificada em um único arquivo
+RUN echo '[global]\nerror_log = /var/log/php-fpm/error.log\nlog_level = debug\ndaemonize = no\n\n[www]\nuser = airton\ngroup = www-data\nlisten = 0.0.0.0:9000\npm = dynamic\npm.max_children = 5\npm.start_servers = 2\npm.min_spare_servers = 1\npm.max_spare_servers = 3' > /usr/local/etc/php-fpm.conf
 
 # Create PHP-FPM log directory and set permissions
 RUN mkdir -p /var/log/php-fpm && \
@@ -62,11 +58,8 @@ RUN mkdir -p /var/www/public/images && \
     chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache /var/www/public && \
     chmod -R 775 /var/www/storage /var/www/bootstrap/cache /var/www/public
 
-# Debug: List PHP-FPM config files
-RUN ls -l /usr/local/etc/php-fpm.d/
-
 # Test PHP-FPM configuration before starting
 RUN php-fpm -t
 
 # Start PHP-FPM in foreground
-CMD ["php-fpm", "-F"]
+CMD ["php-fpm", "-F", "--fpm-config", "/usr/local/etc/php-fpm.conf"]
