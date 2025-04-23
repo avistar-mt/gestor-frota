@@ -1,6 +1,6 @@
 FROM php:8.3-fpm
 
-# set your user name, ex: user=carlos
+# set your user name, ex: user=airton
 ARG user=airton
 ARG uid=1000
 
@@ -40,14 +40,33 @@ WORKDIR /var/www
 # Copy custom configurations PHP
 COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 
+# Copy PHP-FPM configuration
+COPY docker/php-fpm/php-fpm.conf /usr/local/etc/php-fpm.conf
+COPY docker/php-fpm/www.conf /usr/local/etc/php-fpm.d/www.conf
+
+# Remove conflicting files and ensure only www.conf is present
+RUN find /usr/local/etc/php-fpm.d/ -type f -name "*.conf" ! -name "www.conf" -delete
+
+# Create PHP-FPM log directory and set permissions
+RUN mkdir -p /var/log/php-fpm && \
+    chown -R $user:www-data /var/log/php-fpm && \
+    chmod -R 775 /var/log/php-fpm
+
 # Copy application files
 COPY . /var/www
 
-# Adjust permissions for storage and bootstrap/cache public/images directories
-RUN mkdir -p /var/www/public/images \
-    && chown -R $user:$user /var/www/public/images \
-    && chmod -R 775 /var/www/public/images \
-    && chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
-    && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+# Adjust permissions for storage, bootstrap/cache, and public directories
+RUN mkdir -p /var/www/public/images && \
+    chown -R $user:$user /var/www/public/images && \
+    chmod -R 775 /var/www/public/images && \
+    chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache /var/www/public && \
+    chmod -R 775 /var/www/storage /var/www/bootstrap/cache /var/www/public
 
-USER $user
+# Debug: List PHP-FPM config files
+RUN ls -l /usr/local/etc/php-fpm.d/
+
+# Test PHP-FPM configuration before starting
+RUN php-fpm -t
+
+# Start PHP-FPM in foreground
+CMD ["php-fpm", "-F"]

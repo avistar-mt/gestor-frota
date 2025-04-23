@@ -1,7 +1,6 @@
 version: "3.7"
 
 services:
-    # image project
     app:
         build:
             context: .
@@ -15,24 +14,10 @@ services:
             - db
         networks:
             - laravel
+            - proxy
         links:
             - db
 
-    # nginx
-    nginx:
-        image: nginx:1.27.0
-        restart: unless-stopped
-        ports:
-            - "8989:80"
-        volumes:
-            - ./:/var/www
-            - ./docker/nginx/:/etc/nginx/conf.d/
-        networks:
-            - laravel
-        depends_on:
-            - app
-
-    # db mysql
     db:
         image: mysql/mysql-server:8.0.23
         restart: unless-stopped
@@ -48,7 +33,6 @@ services:
         networks:
             - laravel
 
-    # PHPMyAdmin
     phpmyadmin:
         image: phpmyadmin
         restart: unless-stopped
@@ -63,7 +47,6 @@ services:
         depends_on:
             - db
 
-    # redis
     redis:
         image: redis:latest
         networks:
@@ -71,3 +54,5 @@ services:
 
 networks:
     laravel:
+    proxy:
+        external: true
