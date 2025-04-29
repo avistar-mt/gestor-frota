@@ -20,7 +20,7 @@
                         <a href="https://avistar.online/" class="nav-link text-muted" target="_blank">Avistar</a>
                     </li>
                     <li class="nav-item">
-                        <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Avistar</a>
+                        <a href="https://avistar.online/" class="nav-link text-muted" target="_blank">Avistar</a>
                     </li>
                     <li class="nav-item">
                         <a href="https://avistar.online/" class="nav-link text-muted"

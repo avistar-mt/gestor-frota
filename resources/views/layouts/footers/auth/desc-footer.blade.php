@@ -46,9 +46,9 @@
                     <script>
                         document.write(new Date().getFullYear())
                     </script>
-                    <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Avistar</a>
+                    <a href="https://avistar.online/" class="font-weight-bold" target="_blank">Avistar</a>
                     &
-                    <a href="https://www.updivision.com" class="font-weight-bold" target="_blank">Avistar</a>
+                    <a href="https://avistar.online/" class="font-weight-bold" target="_blank">Avistar</a>
                 </p>
             </div>
         </div>
